@@ -1,28 +1,46 @@
-let stream$ = rxjs.Observable.create(function (observer) {
-  console.log("Stream was created");
-  observer.next("One");
+// let button = document.querySelector("button");
+// console.log(rxjs);
+// let btn$ = rxjs.Observable.fromEvent(button, "click");
 
-  setTimeout(function () {
-    observer.error("Something went wrong!");
-  }, 5000);
-  setTimeout(function () {
-    // observer.complete();
-  }, 3000);
-  setTimeout(function () {
-    observer.next("After 2 seconds!");
-  }, 2000);
-  //   observer.complete();
-  observer.next("Two");
+// console.log(btn$);
+
+// btn$._subscribe(function (e) {
+//   console.log(e);
+// });
+
+let button = document.querySelector("button");
+
+let btn$ = rxjs.fromEvent(button, "click");
+
+btn$.subscribe(function (e) {
+  console.log(e);
 });
 
-stream$.subscribe(
-  function (data) {
-    console.log("subscribe: ", data);
-  },
-  function (error) {
-    console.log("Error: ", error);
-  },
-  function () {
-    console.log("Completed!");
-  }
-);
+rxjs
+  .fromEvent(document.querySelector("input"), "keyup")
+  .subscribe((e) => console.log(e));
+
+rxjs.fromEvent(document, "mousemove").subscribe((e) => {
+  document.querySelector("h1").innerHTML = `X: ${e.clientX}, Y: ${e.clientY}`;
+});
+
+// let s$ = rxjs.Observable.create(function (observer) {
+//   observer.next("One");
+
+//   setTimeout(function () {
+//     observer.next("After 5 seconds!");
+//   }, 5000);
+
+//   setTimeout(function () {
+//     observer.next("After 3 seconds!");
+//   }, 3000);
+
+//   setTimeout(function () {
+//     observer.next("After 2 seconds!");
+//   }, 2000);
+//   observer.next("Two");
+// });
+
+// s$.subscribe(function (data) {
+//   console.log("subscribe: ", data);
+// });
