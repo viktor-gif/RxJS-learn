@@ -15,11 +15,17 @@ function createSubscribe(name) {
 function delay(ms = 1000) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve();
+      resolve(ms);
     }, ms);
   });
 }
 
-delay(3000).then(() => {
-  console.log("Promise was resolved!");
-});
+// delay(3000).then(() => {
+//   console.log("Promise was resolved!");
+// });
+
+console.log(rxjs);
+
+const p$ = rxjs.from(delay(4000));
+p$.subscribe(createSubscribe("fromPromise"));
+//"fromPromise" is not exist enymore. Use "from", please.
