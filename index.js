@@ -15,17 +15,14 @@ function createSubscribe(name) {
 const ops = rxjs.operators;
 
 rxjs
-  .fromEvent(document.querySelector("input"), "keyup")
+  .of(1, 5, "Hello", "world")
   .pipe(
-    ops.map((x) => x.target.value),
-    // ops.pluck("target", "value"),
-    // pluck выше делает то же, что и ops.map((x) => x.target.value)
-    ops.map((x) => x.toUpperCase()),
-    ops.map((x) => {
-      return {
-        value: x,
-        length: x.length,
-      };
+    ops.find((x) => {
+      if (typeof x === "string") {
+        return x.toLowerCase() === "hello";
+      }
     })
+    // ops.first()
+    // ops.last()
   )
-  .subscribe(createSubscribe("map"));
+  .subscribe(createSubscribe("find"));
