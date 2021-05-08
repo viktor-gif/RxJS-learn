@@ -14,11 +14,19 @@ function createSubscribe(name) {
 
 const ops = rxjs.operators;
 
+// rxjs
+//   .of(1, 5, "Hello", "world")
+//   .pipe(
+//     ops.skipWhile((x) => {
+//       return typeof x === "number";
+//     })
+//   )
+//   .subscribe(createSubscribe("findIndex"));
+
 rxjs
-  .of(1, 5, "Hello", "world")
+  .interval(500)
   .pipe(
-    ops.skip(2)
-    // ops.findIndex((x) => x === 5),
-    // ops.take(3)
+    ops.skipWhile((x) => x < 5),
+    ops.takeWhile((x) => x < 12)
   )
-  .subscribe(createSubscribe("findIndex"));
+  .subscribe(createSubscribe("skipWhile"));
