@@ -12,16 +12,20 @@ function createSubscribe(name) {
   };
 }
 
-rxjs
-  .range(10, 5) // начиная с 10(включительно) 5 элементов (10, 11, 12, 13, 14)
-  .subscribe(createSubscribe("interval"));
+const map = new Map([
+  [1, 2],
+  [3, 4],
+  [5, 6],
+]);
+rxjs.from(map).subscribe(createSubscribe("from"));
 
-// rxjs
-//   .of([5, 3], 0, 5, "string", true, { name: "Vasya" })
-//   .subscribe(createSubscribe("of"));
+// const set = new Set([1, 2, 3, "f", "str", { id: 6 }]);
+// rxjs.from(set).subscribe(createSubscribe("from"));
 
-// rxjs.of([5, 3], 0, 5, "string", true, { name: "Vasya" }).subscribe(
-//   (x) => console.log("Next: ", x),
-//   (err) => console.log("Error: ", err),
-//   () => console.log("Completed.")
-// );
+// const arr = [
+//   { id: 1, name: "Viktor" },
+//   { id: 2, name: "Vasia" },
+// ];
+// rxjs.from(arr).subscribe(createSubscribe("from"));
+
+// rxjs.from([1, 2, 3, 4, 5]).subscribe(createSubscribe("from"));
