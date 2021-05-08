@@ -17,12 +17,8 @@ const ops = rxjs.operators;
 rxjs
   .of(1, 5, "Hello", "world")
   .pipe(
-    ops.find((x) => {
-      if (typeof x === "string") {
-        return x.toLowerCase() === "hello";
-      }
-    })
-    // ops.first()
-    // ops.last()
+    ops.skip(2)
+    // ops.findIndex((x) => x === 5),
+    // ops.take(3)
   )
-  .subscribe(createSubscribe("find"));
+  .subscribe(createSubscribe("findIndex"));
