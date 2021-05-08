@@ -11,10 +11,15 @@ function createSubscribe(name) {
     },
   };
 }
-
+console.log(rxjs.interval(400));
 rxjs
-  .of([5, 3], 0, 5, "string", true, { name: "Vasya" })
-  .subscribe(createSubscribe("of"));
+  .interval(400)
+  .pipe(rxjs.operators.take(10))
+  .subscribe(createSubscribe("interval"));
+
+// rxjs
+//   .of([5, 3], 0, 5, "string", true, { name: "Vasya" })
+//   .subscribe(createSubscribe("of"));
 
 // rxjs.of([5, 3], 0, 5, "string", true, { name: "Vasya" }).subscribe(
 //   (x) => console.log("Next: ", x),
