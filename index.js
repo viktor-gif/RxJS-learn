@@ -12,20 +12,17 @@ function createSubscribe(name) {
   };
 }
 
-function delay(ms = 1000) {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(ms);
-    }, ms);
-  });
-}
+const ops = rxjs.operators;
 
-// delay(3000).then(() => {
-//   console.log("Promise was resolved!");
-// });
+rxjs
+  .of("hello", "my", "friends")
+  .pipe(ops.map((x) => x[0].toUpperCase() + x.slice(1)))
+  .subscribe(createSubscribe("map"));
 
-console.log(rxjs);
-
-const p$ = rxjs.from(delay(4000));
-p$.subscribe(createSubscribe("fromPromise"));
-//"fromPromise" is not exist enymore. Use "from", please.
+rxjs
+  .interval(1000)
+  .pipe(
+    ops.map((x) => x * x),
+    ops.take(5)
+  )
+  .subscribe(createSubscribe("map"));
