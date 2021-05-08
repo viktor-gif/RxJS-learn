@@ -15,14 +15,17 @@ function createSubscribe(name) {
 const ops = rxjs.operators;
 
 rxjs
-  .of("hello", "my", "friends")
-  .pipe(ops.map((x) => x[0].toUpperCase() + x.slice(1)))
-  .subscribe(createSubscribe("map"));
-
-rxjs
-  .interval(1000)
+  .fromEvent(document.querySelector("input"), "keyup")
   .pipe(
-    ops.map((x) => x * x),
-    ops.take(5)
+    ops.map((x) => x.target.value),
+    // ops.pluck("target", "value"),
+    // pluck выше делает то же, что и ops.map((x) => x.target.value)
+    ops.map((x) => x.toUpperCase()),
+    ops.map((x) => {
+      return {
+        value: x,
+        length: x.length,
+      };
+    })
   )
   .subscribe(createSubscribe("map"));
