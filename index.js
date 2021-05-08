@@ -13,8 +13,7 @@ function createSubscribe(name) {
 }
 
 rxjs
-  .timer(4000, 500) //4000 - задержка
-  .pipe(rxjs.operators.take(10))
+  .range(10, 5) // начиная с 10(включительно) 5 элементов (10, 11, 12, 13, 14)
   .subscribe(createSubscribe("interval"));
 
 // rxjs
