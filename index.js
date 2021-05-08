@@ -11,9 +11,9 @@ function createSubscribe(name) {
     },
   };
 }
-console.log(rxjs.interval(400));
+
 rxjs
-  .interval(400)
+  .timer(4000, 500) //4000 - задержка
   .pipe(rxjs.operators.take(10))
   .subscribe(createSubscribe("interval"));
 
