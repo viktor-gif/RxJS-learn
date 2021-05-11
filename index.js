@@ -14,32 +14,10 @@ function createSubscribe(name) {
 
 const ops = rxjs.operators;
 
-rxjs
-  .range(1, 3)
-  .pipe(
-    ops.delay(2000), //задержка стрима
-    ops.map((x) => x * x)
-  )
-  .subscribe(createSubscribe("delay"));
+// совмещение разных стримов в один стрим
 
-// rxjs
-//   .range(1, 3)
-//   .pipe(
-//     ops.tap((x) => console.log("Before: ", x)),
-//     ops.map((x) => x * x),
-//     ops.tap((x) => console.log("After: ", x))
-//   )
-//   .subscribe(createSubscribe("tap"));
+const s1$ = rxjs.of("Hello ");
+const s2$ = rxjs.of("world");
 
-// rxjs
-//   .from([1, 2, 3, 4, 5])
-//   .pipe(
-//     ops.map((x) => x * 2),
-//     ops.every((x) => x % 2 === 0) //выдаст значение "true / false"
-//   )
-//   .subscribe(createSubscribe("every"));
-
-// rxjs
-//   .of(231)
-//   .pipe(ops.defaultIfEmpty("I am en empty stream"))
-//   .subscribe(createSubscribe("defaultIfEmpty"));
+// rxjs.merge(s1$, s2$).subscribe(createSubscribe("merge"));
+s1$.pipe(ops.merge(s2$)).subscribe(createSubscribe("merge"));
