@@ -14,9 +14,13 @@ function createSubscribe(name) {
 
 const ops = rxjs.operators;
 
-const s1$ = rxjs.throwError(new Error("Что-то пошло не так!"));
-const s2$ = rxjs.interval(500).pipe(ops.take(2));
+const subject$ = new rxjs.Subject();
 
-s1$
-  .pipe(ops.onErrorResumeNext(s2$))
-  .subscribe(createSubscribe("onErrorResumeNext"));
+subject$.subscribe(createSubscribe("subject"));
+
+setTimeout(() => {
+  subject$.next(3);
+  subject$.complete();
+}, 3000);
+subject$.next(1);
+subject$.next(2);
