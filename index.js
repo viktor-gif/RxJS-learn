@@ -15,10 +15,6 @@ function createSubscribe(name) {
 const ops = rxjs.operators;
 
 rxjs
-  .fromEvent(document.querySelector("input"), "keyup")
-  .pipe(
-    ops.map((e) => e.target.value),
-    ops.debounceTime(1000), //задержка между действиями
-    ops.distinct() //запрещает действия, если значение не изменилось
-  )
-  .subscribe(createSubscribe("debounceTime"));
+  .from([99, 1, 2, 3, 3, 3, 5, 5, 1, 1, 99, 99, 2, 4, 6])
+  .pipe(ops.distinctUntilChanged())
+  .subscribe(createSubscribe("from"));
