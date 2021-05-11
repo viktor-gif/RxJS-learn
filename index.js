@@ -17,6 +17,9 @@ const ops = rxjs.operators;
 //буфферы нужны для того, чтобы временно сохранять какие-то значения
 
 rxjs
-  .range(0, 40)
-  .pipe(ops.bufferCount(10))
+  .interval(1000)
+  .pipe(
+    ops.buffer(rxjs.fromEvent(document, "click")),
+    ops.map((x) => x.length)
+  )
   .subscribe(createSubscribe("buffer"));
