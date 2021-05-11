@@ -15,12 +15,10 @@ function createSubscribe(name) {
 const ops = rxjs.operators;
 
 const subject$ = new rxjs.Subject();
+const int$ = new rxjs.interval(1000);
 
-subject$.subscribe(createSubscribe("subject"));
+int$.subscribe(subject$);
 
-setTimeout(() => {
-  subject$.next(3);
-  subject$.complete();
-}, 3000);
-subject$.next(1);
-subject$.next(2);
+subject$.subscribe(createSubscribe("subject 1"));
+subject$.subscribe(createSubscribe("subject 2"));
+setTimeout(() => subject$.subscribe(createSubscribe("subject 3")), 2000);
