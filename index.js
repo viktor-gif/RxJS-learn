@@ -16,15 +16,15 @@ const ops = rxjs.operators;
 
 // совмещение разных стримов в один стрим
 
-let promise = (data) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      resolve(data + " wish you good luck!");
-    }, 2000);
-  });
-};
-
 rxjs
-  .of("WFM")
-  .pipe(ops.mergeMap((x) => promise(x)))
-  .subscribe(createSubscribe("promeise"));
+  .range(1, 10)
+  .pipe(
+    ops.concatMap((x, i) => {
+      //i - это индекс
+      return rxjs.interval(100).pipe(
+        ops.take(x),
+        ops.map((q) => i)
+      );
+    })
+  )
+  .subscribe(createSubscribe("concatMap"));
