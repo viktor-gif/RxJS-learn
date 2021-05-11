@@ -14,7 +14,12 @@ function createSubscribe(name) {
 
 const ops = rxjs.operators;
 
-const subject$ = new rxjs.BehaviorSubject("wfm");
+const subject$ = new rxjs.ReplaySubject(2);
 
-subject$.subscribe(createSubscribe("behavior"));
-subject$.next("Hello");
+subject$.next(1);
+subject$.next(2);
+subject$.next(3);
+subject$.next(4);
+subject$.complete();
+
+subject$.subscribe(createSubscribe("replay"));
