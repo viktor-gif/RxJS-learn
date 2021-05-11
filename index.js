@@ -14,9 +14,9 @@ function createSubscribe(name) {
 
 const ops = rxjs.operators;
 
-rxjs
-  .throwError(new Error("Что-то пошло не так!"))
-  .pipe(ops.catchError((error) => rxjs.of(error)))
-  .subscribe(createSubscribe("catchError"));
+const s1$ = rxjs.throwError(new Error("Что-то пошло не так!"));
+const s2$ = rxjs.interval(500).pipe(ops.take(2));
 
-rxjs.interval(500).pipe(ops.take(3)).subscribe(createSubscribe("interval"));
+s1$
+  .pipe(ops.onErrorResumeNext(s2$))
+  .subscribe(createSubscribe("onErrorResumeNext"));
