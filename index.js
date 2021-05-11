@@ -14,12 +14,32 @@ function createSubscribe(name) {
 
 const ops = rxjs.operators;
 
-//буфферы нужны для того, чтобы временно сохранять какие-то значения
-
 rxjs
-  .interval(1000)
+  .range(1, 3)
   .pipe(
-    ops.buffer(rxjs.fromEvent(document, "click")),
-    ops.map((x) => x.length)
+    ops.delay(2000), //задержка стрима
+    ops.map((x) => x * x)
   )
-  .subscribe(createSubscribe("buffer"));
+  .subscribe(createSubscribe("delay"));
+
+// rxjs
+//   .range(1, 3)
+//   .pipe(
+//     ops.tap((x) => console.log("Before: ", x)),
+//     ops.map((x) => x * x),
+//     ops.tap((x) => console.log("After: ", x))
+//   )
+//   .subscribe(createSubscribe("tap"));
+
+// rxjs
+//   .from([1, 2, 3, 4, 5])
+//   .pipe(
+//     ops.map((x) => x * 2),
+//     ops.every((x) => x % 2 === 0) //выдаст значение "true / false"
+//   )
+//   .subscribe(createSubscribe("every"));
+
+// rxjs
+//   .of(231)
+//   .pipe(ops.defaultIfEmpty("I am en empty stream"))
+//   .subscribe(createSubscribe("defaultIfEmpty"));
