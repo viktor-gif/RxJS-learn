@@ -3,23 +3,23 @@ import {Observable} from 'rxjs';
 
 export const RxjsLearn = () => {
 
-    const observable$ = new Observable<number>(subscriber => {
-        let counter = 0;
-        const intervalId = setInterval(() => {
-            console.log('Emitted ', counter);
-            subscriber.next(counter += 1);
-        }, 1000)
+    // const observable$ = new Observable<number>(subscriber => {
+    //     let counter = 0;
+    //     const intervalId = setInterval(() => {
+    //         console.log('Emitted ', counter);
+    //         subscriber.next(counter += 1);
+    //     }, 1000)
 
-        return () => {
-            clearInterval(intervalId);
-        }
-    });
+    //     return () => {
+    //         clearInterval(intervalId);
+    //     }
+    // });
 
-    const subscription = observable$.subscribe(val => console.log(val));
+    // const subscription = observable$.subscribe(val => console.log(val));
 
-    setTimeout(() => subscription.unsubscribe(), 7000);
-
-
+    // setTimeout(() => subscription.unsubscribe(), 7000);
+   
+        console.log('Emitted ');
 
 
 //   const observable$ = new Observable<string>(subscriber => {
