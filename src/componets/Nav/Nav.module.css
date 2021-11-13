@@ -1,0 +1,12 @@
+.navContainer {
+    padding: 15px;
+}
+
+.navList a {
+    text-decoration: none;
+    color: #000;
+}
+.navList a li {
+    font-size: 30px;
+    line-height: 40px;
+}
