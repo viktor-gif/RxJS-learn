@@ -1,62 +1,51 @@
-import React from "react";
+import React, { useEffect } from "react";
+import {ajax} from "rxjs/ajax";
 import {Observable} from 'rxjs';
+import s from './RxjsLearn.module.css';
 
 export const RxjsLearn = () => {
 
-    // const observable$ = new Observable<number>(subscriber => {
-    //     let counter = 0;
-    //     const intervalId = setInterval(() => {
-    //         console.log('Emitted ', counter);
-    //         subscriber.next(counter += 1);
-    //     }, 1000)
-
-    //     return () => {
-    //         clearInterval(intervalId);
-    //     }
+    //cold observable
+    // const ajax$ = ajax<any>('https://random-data-api.com/api/name/random_name');
+    
+    // ajax$.subscribe(data => {
+    //     console.log('Sub1', data.response.first_name);
+    // });
+    // ajax$.subscribe(data => {
+    //     console.log('Sub2', data.response.first_name);
+    // });
+    // ajax$.subscribe(data => {
+    //     console.log('Sub3', data.response.first_name);
     // });
 
-    // const subscription = observable$.subscribe(val => console.log(val));
-
-    // setTimeout(() => subscription.unsubscribe(), 7000);
-   
-        console.log('Emitted ');
-
-
-//   const observable$ = new Observable<string>(subscriber => {
-//     console.log('Observable executed');
-//     subscriber.next('Ivan');
-
-//     setTimeout(() => subscriber.error(new Error('Failure')), 1000);
-
-//     setTimeout(() => {
-//         subscriber.next('Alice');
-//         subscriber.complete();
-//     }, 2000)
     
-//     setTimeout(() => subscriber.error(new Error('Failure')), 4000);
 
-//     subscriber.next('Vasya');
+    //hot observable
+    useEffect(() => {
+        const helloButton = document.getElementById('hello');
 
-//     return () => {
-//         console.log('Teardown');
-//     }
+        const helloClick$ = new Observable<MouseEvent>(sub => {
+            helloButton?.addEventListener('click', (event) => {
+                sub.next(event);
+            });
+        })
     
-//   });
+        helloClick$.subscribe(e => console.log('Sub1 ', e.x, e.y));
 
-//   console.log('Before');
-//   observable$.subscribe({
-//       next: val => console.log(val),
-//       error: err => console.log(err.message),
-//       complete: () => console.log('Complete')
-//   });
-//   console.log('after');
+        setTimeout (() => {
+            console.log('Hello');
+            helloClick$.subscribe(e => console.log('Sub2 ', e.x, e.y));
+        }, 5000)
+        
+    }, [])
 
-
-
+    
 
 
 
 
 
-    return <div></div>
+    return <div>
+        <button className={s.hello} id="hello">Hello!</button>
+    </div>
 }
