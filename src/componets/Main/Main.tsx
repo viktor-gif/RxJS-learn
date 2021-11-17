@@ -1,11 +1,18 @@
 import React  from "react";
+import { Route } from "react-router-dom";
+import { dialogsPageType, profilePageType } from "../../redux/store";
 import s from "./Main.module.css";
 import { Messages } from "./Messages/Messages";
 import { Profile } from "./Profile/Profile";
 
-export const Main = () => {
+type propsType = {
+    dialogsPage: dialogsPageType
+    profilePage: profilePageType
+}
+
+export const Main = (props: propsType) => {
     return <div className={s.mainContainer}>
-        {/* <Profile /> */}
-        <Messages />
+        <Route path="/profile" render={() => <Profile />} />
+        <Route path="/messages" render={() => <Messages />} />
     </div>
 }

@@ -1,5 +1,3 @@
-import React from "react";
-
 export type dialogType = {id: number, name: string, url: string};
 export type dialogsType = Array<dialogType>;
 export type messageType = {id: number, message: string};

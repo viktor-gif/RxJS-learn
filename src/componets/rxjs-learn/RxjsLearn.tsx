@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import {ajax} from "rxjs/ajax";
-import {Observable} from 'rxjs';
+import React from "react";
+// import {ajax} from "rxjs/ajax";
+// import {Observable} from 'rxjs';
 import s from './RxjsLearn.module.css';
 
 export const RxjsLearn = () => {
@@ -21,23 +21,23 @@ export const RxjsLearn = () => {
     
 
     //hot observable
-    useEffect(() => {
-        const helloButton = document.getElementById('hello');
+    // useEffect(() => {
+    //     const helloButton = document.getElementById('hello');
 
-        const helloClick$ = new Observable<MouseEvent>(sub => {
-            helloButton?.addEventListener('click', (event) => {
-                sub.next(event);
-            });
-        })
+    //     const helloClick$ = new Observable<MouseEvent>(sub => {
+    //         helloButton?.addEventListener('click', (event) => {
+    //             sub.next(event);
+    //         });
+    //     })
     
-        helloClick$.subscribe(e => console.log('Sub1 ', e.x, e.y));
+    //     helloClick$.subscribe(e => console.log('Sub1 ', e.x, e.y));
 
-        setTimeout (() => {
-            console.log('Hello');
-            helloClick$.subscribe(e => console.log('Sub2 ', e.x, e.y));
-        }, 5000)
+    //     setTimeout (() => {
+    //         console.log('Hello');
+    //         helloClick$.subscribe(e => console.log('Sub2 ', e.x, e.y));
+    //     }, 5000)
         
-    }, [])
+    // }, [])
 
     
 
