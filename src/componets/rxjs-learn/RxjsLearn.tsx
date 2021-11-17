@@ -1,53 +1,80 @@
 import { rejects } from "assert";
 import React, { useEffect } from "react";
-import {from, Observable, of} from 'rxjs';
+import {from, fromEvent, interval, Observable, of, timer} from 'rxjs';
+import s from "./RxjsLearn.module.css";
 
 export const RxjsLearn = () => {
 
-    from(['Alice', 'Ben', 'Charlie']).subscribe({
-        next: value => console.log(value),
-        complete: () => console.log('Completed')
-    })
-
-    myFrom(['Alice', 'Ben', 'Charlie']).subscribe({
-        next: value => console.log(value),
-        error: err => console.log('Error: ', err),
-        complete: () => console.log('Completed')
-    })
-
+    //timer
     useEffect(() => {
-        const promise = new Promise((resolve, reject) => {
-            // resolve('Resolved!');
-            reject('Rejected');
-        })
+        // const sub = timer(2000).subscribe({
+        //     next: val => console.log(val),
+        //     complete: () => console.log('Complete')
+        // })
+        // setTimeout(() => {
+        //     sub.unsubscribe();
+        // }, 1000)
+
+        // timer-observable
+        // const timer$ = new Observable<number>(subscriber => {
+        //     const timerId = setTimeout(() => {
+        //         console.log('Timeout!')
+        //         subscriber.next(0);
+        //         subscriber.complete();
+        //     }, 2000)
+        //     return () => clearTimeout(timerId);
+        // })
+        // const sub = timer$.subscribe({
+        //     next: val => console.log(val),
+        //     complete: () => console.log('Complete')
+        // })
+        // setTimeout(() => {
+        //     sub.unsubscribe();
+        //     console.log('Unsubscribe');
+        // }, 1000)
+
+        // my timer
+        // function myTimer(time: number) {
+        //     return new Observable<number>(subscriber => {
+        //         setTimeout(() => {
+        //             subscriber.next(0);
+        //             subscriber.complete();
+        //         }, time)
+        //     })
+        // }
     
-        const observableFromPromise$ = from(promise);
-    
-        observableFromPromise$.subscribe({
-            next: value => console.log(value),
-            error: err => console.log("Error: ", err),
-            complete: () => console.log("Completed")
-        })
     }, [])
-   
 
+    // interval
+    useEffect(() => {
+        // const sub = interval(1000).subscribe({
+        //     next: val => console.log(val),
+        //     complete: () => console.log('Complete')
+        // })
+        // setTimeout(() => {
+        //     sub.unsubscribe();
+        // }, 5000)
 
-    //my own from (it must be rewrite)
-    function myFrom(args: any): Observable<any> {
-        return new Observable(subscriber => {
-            if (args.length) {
-                for (let i = 0; i < args.length; i++) {
-                    subscriber.next(args[i]);
-                }
-            } else {
-                subscriber.error('It is not iterable argument')
-            }
-            
-            subscriber.complete();
+        // interval-observable
+        const interval$ = new Observable<number>(subscriber => {
+            let val = 0;
+            const intervalId = setInterval(() => {
+                console.log('Interval!')
+                subscriber.next(val++);
+            }, 1000)
+            // subscriber.complete();
+            return () => clearInterval(intervalId);
         })
-        
-    }
+        const sub = interval$.subscribe({
+            next: val => console.log(val),
+            complete: () => console.log('Complete')
+        })
+        setTimeout(() => {
+            sub.unsubscribe();
+            console.log('Unsubscribe');
+        }, 5000)
+    }, [])
+    
 
-
-    return <div></div>
+    return <div><button className={s.btnClick} id="btnClick">Click</button></div>
 }
