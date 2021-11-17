@@ -1,7 +1,79 @@
-.mainInfoContainer {
+.profileInfoContainer {
+    margin-bottom: 20px;
+}
+
+.profilePage {
     padding: 15px;
 }
 
 .mainPhoto img {
     width: 100%;
+}
+
+.ava {
+    margin-bottom: 20px;
+}
+.ava img {
+    width: 200px;
+}
+
+.description {
+    font-size: 18px;
+    line-height: 25px;
+}
+.profileInfoItem span {
+    font-weight: bold;
+}
+.contactsTitle {
+    font-weight: bold;
+    font-size: 20px;
+}
+.contactsListWrap {
+    margin-top: 10px;
+}
+.contactsList {
+    margin-left: 20px;
+}
+.contactItem span {
+    font-weight: bold;
+}
+
+.postsTitle {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.postsForm {
+    margin-bottom: 20px;
+}
+.postsFormInput {
+    margin-bottom: 10px;
+}
+.postsFormInput textarea {
+    max-width: 400px;
+    width: 100%;
+    border-radius: 5px;
+}
+.submitBtn {
+    padding: 5px;
+    border: none;
+    background-color: rgb(176, 165, 212);
+    border-radius: 5px;
+}
+.post {
+    margin-bottom: 15px;
+}
+.postAva {
+    margin-bottom: 10px;
+}
+.postAva img {
+    width: 50px;
+}
+.postText {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+.likes {
+    font-size: 16px;
+    color: rgb(230, 16, 62);
 }

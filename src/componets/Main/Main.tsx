@@ -12,7 +12,7 @@ type propsType = {
 
 export const Main = (props: propsType) => {
     return <div className={s.mainContainer}>
-        <Route path="/profile" render={() => <Profile />} />
+        <Route path="/profile" render={() => <Profile profilePage={props.profilePage} />} />
         <Route path="/messages" render={() => <Messages />} />
     </div>
 }
