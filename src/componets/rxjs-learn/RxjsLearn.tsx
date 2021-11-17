@@ -1,38 +1,52 @@
-import React from "react";
-import {Observable, of} from 'rxjs';
+import { rejects } from "assert";
+import React, { useEffect } from "react";
+import {from, Observable, of} from 'rxjs';
 
 export const RxjsLearn = () => {
 
-    of('Alice', 'Ben', 'John').subscribe({
+    from(['Alice', 'Ben', 'Charlie']).subscribe({
         next: value => console.log(value),
         complete: () => console.log('Completed')
     })
 
-    //of realisation
-    const names$ = new Observable(subscriber => {
-        subscriber.next('Alice2');
-        subscriber.next('Ben2');
-        subscriber.next('John2');
-        subscriber.complete();
-    })
-    names$.subscribe({
+    myFrom(['Alice', 'Ben', 'Charlie']).subscribe({
         next: value => console.log(value),
-        complete: () => console.log('Completed2')
+        error: err => console.log('Error: ', err),
+        complete: () => console.log('Completed')
     })
 
-    //creating my 'of'
-    function myOf(...args: any[]): Observable<any> {
+    useEffect(() => {
+        const promise = new Promise((resolve, reject) => {
+            // resolve('Resolved!');
+            reject('Rejected');
+        })
+    
+        const observableFromPromise$ = from(promise);
+    
+        observableFromPromise$.subscribe({
+            next: value => console.log(value),
+            error: err => console.log("Error: ", err),
+            complete: () => console.log("Completed")
+        })
+    }, [])
+   
+
+
+    //my own from (it must be rewrite)
+    function myFrom(args: any): Observable<any> {
         return new Observable(subscriber => {
-            for (let i = 0; i < args.length; i++) {
-                subscriber.next(args[i]);
+            if (args.length) {
+                for (let i = 0; i < args.length; i++) {
+                    subscriber.next(args[i]);
+                }
+            } else {
+                subscriber.error('It is not iterable argument')
             }
+            
             subscriber.complete();
         })
         
     }
-
-
-
 
 
     return <div></div>
