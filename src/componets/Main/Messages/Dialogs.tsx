@@ -3,6 +3,7 @@ import { dialogsPageType } from "../../../redux/store";
 import s from "./Dialogs.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
 import avaFemale from "../../../img/ava_female.png";
+import { NavLink } from "react-router-dom"
 
 type dialogsPropsType = {
     dialogsPage: dialogsPageType
@@ -49,10 +50,10 @@ export const Dialogs = (props: dialogsPropsType) => {
 export const Dialog = (props: dialogPropsType) => {
     return (
         <div className={s.dialog}>
-            <div className={s.avatar}>
+            <NavLink to={`/dialogs/${props.id}`}><div className={s.avatar}>
                 <img src={props.sex === "male" ? avaMale : avaFemale} alt="User" />
             </div>
-            <div className={s.userName}>{props.name}</div>
+            <div className={s.userName}>{props.name}</div></NavLink>
         </div>
     )
 }

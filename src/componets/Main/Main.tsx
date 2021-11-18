@@ -13,6 +13,6 @@ type propsType = {
 export const Main = (props: propsType) => {
     return <div className={s.mainContainer}>
         <Route path="/profile" render={() => <Profile profilePage={props.profilePage} />} />
-        <Route path="/messages" render={() => <Dialogs dialogsPage={props.dialogsPage} />} />
+        <Route path="/dialogs" render={() => <Dialogs dialogsPage={props.dialogsPage} />} />
     </div>
 }
