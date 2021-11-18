@@ -1,0 +1,45 @@
+.messagesContainer {
+    padding: 15px;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 4fr;
+}
+
+.usersWrap {
+    border-right: 2px solid #999;
+}
+
+
+.messagesWrap {
+    padding: 0 20px;
+}
+.messageWrap {
+    text-align: right;
+}
+.message {
+    margin-bottom: 20px;
+    background-color: rgba(111, 199, 123, 0.5);
+    padding: 20px;
+    border-radius: 20px 20px 20px 0;
+    display: inline-block;
+}
+.myMessage {
+    background-color: rgba(209, 207, 76, 0.5);
+    border-radius: 20px 20px 0 20px;
+    text-align: right;
+}
+
+.dialog {
+    margin-bottom: 20px;
+    text-align: center;
+    width: 70px;
+}
+.dialog:last-child {
+    margin-bottom: 0;
+}
+.avatar {
+    margin-bottom: 5px;
+}
+.avatar img {
+    width: 70px;
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import { postsType, profilePageType } from "../../../redux/store";
 import s from "./Profile.module.css";
-import ava from "../../../img/profile_page/ava.jpeg";
+import ava from "../../../img/ava_male.jpeg";
 
 type profilePropsType = {
     profilePage: profilePageType
