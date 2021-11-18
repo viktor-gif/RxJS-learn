@@ -10,6 +10,8 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 type propsType = {
   state: stateType
+  addPost: (postText: string) => void
+  updateNewPostText: (text: string) =>void
 }
 
 const App = (props: propsType) => {
@@ -24,7 +26,9 @@ const App = (props: propsType) => {
           </header>
           <main className="main">
             <Main dialogsPage={props.state.dialogsPage} 
-                  profilePage={props.state.profilePage} />
+                  profilePage={props.state.profilePage}
+                  addPost={props.addPost}
+                  updateNewPostText={props.updateNewPostText} />
           </main>
           <nav className="nav">
             <Nav />

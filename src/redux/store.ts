@@ -1,3 +1,4 @@
+import {renderEntireTree} from "../render";
 
 export type dialogType = {id: number, name: string, sex: string, url: string};
 export type dialogsType = Array<dialogType>;
@@ -6,9 +7,9 @@ export type messagesType = Array<messageType>;
 export type postType = {id: number, postText: string, likesCount: number, avaUrl: string};
 export type postsType = Array<postType>;
 export type dialogsPageType = {dialogs: dialogsType, messages: messagesType};
-export type profilePageType = {posts: postsType};
+export type profilePageType = {posts: postsType, postText: string};
 export type stateType = {dialogsPage: dialogsPageType, profilePage: profilePageType};
-export type storeType = {state: stateType};
+export type storeType = {state: stateType, addPost: (postText: string) => void, updateNewPostText: (text: string) => void};
 
 
 export const store: storeType = {
@@ -35,10 +36,24 @@ export const store: storeType = {
                 {id: 2, postText: "This is my post.", likesCount: 23, avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"},
                 {id: 3, postText: "Never underastimate me!", likesCount: 8, avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"},
                 {id: 4, postText: "Bla-bla", likesCount: 129, avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"}
-            ]
+            ],
+            postText: "Some text"
         },
+    },
+    addPost: (postText) => {
+        let posts = store.state.profilePage.posts;
+        posts.push({
+            id: posts[posts.length - 1].id + 1,
+            postText,
+            likesCount: Math.ceil(Math.random() * 100),
+            avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"
+        })
+        store.state.profilePage.postText = "";
+        renderEntireTree(store);
+    },
+    updateNewPostText: (text: string) => {
+        store.state.profilePage.postText = text;
+        renderEntireTree(store);
     }
-    
 }
-
 
