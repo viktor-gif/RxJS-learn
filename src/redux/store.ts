@@ -1,4 +1,3 @@
-import {renderEntireTree} from "../render";
 
 export type dialogType = {id: number, name: string, sex: string, url: string};
 export type dialogsType = Array<dialogType>;
@@ -9,8 +8,15 @@ export type postsType = Array<postType>;
 export type dialogsPageType = {dialogs: dialogsType, messages: messagesType};
 export type profilePageType = {posts: postsType, postText: string};
 export type stateType = {dialogsPage: dialogsPageType, profilePage: profilePageType};
-export type storeType = {state: stateType, addPost: (postText: string) => void, updateNewPostText: (text: string) => void};
+export type storeType = {
+    state: stateType, addPost: (postText: string) => void, 
+    updateNewPostText: (text: string) => void,
+    subscribe: (subscriber: () => void) => void
+};
 
+let renderEntireTree = () => {
+    console.log("Hello!");
+}
 
 export const store: storeType = {
     state: {
@@ -49,11 +55,14 @@ export const store: storeType = {
             avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"
         })
         store.state.profilePage.postText = "";
-        renderEntireTree(store);
+        renderEntireTree();
     },
     updateNewPostText: (text: string) => {
         store.state.profilePage.postText = text;
-        renderEntireTree(store);
+        renderEntireTree();
+    },
+    subscribe: (subscriber) => {
+        renderEntireTree = subscriber;
     }
 }
 
