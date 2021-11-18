@@ -1,5 +1,8 @@
-.btnClick {
-    margin: 100px;
-    width: 400px;
-    height: 200px;
+.temperature {
+    margin: 50px;
+}
+input, select {
+    width: 150px;
+    padding: 5px;
+    margin-bottom: 15px;
 }
