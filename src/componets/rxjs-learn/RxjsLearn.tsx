@@ -1,80 +1,67 @@
 import { rejects } from "assert";
 import React, { useEffect } from "react";
-import {from, fromEvent, interval, Observable, of, timer} from 'rxjs';
+import {forkJoin, from, fromEvent, interval, Observable, of, timer} from 'rxjs';
 import s from "./RxjsLearn.module.css";
+import {ajax} from "rxjs/ajax";
 
 export const RxjsLearn = () => {
-
-    //timer
+   
+    // forkJoin-Observable that emittes successfully
     useEffect(() => {
-        // const sub = timer(2000).subscribe({
-        //     next: val => console.log(val),
-        //     complete: () => console.log('Complete')
-        // })
-        // setTimeout(() => {
-        //     sub.unsubscribe();
-        // }, 1000)
+        const randomName$ = ajax(
+            'https://random-data-api.com/api/name/random_name');
+    
+        const randomNation$ = ajax(
+            'https://random-data-api.com/api/nation/random_nation');
+    
+        const randomFood$ = ajax(
+            'https://random-data-api.com/api/food/random_food');
+    
+        //     //@ts-ignore
+        // randomName$.subscribe(sub => console.log(sub.response.first_name));
+        // //@ts-ignore
+        // randomNation$.subscribe(sub => console.log(sub.response.capital));
+        // //@ts-ignore
+        // randomFood$.subscribe(sub => console.log(sub.response.dish));
 
-        // timer-observable
-        // const timer$ = new Observable<number>(subscriber => {
-        //     const timerId = setTimeout(() => {
-        //         console.log('Timeout!')
-        //         subscriber.next(0);
+        forkJoin([randomName$, randomNation$, randomFood$]).subscribe(
+            ([nameAjax, nationAjax, foodAjax]) => console.log(
+                //@ts-ignore
+                `${nameAjax.response.first_name} is from ${nationAjax.response.capital} and likes to eat ${foodAjax.response.dish}.`
+            )
+        )
+        
+    }, [])
+
+    // forkJoin-Observable with error
+    useEffect(() => {
+        // const a$ = new Observable(subscriber => {
+        //     setTimeout(() => {
+        //         subscriber.next('A');
         //         subscriber.complete();
-        //     }, 2000)
-        //     return () => clearTimeout(timerId);
-        // })
-        // const sub = timer$.subscribe({
-        //     next: val => console.log(val),
-        //     complete: () => console.log('Complete')
-        // })
-        // setTimeout(() => {
-        //     sub.unsubscribe();
-        //     console.log('Unsubscribe');
-        // }, 1000)
+        //     }, 3000)
 
-        // my timer
-        // function myTimer(time: number) {
-        //     return new Observable<number>(subscriber => {
-        //         setTimeout(() => {
-        //             subscriber.next(0);
-        //             subscriber.complete();
-        //         }, time)
-        //     })
-        // }
-    
+        //     return () => console.log('A teardown')
+        // })
+        // const b$ = new Observable(subscriber => {
+        //     setTimeout(() => {
+        //         subscriber.error('Failure!');
+        //     }, 5000)
+
+        //     return () => console.log('B teardown')
+        // })
+
+        // forkJoin([a$, b$]).subscribe({
+        //     next: val => console.log(val),
+        //     error: err => console.log('Error: ', err)
+        // })
     }, [])
 
-    // interval
-    useEffect(() => {
-        // const sub = interval(1000).subscribe({
-        //     next: val => console.log(val),
-        //     complete: () => console.log('Complete')
-        // })
-        // setTimeout(() => {
-        //     sub.unsubscribe();
-        // }, 5000)
-
-        // interval-observable
-        const interval$ = new Observable<number>(subscriber => {
-            let val = 0;
-            const intervalId = setInterval(() => {
-                console.log('Interval!')
-                subscriber.next(val++);
-            }, 1000)
-            // subscriber.complete();
-            return () => clearInterval(intervalId);
-        })
-        const sub = interval$.subscribe({
-            next: val => console.log(val),
-            complete: () => console.log('Complete')
-        })
-        setTimeout(() => {
-            sub.unsubscribe();
-            console.log('Unsubscribe');
-        }, 5000)
-    }, [])
     
+    
+
+
+
 
     return <div><button className={s.btnClick} id="btnClick">Click</button></div>
 }
