@@ -6,8 +6,7 @@ import ava from "../../../../img/ava_male.jpeg";
 
 type myPostsPropsType = {
     posts: postsType
-    addPost: (postText: string) => void
-    updateNewPostText: (text: string) => void
+    dispatch: any
     postText: string
 }
 type postPropsType = {
@@ -23,18 +22,24 @@ export const MyPosts = (props: myPostsPropsType) => {
                 postText={p.postText} likesCount={p.likesCount} />
     })
 
-    const textareaInput:React.RefObject<HTMLTextAreaElement> = React.createRef();
+    const textareaInput: React.RefObject<HTMLTextAreaElement> = React.createRef();
 
     const addPost = () => {
         if (textareaInput.current) {
-            props.addPost(textareaInput.current.value);
+            props.dispatch({
+                type: "ADD_POST",
+                postText: textareaInput.current.value
+            });
             textareaInput.current.value = "";
         }
     }
 
     const changePostText = () => {
         if (textareaInput.current) {
-            props.updateNewPostText(textareaInput.current.value);
+            props.dispatch({
+                type: "UPDATE_POST_TEXT",
+                text: textareaInput.current.value
+            });
         }
     }
 

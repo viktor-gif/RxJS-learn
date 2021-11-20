@@ -10,8 +10,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 type propsType = {
   state: stateType
-  addPost: (postText: string) => void
-  updateNewPostText: (text: string) =>void
+  dispatch: any
 }
 
 const App = (props: propsType) => {
@@ -27,8 +26,7 @@ const App = (props: propsType) => {
           <main className="main">
             <Main dialogsPage={props.state.dialogsPage} 
                   profilePage={props.state.profilePage}
-                  addPost={props.addPost}
-                  updateNewPostText={props.updateNewPostText} />
+                  dispatch={props.dispatch} />
           </main>
           <nav className="nav">
             <Nav />

@@ -1,3 +1,4 @@
+import { Action } from "rxjs/internal/scheduler/Action";
 
 export type dialogType = {id: number, name: string, sex: string, url: string};
 export type dialogsType = Array<dialogType>;
@@ -9,17 +10,15 @@ export type dialogsPageType = {dialogs: dialogsType, messages: messagesType};
 export type profilePageType = {posts: postsType, postText: string};
 export type stateType = {dialogsPage: dialogsPageType, profilePage: profilePageType};
 export type storeType = {
-    state: stateType, addPost: (postText: string) => void, 
-    updateNewPostText: (text: string) => void,
-    subscribe: (subscriber: () => void) => void
+    _state: stateType,
+    _callSubscriber: () => void,
+    getState: () => stateType,
+    subscribe: (subscriber: () => void) => void,
+    dispatch: any,
 };
 
-let renderEntireTree = () => {
-    console.log("Hello!");
-}
-
 export const store: storeType = {
-    state: {
+    _state: {
         dialogsPage: {
             dialogs: [
                 {id: 1, name: 'Viktor', sex: 'male', url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_g_7YVzERozXI_mfnbSPkggiXqlljwtCQXw&usqp=CAU'},
@@ -46,23 +45,32 @@ export const store: storeType = {
             postText: "Some text"
         },
     },
-    addPost: (postText) => {
-        let posts = store.state.profilePage.posts;
-        posts.push({
-            id: posts[posts.length - 1].id + 1,
-            postText,
-            likesCount: Math.ceil(Math.random() * 100),
-            avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"
-        })
-        store.state.profilePage.postText = "";
-        renderEntireTree();
+    _callSubscriber: () => {
+        alert("Hello!");
     },
-    updateNewPostText: (text: string) => {
-        store.state.profilePage.postText = text;
-        renderEntireTree();
+
+    getState: () => {
+            return store._state
     },
     subscribe: (subscriber) => {
-        renderEntireTree = subscriber;
-    }
+        store._callSubscriber = subscriber;
+    },
+    dispatch: (action: any) => {
+        if (action.type === 'ADD_POST') {
+            let posts = store.getState().profilePage.posts;
+            posts.push({
+                id: posts[posts.length - 1].id + 1,
+                postText: action.postText,
+                likesCount: Math.ceil(Math.random() * 100),
+                avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"
+            })
+            store.getState().profilePage.postText = "";
+            store._callSubscriber();
+        }
+        if (action.type === 'UPDATE_POST_TEXT') {
+            store.getState().profilePage.postText = action.text;
+            store._callSubscriber();
+        }
+    },
 }
 
