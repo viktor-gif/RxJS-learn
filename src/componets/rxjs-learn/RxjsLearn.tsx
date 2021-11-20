@@ -1,54 +1,69 @@
-import { rejects } from "assert";
-import React, { useEffect, useState } from "react";
-import {combineLatest, forkJoin, from, fromEvent, interval, Observable, of, timer} from 'rxjs';
+import React, { useEffect } from "react";
+import {forkJoin, Observable} from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import s from "./RxjsLearn.module.css";
-import {ajax} from "rxjs/ajax";
+import {ajax} from 'rxjs/ajax';
 
 export const RxjsLearn = () => {
-    const [help, setHelp] = useState(0);
+
+    interface NewsItem {
+        category: 'Business' | 'Sports';
+        content: string;
+    }
    
-    // forkJoin-Observable that emittes successfully
-    useEffect(() => {
-        const input: any = document.getElementById('t-input');
-        const select: any = document.getElementById('conv-select');
-        const result = document.getElementById('result-text');
-        console.log(result?.innerText);
+    // useEffect(() => {
+    //     const newsFeed$ = new Observable<NewsItem>(subscriber => {
+    //         setTimeout(() => {
+    //             subscriber.next({category: 'Business', content: 'A'});
+    //         }, 1000)
+    //         setTimeout(() => {
+    //             subscriber.next({category: 'Sports', content: 'B'});
+    //         }, 3000)
+    //         setTimeout(() => {
+    //             subscriber.next({category: 'Business', content: 'C'});
+    //         }, 4000)
+    //         setTimeout(() => {
+    //             subscriber.next({category: 'Sports', content: 'D'});
+    //         }, 6000)
+    //         setTimeout(() => {
+    //             subscriber.next({category: 'Business', content: 'E'});
+    //         }, 7000)
+    //     }) 
 
-        if (input && select && result) {
-            const inputEv = fromEvent(input, 'input');
-            const selectEv = fromEvent(select, 'input');
-
-            combineLatest([inputEv, selectEv]).subscribe(
-                ([temperature, conversion]: any[]) => {
-                    const temp = temperature.target.value;
-                    if (conversion.target.value === "f-to-c") {
-                            result.innerText = String(Number(temp - 32) * 5/9);
-                    } else if (conversion.target.value === "c-to-f") {
-                        result.innerText = String(Number(temp * 9/5 + 32));
-                    } else {
-                        result.innerText = "Please choose conversion";
-                    }
-                    console.log(temp, conversion.target.value)
-                }
-            )
-        }
+    //     const newsSportsFeed$ = newsFeed$
+    //         .pipe(filter(item => item.category === 'Sports'));
         
+    //     newsSportsFeed$.subscribe(item => console.log(item));
+    // }, [])
+
+    useEffect(() => {
+        const randomName$ = ajax(
+            //@ts-ignore
+            'https://random-data-api.com/api/name/random_name').pipe(map(res => res.response.first_name)
+            );
+    
+        const randomCapital$ = ajax(
+            //@ts-ignore
+            'https://random-data-api.com/api/nation/random_nation').pipe(map(res => res.response.capital)
+            );
+    
+        const randomFood$ = ajax(
+            //@ts-ignore
+            'https://random-data-api.com/api/food/random_food').pipe(map(res => res.response.dish)
+            );
+
+        forkJoin([randomName$, randomCapital$, randomFood$]).subscribe(
+            ([firstName, capital, dish]) => console.log(
+                //@ts-ignore
+                `${firstName} is from ${capital} and likes to eat ${dish}.`
+            )
+        )
         
     }, [])
 
     
     
     return <div>
-        <div className={s.temperature}>
-            <input type="text" id="t-input" placeholder="Temperature" />
-            <br />
-            <select id="conv-select">
-                <option value="">Choose version</option>
-                <option value="f-to-c">F -&gt; C</option>
-                <option value="c-to-f">C -&gt; F</option>
-            </select>
-            <br />
-            <p id="result-text">Please fill the above form</p>
-        </div>
+
     </div>
 }
