@@ -1,8 +1,7 @@
 import React, { useEffect } from "react";
-import {forkJoin, Observable} from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { fromEvent, of} from 'rxjs';
+import { filter, map, tap, debounceTime } from 'rxjs/operators';
 import s from "./RxjsLearn.module.css";
-import {ajax} from 'rxjs/ajax';
 
 export const RxjsLearn = () => {
 
@@ -11,59 +10,45 @@ export const RxjsLearn = () => {
         content: string;
     }
    
+    // tap
     // useEffect(() => {
-    //     const newsFeed$ = new Observable<NewsItem>(subscriber => {
-    //         setTimeout(() => {
-    //             subscriber.next({category: 'Business', content: 'A'});
-    //         }, 1000)
-    //         setTimeout(() => {
-    //             subscriber.next({category: 'Sports', content: 'B'});
-    //         }, 3000)
-    //         setTimeout(() => {
-    //             subscriber.next({category: 'Business', content: 'C'});
-    //         }, 4000)
-    //         setTimeout(() => {
-    //             subscriber.next({category: 'Sports', content: 'D'});
-    //         }, 6000)
-    //         setTimeout(() => {
-    //             subscriber.next({category: 'Business', content: 'E'});
-    //         }, 7000)
-    //     }) 
+    //     of(1, 7, 3, 6, 2)
+    //     .pipe(
+    //         filter(val => val > 5),
+    //         tap({
+    //             next: value => console.log('Spy: ', value)
+    //         }),
+    //         map(val => val * 2),
+    //     )
+    //     .subscribe(value => console.log('Output: ', value));
 
-    //     const newsSportsFeed$ = newsFeed$
-    //         .pipe(filter(item => item.category === 'Sports'));
-        
-    //     newsSportsFeed$.subscribe(item => console.log(item));
+        // Starting from RxJS 7.3.0, the tap() operator can do even more. You can see when the 
+        // Subscription starts and ends at the level of the tap() operator.
+        // of(1, 7, 3, 6, 2).pipe(
+        //       tap({
+        //         subscribe: () => console.log('New inner Subscription'),
+        //         unsubscribe: () => console.log('Unsubscribed'),
+        //         finalize: () => console.log('Inner Subscription ended')
+        //       })
+        //   ).subscribe(val => console.log(val)).unsubscribe();
     // }, [])
 
+    //debounceTime
     useEffect(() => {
-        const randomName$ = ajax(
-            //@ts-ignore
-            'https://random-data-api.com/api/name/random_name').pipe(map(res => res.response.first_name)
-            );
-    
-        const randomCapital$ = ajax(
-            //@ts-ignore
-            'https://random-data-api.com/api/nation/random_nation').pipe(map(res => res.response.capital)
-            );
-    
-        const randomFood$ = ajax(
-            //@ts-ignore
-            'https://random-data-api.com/api/food/random_food').pipe(map(res => res.response.dish)
-            );
+        const slider: any = document.getElementById('slider');
+        console.log(slider)
 
-        forkJoin([randomName$, randomCapital$, randomFood$]).subscribe(
-            ([firstName, capital, dish]) => console.log(
-                //@ts-ignore
-                `${firstName} is from ${capital} and likes to eat ${dish}.`
-            )
+        fromEvent(slider, 'input')
+        .pipe(
+            debounceTime(1000),
+            // @ts-ignore
+            map((event) => event.target.value)
         )
-        
+        .subscribe(value => console.log(value))
     }, [])
-
     
     
-    return <div>
-
+    return <div className={s.slider}>
+        <input type="range" id="slider" />
     </div>
 }
