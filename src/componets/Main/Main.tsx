@@ -16,6 +16,7 @@ export const Main = (props: propsType) => {
         <Route path="/profile" render={() => <Profile profilePage={props.profilePage}
                                                     dispatch={props.dispatch}
                                                      />} />
-        <Route path="/dialogs" render={() => <Dialogs dialogsPage={props.dialogsPage} />} />
+        <Route path="/dialogs" render={() => <Dialogs dialogsPage={props.dialogsPage}
+                                                    dispatch={props.dispatch} />} />
     </div>
 }

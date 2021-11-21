@@ -43,3 +43,21 @@
 .avatar img {
     width: 70px;
 }
+
+.postsForm {
+    margin-bottom: 20px;
+}
+.messageInput {
+    margin-bottom: 10px;
+}
+.messageInput textarea {
+    max-width: 400px;
+    width: 100%;
+    border-radius: 5px;
+}
+.sendMessage {
+    padding: 5px;
+    border: none;
+    background-color: rgb(176, 165, 212);
+    border-radius: 5px;
+}

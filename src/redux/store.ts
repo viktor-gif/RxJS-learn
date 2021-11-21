@@ -6,7 +6,11 @@ export type messageType = {id: number, isMe: boolean, message: string};
 export type messagesType = Array<messageType>;
 export type postType = {id: number, postText: string, likesCount: number, avaUrl: string};
 export type postsType = Array<postType>;
-export type dialogsPageType = {dialogs: dialogsType, messages: messagesType};
+export type dialogsPageType = {
+    dialogs: dialogsType, 
+    messages: messagesType,
+    newMessageText: string
+};
 export type profilePageType = {posts: postsType, postText: string};
 export type stateType = {dialogsPage: dialogsPageType, profilePage: profilePageType};
 export type storeType = {
@@ -33,7 +37,8 @@ export const store: storeType = {
                 {id: 3, isMe: true, message: "Nice"},
                 {id: 4, isMe: true, message: "What are you doing today?"},
                 {id: 5, isMe: false, message: "Hothing. Let's go to walk!"}
-            ]
+            ],
+            newMessageText: "Some text"
         },
         profilePage: {
             posts: [
@@ -42,7 +47,7 @@ export const store: storeType = {
                 {id: 3, postText: "Never underastimate me!", likesCount: 8, avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"},
                 {id: 4, postText: "Bla-bla", likesCount: 129, avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"}
             ],
-            postText: "Some text"
+            postText: ""
         },
     },
     _callSubscriber: () => {
@@ -69,6 +74,21 @@ export const store: storeType = {
         }
         if (action.type === 'UPDATE_POST_TEXT') {
             store.getState().profilePage.postText = action.text;
+            store._callSubscriber();
+        }
+        if (action.type === 'ADD_MESSAGE') {
+            let messages = store.getState().dialogsPage.messages;
+            let random = Math.random();
+            messages.push({
+                id: messages[messages.length - 1].id + 1,
+                isMe: random < 0.5 ? true : false,
+                message: store.getState().dialogsPage.newMessageText
+            })
+            store.getState().dialogsPage.newMessageText = "";
+            store._callSubscriber();
+        }
+        if (action.type === 'MESSAGE_TEXT_CHANGE') {
+            store.getState().dialogsPage.newMessageText = action.messageText;
             store._callSubscriber();
         }
     },

@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom"
 
 type dialogsPropsType = {
     dialogsPage: dialogsPageType
+    dispatch: any
 }
 type dialogPropsType = {
     id: number
@@ -25,7 +26,7 @@ type messagePropsType = {
 export const Dialogs = (props: dialogsPropsType) => {
     const dialogs = props.dialogsPage.dialogs;
     const messages = props.dialogsPage.messages;
-    
+    const newMessageText = props.dialogsPage.newMessageText;
 
     const usersItems = dialogs.map(d => {
         return <Dialog id={d.id} key={d.id} name={d.name} url={d.url} sex={d.sex} />
@@ -35,6 +36,17 @@ export const Dialogs = (props: dialogsPropsType) => {
         return <Message id={m.id} key={m.id} isMe={m.isMe} message={m.message} />
     })
 
+    const sendMessage = (e: any) => {
+        props.dispatch({type: "ADD_MESSAGE"})
+    }
+
+    const onMessageTextChange = (e: any) => {
+        props.dispatch({
+            type: "MESSAGE_TEXT_CHANGE",
+            messageText: e.target.value
+        });
+    }
+
     return (
         <div className={s.messagesContainer}>
             <div className={s.usersWrap}>
@@ -42,6 +54,13 @@ export const Dialogs = (props: dialogsPropsType) => {
             </div>
             <div className={s.messagesWrap}>
                 {messagesItems}
+                <div className={s.messageInput}>
+                    <textarea value={newMessageText}
+                        onChange={onMessageTextChange}></textarea>
+                </div>
+                <button className={s.sendMessage} onClick={sendMessage}>
+                    Send message
+                </button>
             </div>
         </div>
     )
