@@ -38,7 +38,7 @@ export const store: storeType = {
                 {id: 4, isMe: true, message: "What are you doing today?"},
                 {id: 5, isMe: false, message: "Hothing. Let's go to walk!"}
             ],
-            newMessageText: "Some text"
+            newMessageText: ""
         },
         profilePage: {
             posts: [

@@ -41,10 +41,14 @@ export const Dialogs = (props: dialogsPropsType) => {
     }
 
     const onMessageTextChange = (e: any) => {
-        props.dispatch({
-            type: "MESSAGE_TEXT_CHANGE",
-            messageText: e.target.value
-        });
+        if (e.target.value[e.target.value.length - 1] !== '\n') {
+            props.dispatch({
+                type: "MESSAGE_TEXT_CHANGE",
+                messageText: e.target.value
+            });
+        } else {
+            props.dispatch({type: "ADD_MESSAGE"})
+        }
     }
 
     return (
