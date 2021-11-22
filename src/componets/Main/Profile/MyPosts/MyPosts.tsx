@@ -1,5 +1,5 @@
 import React from "react";
-import { postsType } from "../../../../redux/store";
+import { postsType, profilePageActions } from "../../../../redux/store";
 import s from "./MyPosts.module.css";
 import ava from "../../../../img/ava_male.jpeg";
 
@@ -26,20 +26,17 @@ export const MyPosts = (props: myPostsPropsType) => {
 
     const addPost = () => {
         if (textareaInput.current) {
-            props.dispatch({
-                type: "ADD_POST",
-                postText: textareaInput.current.value
-            });
+            props.dispatch(profilePageActions.addPost());
             textareaInput.current.value = "";
         }
     }
 
     const changePostText = () => {
         if (textareaInput.current) {
-            props.dispatch({
-                type: "UPDATE_POST_TEXT",
-                text: textareaInput.current.value
-            });
+            props.dispatch(
+                profilePageActions.updatePostText(
+                    textareaInput.current.value
+                ));
         }
     }
 

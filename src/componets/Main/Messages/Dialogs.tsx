@@ -1,5 +1,5 @@
 import React from "react";
-import { dialogsPageType } from "../../../redux/store";
+import { dialogsPageActions, dialogsPageType } from "../../../redux/store";
 import s from "./Dialogs.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
 import avaFemale from "../../../img/ava_female.png";
@@ -37,17 +37,17 @@ export const Dialogs = (props: dialogsPropsType) => {
     })
 
     const sendMessage = (e: any) => {
-        props.dispatch({type: "ADD_MESSAGE"})
+        props.dispatch(dialogsPageActions.addMessage())
     }
 
     const onMessageTextChange = (e: any) => {
         if (e.target.value[e.target.value.length - 1] !== '\n') {
-            props.dispatch({
-                type: "MESSAGE_TEXT_CHANGE",
-                messageText: e.target.value
-            });
+            props.dispatch(
+                dialogsPageActions.updateMessageText(
+                    e.target.value
+                ));
         } else {
-            props.dispatch({type: "ADD_MESSAGE"})
+            props.dispatch(dialogsPageActions.addMessage())
         }
     }
 

@@ -65,7 +65,7 @@ export const store: storeType = {
             let posts = store.getState().profilePage.posts;
             posts.push({
                 id: posts[posts.length - 1].id + 1,
-                postText: action.postText,
+                postText: store.getState().profilePage.postText,
                 likesCount: Math.ceil(Math.random() * 100),
                 avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"
             })
@@ -88,9 +88,24 @@ export const store: storeType = {
             store._callSubscriber();
         }
         if (action.type === 'MESSAGE_TEXT_CHANGE') {
-            store.getState().dialogsPage.newMessageText = action.messageText;
+            store.getState().dialogsPage.newMessageText = action.text;
             store._callSubscriber();
         }
     },
+}
+
+const ADD_POST = "ADD_POST"
+const UPDATE_POST_TEXT = "UPDATE_POST_TEXT"
+const ADD_MESSAGE = "ADD_MESSAGE"
+const MESSAGE_TEXT_CHANGE = "MESSAGE_TEXT_CHANGE"
+
+export const profilePageActions = {
+    addPost: () => ({type: ADD_POST}),
+    updatePostText: (text: string) => ({type: UPDATE_POST_TEXT, text})
+}
+
+export const dialogsPageActions = {
+    addMessage: () => ({type: ADD_MESSAGE}),
+    updateMessageText: (text: string) => ({type: MESSAGE_TEXT_CHANGE, text})
 }
 
