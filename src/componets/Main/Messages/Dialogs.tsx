@@ -1,5 +1,6 @@
 import React from "react";
-import { dialogsPageActions, dialogsPageType } from "../../../redux/store";
+import { dialogsPageType } from "../../../redux/store";
+import { dialogsPageActions, } from "../../../redux/dialogs-reducer";
 import s from "./Dialogs.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
 import avaFemale from "../../../img/ava_female.png";

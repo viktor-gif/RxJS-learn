@@ -1,4 +1,7 @@
-import { Action } from "rxjs/internal/scheduler/Action";
+
+import { dialogsReducer } from "./dialogs-reducer";
+import { profileReducer } from "./profile-reducer";
+import { sidebarReducer } from "./sidebar-reducer";
 
 export type dialogType = {id: number, name: string, sex: string, url: string};
 export type dialogsType = Array<dialogType>;
@@ -12,7 +15,7 @@ export type dialogsPageType = {
     newMessageText: string
 };
 export type profilePageType = {posts: postsType, postText: string};
-export type stateType = {dialogsPage: dialogsPageType, profilePage: profilePageType};
+export type stateType = {dialogsPage: dialogsPageType, profilePage: profilePageType, sidebar: any};
 export type storeType = {
     _state: stateType,
     _callSubscriber: () => void,
@@ -49,6 +52,7 @@ export const store: storeType = {
             ],
             postText: ""
         },
+        sidebar:{}
     },
     _callSubscriber: () => {
         alert("Hello!");
@@ -61,51 +65,9 @@ export const store: storeType = {
         store._callSubscriber = subscriber;
     },
     dispatch: (action: any) => {
-        if (action.type === 'ADD_POST') {
-            let posts = store.getState().profilePage.posts;
-            posts.push({
-                id: posts[posts.length - 1].id + 1,
-                postText: store.getState().profilePage.postText,
-                likesCount: Math.ceil(Math.random() * 100),
-                avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"
-            })
-            store.getState().profilePage.postText = "";
-            store._callSubscriber();
-        }
-        if (action.type === 'UPDATE_POST_TEXT') {
-            store.getState().profilePage.postText = action.text;
-            store._callSubscriber();
-        }
-        if (action.type === 'ADD_MESSAGE') {
-            let messages = store.getState().dialogsPage.messages;
-            let random = Math.random();
-            messages.push({
-                id: messages[messages.length - 1].id + 1,
-                isMe: random < 0.5 ? true : false,
-                message: store.getState().dialogsPage.newMessageText
-            })
-            store.getState().dialogsPage.newMessageText = "";
-            store._callSubscriber();
-        }
-        if (action.type === 'MESSAGE_TEXT_CHANGE') {
-            store.getState().dialogsPage.newMessageText = action.text;
-            store._callSubscriber();
-        }
+        dialogsReducer(store.getState().dialogsPage, action)
+        profileReducer(store.getState().profilePage, action)
+        sidebarReducer(store.getState().sidebar, action)
+        store._callSubscriber()
     },
 }
-
-const ADD_POST = "ADD_POST"
-const UPDATE_POST_TEXT = "UPDATE_POST_TEXT"
-const ADD_MESSAGE = "ADD_MESSAGE"
-const MESSAGE_TEXT_CHANGE = "MESSAGE_TEXT_CHANGE"
-
-export const profilePageActions = {
-    addPost: () => ({type: ADD_POST}),
-    updatePostText: (text: string) => ({type: UPDATE_POST_TEXT, text})
-}
-
-export const dialogsPageActions = {
-    addMessage: () => ({type: ADD_MESSAGE}),
-    updateMessageText: (text: string) => ({type: MESSAGE_TEXT_CHANGE, text})
-}
-

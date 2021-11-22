@@ -1,5 +1,6 @@
 import React from "react";
-import { postsType, profilePageActions } from "../../../../redux/store";
+import { postsType } from "../../../../redux/store";
+import { profilePageActions } from "../../../../redux/profile-reducer";
 import s from "./MyPosts.module.css";
 import ava from "../../../../img/ava_male.jpeg";
 
