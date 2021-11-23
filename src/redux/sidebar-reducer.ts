@@ -1,4 +1,7 @@
-export const sidebarReducer = (state: undefined, action: any) => {
+
+const initialState = null
+
+export const sidebarReducer = (state: null = initialState, action: any) => {
     switch (action.type) {
         default: return state;
     }
