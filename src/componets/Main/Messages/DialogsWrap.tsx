@@ -2,26 +2,32 @@ import React from "react";
 import { dialogsPageType } from "../../../redux/store";
 import { dialogsPageActions, } from "../../../redux/dialogs-reducer";
 import { Dialogs } from "./Dialogs";
+import StoreContext from "../../../storeContext";
 
-type dialogsPropsType = {
-    dialogsPage: dialogsPageType
-    dispatch: any
-}
+type dialogsPropsType = {}
 
 export const DialogsWrap = (props: dialogsPropsType) => {
 
-    const addMessage = () => {
-        props.dispatch(dialogsPageActions.addMessage())
-    }
+    return <StoreContext.Consumer> 
+        { (store: any) => {
 
-    const updateMessageText = (text: string) => {
-            props.dispatch(dialogsPageActions.updateMessageText(text))
-    }
+            const state = store.getState()
 
-    return <Dialogs addMessage={addMessage}
-                    updateMessageText={updateMessageText}
-                    dialogs={props.dialogsPage.dialogs}
-                    messages={props.dialogsPage.messages}
-                    newMessageText={props.dialogsPage.newMessageText} />
+            const addMessage = () => {
+                store.dispatch(dialogsPageActions.addMessage())
+            }
+        
+            const updateMessageText = (text: string) => {
+                    store.dispatch(dialogsPageActions.updateMessageText(text))
+            }
+        
+            return <Dialogs addMessage={addMessage}
+                            updateMessageText={updateMessageText}
+                            dialogs={state.dialogsPage.dialogs}
+                            messages={state.dialogsPage.messages}
+                            newMessageText={state.dialogsPage.newMessageText} />
+        
+    }}
+    </StoreContext.Consumer>
 }
 

@@ -4,10 +4,7 @@ import s from "./Profile.module.css";
 import ava from "../../../img/ava_male.jpeg";
 import { MyPostsWrap } from "./MyPosts/MyPostsWrap";
 
-type profilePropsType = {
-    profilePage: profilePageType
-    dispatch: any
-}
+type profilePropsType = {}
 
 export const Profile = (props: profilePropsType) => {
     return (
@@ -17,8 +14,7 @@ export const Profile = (props: profilePropsType) => {
             </div>
             <div className={s.profilePage}>
                 <ProfileInfo />
-                <MyPostsWrap profilePage={props.profilePage}
-                         dispatch={props.dispatch} />
+                <MyPostsWrap />
             </div>
         </div>
     )

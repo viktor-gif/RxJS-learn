@@ -5,18 +5,11 @@ import s from "./Main.module.css";
 import { DialogsWrap } from "./Messages/DialogsWrap";
 import { Profile } from "./Profile/Profile";
 
-type propsType = {
-    dialogsPage: dialogsPageType
-    profilePage: profilePageType
-    dispatch: any
-}
+type propsType = {}
 
 export const Main = (props: propsType) => {
     return <div className={s.mainContainer}>
-        <Route path="/profile" render={() => <Profile profilePage={props.profilePage}
-                                                    dispatch={props.dispatch}
-                                                     />} />
-        <Route path="/dialogs" render={() => <DialogsWrap dialogsPage={props.dialogsPage}
-                                                    dispatch={props.dispatch} />} />
+        <Route path="/profile" render={() => <Profile  />} />
+        <Route path="/dialogs" render={() => <DialogsWrap />} />
     </div>
 }

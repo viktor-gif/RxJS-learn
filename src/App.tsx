@@ -8,10 +8,7 @@ import { RxjsLearn } from './componets/rxjs-learn/RxjsLearn';
 import { stateType } from './redux/store';
 import { BrowserRouter, Route } from 'react-router-dom';
 
-type propsType = {
-  state: stateType
-  dispatch: any
-}
+type propsType = {}
 
 const App = (props: propsType) => {
 
@@ -24,9 +21,7 @@ const App = (props: propsType) => {
             <Header />
           </header>
           <main className="main">
-            <Main dialogsPage={props.state.dialogsPage} 
-                  profilePage={props.state.profilePage}
-                  dispatch={props.dispatch} />
+            <Main />
           </main>
           <nav className="nav">
             <Nav />
