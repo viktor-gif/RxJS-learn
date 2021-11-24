@@ -23,20 +23,25 @@ const initialState = {
 }
 
 export const dialogsReducer = (state: dialogsPageType = initialState, action: any) => {
+    const messages = state.messages
     switch (action.type) {
-        case ADD_MESSAGE:
-            let messages = state.messages;
-            let random = Math.random();
-            messages.push({
+        case ADD_MESSAGE: 
+            const newPost = {
                 id: messages[messages.length - 1].id + 1,
-                isMe: random < 0.5 ? true : false,
+                isMe: Math.random() < 0.5 ? true : false,
                 message: state.newMessageText
-            })
-            state.newMessageText = "";
-            return state
-        case MESSAGE_TEXT_CHANGE:
-            state.newMessageText = action.text;
-            return state
+            }
+            return {
+                ...state,
+                messages: [...state.messages, newPost],
+                newMessageText: ""
+            }
+        
+        case MESSAGE_TEXT_CHANGE: 
+            return {
+                ...state,
+                newMessageText: action.text
+            }
         default: return state
     }
 }

@@ -6,7 +6,6 @@ import ava from "../../../../img/ava_male.jpeg";
 
 type myPostsPropsType = {
     posts: postsType
-    dispatch: any
     postText: string
     addPost: () => void
     updatePostText: (text: string) => void
