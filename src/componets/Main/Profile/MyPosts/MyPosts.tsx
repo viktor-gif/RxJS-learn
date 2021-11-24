@@ -1,6 +1,5 @@
 import React from "react";
 import { postsType } from "../../../../redux/store";
-import { profilePageActions } from "../../../../redux/profile-reducer";
 import s from "./MyPosts.module.css";
 import ava from "../../../../img/ava_male.jpeg";
 
@@ -9,6 +8,8 @@ type myPostsPropsType = {
     posts: postsType
     dispatch: any
     postText: string
+    addPost: () => void
+    updatePostText: (text: string) => void
 }
 type postPropsType = {
     id: number
@@ -26,18 +27,12 @@ export const MyPosts = (props: myPostsPropsType) => {
     const textareaInput: React.RefObject<HTMLTextAreaElement> = React.createRef();
 
     const addPost = () => {
-        if (textareaInput.current) {
-            props.dispatch(profilePageActions.addPost());
-            textareaInput.current.value = "";
-        }
+            props.addPost();
     }
 
     const changePostText = () => {
         if (textareaInput.current) {
-            props.dispatch(
-                profilePageActions.updatePostText(
-                    textareaInput.current.value
-                ));
+            props.updatePostText(textareaInput.current.value);
         }
     }
 

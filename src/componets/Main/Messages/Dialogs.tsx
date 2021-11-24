@@ -1,5 +1,5 @@
 import React from "react";
-import { dialogsPageType } from "../../../redux/store";
+import { dialogsPageType, dialogsType, messagesType } from "../../../redux/store";
 import { dialogsPageActions, } from "../../../redux/dialogs-reducer";
 import s from "./Dialogs.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
@@ -7,8 +7,11 @@ import avaFemale from "../../../img/ava_female.png";
 import { NavLink } from "react-router-dom"
 
 type dialogsPropsType = {
-    dialogsPage: dialogsPageType
-    dispatch: any
+    dialogs: dialogsType
+    messages: messagesType
+    newMessageText: string
+    addMessage: () => void
+    updateMessageText: (text: string) => void
 }
 type dialogPropsType = {
     id: number
@@ -25,9 +28,9 @@ type messagePropsType = {
 }
 
 export const Dialogs = (props: dialogsPropsType) => {
-    const dialogs = props.dialogsPage.dialogs;
-    const messages = props.dialogsPage.messages;
-    const newMessageText = props.dialogsPage.newMessageText;
+    const dialogs = props.dialogs;
+    const messages = props.messages;
+    const newMessageText = props.newMessageText;
 
     const usersItems = dialogs.map(d => {
         return <Dialog id={d.id} key={d.id} name={d.name} url={d.url} sex={d.sex} />
@@ -37,18 +40,15 @@ export const Dialogs = (props: dialogsPropsType) => {
         return <Message id={m.id} key={m.id} isMe={m.isMe} message={m.message} />
     })
 
-    const sendMessage = (e: any) => {
-        props.dispatch(dialogsPageActions.addMessage())
+    const sendMessage = () => {
+        props.addMessage()
     }
 
     const onMessageTextChange = (e: any) => {
         if (e.target.value[e.target.value.length - 1] !== '\n') {
-            props.dispatch(
-                dialogsPageActions.updateMessageText(
-                    e.target.value
-                ));
+            props.updateMessageText(e.target.value);
         } else {
-            props.dispatch(dialogsPageActions.addMessage())
+            props.addMessage()
         }
     }
 

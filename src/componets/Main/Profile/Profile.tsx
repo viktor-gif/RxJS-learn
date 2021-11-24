@@ -2,7 +2,7 @@ import React from "react";
 import { profilePageType } from "../../../redux/store";
 import s from "./Profile.module.css";
 import ava from "../../../img/ava_male.jpeg";
-import { MyPosts } from "./MyPosts/MyPosts";
+import { MyPostsWrap } from "./MyPosts/MyPostsWrap";
 
 type profilePropsType = {
     profilePage: profilePageType
@@ -17,8 +17,7 @@ export const Profile = (props: profilePropsType) => {
             </div>
             <div className={s.profilePage}>
                 <ProfileInfo />
-                <MyPosts posts={props.profilePage.posts}
-                        postText={props.profilePage.postText}
+                <MyPostsWrap profilePage={props.profilePage}
                          dispatch={props.dispatch} />
             </div>
         </div>
