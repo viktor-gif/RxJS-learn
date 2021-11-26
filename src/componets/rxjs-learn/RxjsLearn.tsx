@@ -1,50 +1,49 @@
-import React, { useEffect } from "react";
-import { ajax } from "rxjs/ajax";
-import { fromEvent, of} from 'rxjs';
-import { map, catchError, concatMap, switchMap, mergeMap, exhaustMap } from 'rxjs/operators';
+import React, { useEffect, useState } from "react";
+import { fromEvent, Subject} from 'rxjs';
+import { map } from 'rxjs/operators';
 import s from "./RxjsLearn.module.css";
 
 export const RxjsLearn = () => {
-
-    // HTTP-request in observer 
+    
     useEffect(() => {
-        const input = document.getElementById('input');
-        const fetch = document.getElementById('fetch');
+        const input: any = document.getElementById('input')
+        const emitBtn: any= document.getElementById('emitBtn')
+        const subscribeBtn: any = document.getElementById('subscribeBtn')
 
-        //@ts-ignore
-        fromEvent(fetch, 'click').pipe(
-            //@ts-ignore
-            map(() => input.value),
-            //@ts-ignore
-            switchMap(value => 
-                ajax(`https://random-data-api.com/api/${value}/random_${value}`).pipe(
-                    //@ts-ignore
-                    catchError((error) => of(`Could not fetch data: ${error}`))
-                )
-            ),
-            //@ts-ignore
-            // catchError(() => EMPTY)
-        ).subscribe({
-            next: val => console.log(val),
-            error: err => console.log("Error: ", err),
-            complete: () => console.log('completed')
-        })
-    })
+        const value$ = new Subject<string>();
 
-    // concatMap ставить всі запити в чергу і в порядку
-    // черги їх виконує
 
-    // switchMap виконує останній запит, якщо попередні 
-    // запити не встигли виконатись
 
-    // mergeMap виконує всі запити паралельно, перший виконаний
-    // прийде перший в output
+        // это
+        // fromEvent(emitBtn, 'click').subscribe(
+        //     () => {
+        //         value$.next(input.value)
+        //     }
+        // );
+
+        // и это работает одинаково
+        fromEvent(emitBtn, 'click').pipe(
+            map(() => input.value)
+        ).subscribe(value$);
+
+
+
+
+
+
+        fromEvent(subscribeBtn, 'click').subscribe(
+            () => {
+                console.log('New subscription')
+                value$.subscribe(value => console.log(value))
+            }
+        );
+    }, [])
     
-    
-    return <div className={s.slider}>
+    return <div className={s.formWrap}>
             <div className="inputWrap">
                 <input id="input" type="text" />
+                <button id="emitBtn">Emit</button>
             </div>
-            <button id="fetch">Fetch</button>
+            <button id="subscribeBtn">Subscribe</button>
     </div>
 }
