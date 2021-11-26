@@ -4,12 +4,14 @@ import { dialogsPageType, profilePageType } from "../../redux/store";
 import s from "./Main.module.css";
 import { DialogsWrap } from "./Messages/DialogsWrap";
 import { Profile } from "./Profile/Profile";
+import { UsersWrap } from "./Users/UsersWrap";
 
-type propsType = {}
 
-export const Main = (props: propsType) => {
+
+export const Main = () => {
     return <div className={s.mainContainer}>
         <Route path="/profile" render={() => <Profile  />} />
         <Route path="/dialogs" render={() => <DialogsWrap />} />
+        <Route path="/users" render={() => <UsersWrap />} />
     </div>
 }
