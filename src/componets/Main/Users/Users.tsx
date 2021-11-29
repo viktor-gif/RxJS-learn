@@ -21,19 +21,26 @@ type userPropsType = {
     setUsers: (users: usersType) => void
 }
 
-export const Users = (props: usersPropsType) => {
+export class Users extends React.Component<usersPropsType> {
 
-    const usersItems = props.users?.map(u => {
-        return <User id={u.id} key={u.id} photoUrl={u.photos.small}
-            name={u.name}
-            status={u.status}
-            followed={u.followed} followUnfollow={props.followUnfollow}
-            setUsers={props.setUsers} />
-    })
+    constructor(props: usersPropsType) {
+        super(props)
+    }
 
-    return (
-        <div className={s.usersWrap}>{usersItems}</div>
-    )
+    render() {
+        const usersItems = this.props.users?.map(u => {
+            return <User id={u.id} key={u.id} photoUrl={u.photos.small}
+                name={u.name}
+                status={u.status}
+                followed={u.followed} followUnfollow={this.props.followUnfollow}
+                setUsers={this.props.setUsers} />
+        })
+    
+        return (
+            <div className={s.usersWrap}>{usersItems}</div>
+        )
+    }
+    
 }
 
 const User = (props: userPropsType) => {

@@ -11,8 +11,9 @@ export type usersWrapPropsType = {
     setUsers: (users: usersType) => void
 }
 
-const  UsersWrapMiddle = (props: usersWrapPropsType) => {
-    useEffect(() => {
+class UsersWrapMiddle extends React.Component<usersWrapPropsType> {
+
+    componentDidMount () {
         axios.get('https://social-network.samuraijs.com/api/1.0/users', {
             withCredentials: true,
             headers: {
@@ -20,13 +21,17 @@ const  UsersWrapMiddle = (props: usersWrapPropsType) => {
             }
         })
             .then(response => {
-                props.setUsers(response.data.items)
+                this.props.setUsers(response.data.items)
             })
-    }, [])
+    }
 
-    return <Users users={props.users}
-                followUnfollow={props.followUnfollow}
-                setUsers={props.setUsers} />
+    render() {
+        
+        return <Users users={this.props.users}
+                    followUnfollow={this.props.followUnfollow}
+                    setUsers={this.props.setUsers} />
+    }
+    
 }
 
 const mapStateToProps = (state: stateType) => {
