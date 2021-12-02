@@ -1,49 +1,42 @@
-import React, { useEffect, useState } from "react";
-import { fromEvent, Subject} from 'rxjs';
-import { map } from 'rxjs/operators';
+import React, { ReactElement, useEffect, useState } from "react";
+import { fromEvent, Subject, BehaviorSubject} from 'rxjs';
+import { map, withLatestFrom } from 'rxjs/operators';
 import s from "./RxjsLearn.module.css";
 
 export const RxjsLearn = () => {
     
     useEffect(() => {
-        const input: any = document.getElementById('input')
-        const emitBtn: any= document.getElementById('emitBtn')
-        const subscribeBtn: any = document.getElementById('subscribeBtn')
+        const loggedIn: any = document.querySelector('span#logged-in');
+        const login: HTMLElement | null = document.querySelector('button#login')
+        const logout: any = document.querySelector('button#logout')
+        const printState: any = document.querySelector('button#print-state')
 
-        const value$ = new Subject<string>();
+        const isLoggedIn$ = new BehaviorSubject<boolean>(false);
+        // @ts-ignore
+        fromEvent(login, 'click').subscribe(() => isLoggedIn$.next(true))
+        fromEvent(logout, 'click').subscribe(() => isLoggedIn$.next(false))
 
+        isLoggedIn$.subscribe(
+            isLoggedIn => loggedIn.innerText = isLoggedIn.toString()
+        )
 
+        isLoggedIn$.subscribe(isLoggedIn => {
+            logout.style.display = isLoggedIn ? 'block' : 'none'
+            // @ts-ignore
+            login.style.display = !isLoggedIn ? 'block' : 'none'
+        })
 
-        // это
-        // fromEvent(emitBtn, 'click').subscribe(
-        //     () => {
-        //         value$.next(input.value)
-        //     }
-        // );
-
-        // и это работает одинаково
-        fromEvent(emitBtn, 'click').pipe(
-            map(() => input.value)
-        ).subscribe(value$);
-
-
-
-
-
-
-        fromEvent(subscribeBtn, 'click').subscribe(
-            () => {
-                console.log('New subscription')
-                value$.subscribe(value => console.log(value))
-            }
-        );
+        fromEvent(printState, 'click').pipe(
+            withLatestFrom(isLoggedIn$)
+        ).subscribe(
+            ([event, isLoggedIn]) => console.log('User is logged in: ', isLoggedIn)
+        )
     }, [])
     
-    return <div className={s.formWrap}>
-            <div className="inputWrap">
-                <input id="input" type="text" />
-                <button id="emitBtn">Emit</button>
-            </div>
-            <button id="subscribeBtn">Subscribe</button>
+    return <div className={s.subjects}>
+            <div className={s.loggedIn_wrap}>logged in: <span id="logged-in"></span></div>
+            <button id="login">Login</button>
+            <button id="logout">Logout</button>
+            <button id="print-state">Print state</button>
     </div>
 }
