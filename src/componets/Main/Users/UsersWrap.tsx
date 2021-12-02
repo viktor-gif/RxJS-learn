@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { stateType, usersType } from "../../../redux/store";
 import { connect } from "react-redux";
 import { Users } from "./Users";
@@ -12,8 +12,23 @@ export type usersWrapPropsType = {
 }
 
 const  UsersWrapMiddle = (props: usersWrapPropsType) => {
+    const [usersCount, setUsersCount] = useState(0)
+    const pageSize: number = 10
     useEffect(() => {
-        axios.get('https://social-network.samuraijs.com/api/1.0/users', {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=1`, {
+            withCredentials: true,
+            headers: {
+                "API-KEY": "8844171b-8f1f-4905-bc9a-c6a452eff646"
+            }
+        })
+            .then(response => {
+                setUsersCount(response.data.totalCount)
+                props.setUsers(response.data.items)
+            })
+    }, [])
+
+    const changePageNumber = (pageNumber: number) => {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${pageNumber}`, {
             withCredentials: true,
             headers: {
                 "API-KEY": "8844171b-8f1f-4905-bc9a-c6a452eff646"
@@ -22,11 +37,14 @@ const  UsersWrapMiddle = (props: usersWrapPropsType) => {
             .then(response => {
                 props.setUsers(response.data.items)
             })
-    }, [])
+    }
 
     return <Users users={props.users}
                 followUnfollow={props.followUnfollow}
-                setUsers={props.setUsers} />
+                setUsers={props.setUsers}
+                usersCount={usersCount}
+                pageSize={pageSize}
+                changePageNumber={changePageNumber} />
 }
 
 const mapStateToProps = (state: stateType) => {

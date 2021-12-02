@@ -3,11 +3,15 @@ import { usersType } from "../../../redux/store";
 import s from "./Users.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
 import axios from "axios";
+import { spawn } from "child_process";
 
 export type usersPropsType = {
     users: usersType
     followUnfollow: (id: number) => void
     setUsers: (users: usersType) => void
+    usersCount: number
+    pageSize: number
+    changePageNumber: (pageNumber: number) => void
 }
 
 type userPropsType = {
@@ -31,8 +35,25 @@ export const Users = (props: usersPropsType) => {
             setUsers={props.setUsers} />
     })
 
+    const pagesCount = props.usersCount / props.pageSize
+
+    let pagesNumbers = []
+    for (let i = 1; i <= pagesCount + 1; i++) {
+        pagesNumbers.push(i)
+    }
+    const pages = pagesNumbers.map(p => {
+        return <span className={s.page} onClick={() => props.changePageNumber(p)}>
+            {p}
+        </span>
+    })
+
     return (
-        <div className={s.usersWrap}>{usersItems}</div>
+        <div className={s.usersWrap}>
+            <div className={s.paginator}>
+                {pages}
+            </div>
+            {usersItems}
+        </div>
     )
 }
 
@@ -43,6 +64,7 @@ const User = (props: userPropsType) => {
     }
 
     return <div className={s.userWrap}>
+        
         <div className={s.ava}>
             <img src={props.photoUrl ? props.photoUrl : avaMale} alt="UserAva" />
         </div>
