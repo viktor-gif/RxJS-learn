@@ -20,6 +20,8 @@ type userType = {
 }
 export type usersPageType = {
     users: usersType
+    usersCount: number | null
+    pageSize: number
 }
 export type dialogsPageType = {
     dialogs: dialogsType, 
@@ -104,6 +106,8 @@ export const store: storeType = {
                     uniqueUrlName: null
                 }
             ],
+            usersCount: null,
+            pageSize: 10
         },
         sidebar:{}
     },

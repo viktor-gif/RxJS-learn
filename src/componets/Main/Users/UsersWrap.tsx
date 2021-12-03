@@ -7,8 +7,11 @@ import axios from "axios";
 
 export type usersWrapPropsType = {
     users: usersType
+    usersCount: number | null
+    pageSize: number
     followUnfollow: (id: number) => void
     setUsers: (users: usersType) => void
+    setUsersCount: (usersCount: number) => void
 }
 
 const  UsersWrapMiddle = (props: usersWrapPropsType) => {
@@ -22,7 +25,7 @@ const  UsersWrapMiddle = (props: usersWrapPropsType) => {
             }
         })
             .then(response => {
-                setUsersCount(response.data.totalCount)
+                props.setUsersCount(response.data.totalCount)
                 props.setUsers(response.data.items)
             })
     }, [])
@@ -42,21 +45,24 @@ const  UsersWrapMiddle = (props: usersWrapPropsType) => {
     return <Users users={props.users}
                 followUnfollow={props.followUnfollow}
                 setUsers={props.setUsers}
-                usersCount={usersCount}
-                pageSize={pageSize}
+                usersCount={props.usersCount}
+                pageSize={props.pageSize}
                 changePageNumber={changePageNumber} />
 }
 
 const mapStateToProps = (state: stateType) => {
     return {
-       users: state.usersPage?.users
+       users: state.usersPage?.users,
+       usersCount: state.usersPage.usersCount,
+       pageSize: state.usersPage.pageSize
     }
 }
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
         followUnfollow: (id: number) => dispatch(usersPageActions.followUnfollow(id)),
-        setUsers: (users:usersType) => dispatch(usersPageActions.setUsers(users))
+        setUsers: (users:usersType) => dispatch(usersPageActions.setUsers(users)),
+        setUsersCount: (usersCount: number) => dispatch(usersPageActions.setUsersCount(usersCount))
     }
 }
 

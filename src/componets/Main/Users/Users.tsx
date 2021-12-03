@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { usersType } from "../../../redux/store";
 import s from "./Users.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
@@ -9,7 +9,7 @@ export type usersPropsType = {
     users: usersType
     followUnfollow: (id: number) => void
     setUsers: (users: usersType) => void
-    usersCount: number
+    usersCount: number | null
     pageSize: number
     changePageNumber: (pageNumber: number) => void
 }
@@ -27,6 +27,8 @@ type userPropsType = {
 
 export const Users = (props: usersPropsType) => {
 
+    const [currentPage, setCurrentPage] = useState(1)
+
     const usersItems = props.users?.map(u => {
         return <User id={u.id} key={u.id} photoUrl={u.photos.small}
             name={u.name}
@@ -35,14 +37,19 @@ export const Users = (props: usersPropsType) => {
             setUsers={props.setUsers} />
     })
 
-    const pagesCount = props.usersCount / props.pageSize
+    const pagesCount: number | null = props.usersCount && Math.ceil(props.usersCount / props.pageSize)
 
     let pagesNumbers = []
-    for (let i = 1; i <= pagesCount + 1; i++) {
-        pagesNumbers.push(i)
+    if (pagesCount) {
+        for (let i = 1; i <= pagesCount; i++) {
+            pagesNumbers.push(i)
+        }
     }
     const pages = pagesNumbers.map(p => {
-        return <span className={s.page} onClick={() => props.changePageNumber(p)}>
+        return <span className={s.page + ' ' + (currentPage === p ? s.currentPage : '')} onClick={() => {
+            props.changePageNumber(p);
+            setCurrentPage(p);
+            }}>
             {p}
         </span>
     })
