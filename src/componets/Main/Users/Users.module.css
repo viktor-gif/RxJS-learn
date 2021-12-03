@@ -33,3 +33,19 @@
     font-size: 16px;
     line-height: 26px;
 }
+
+.pagesButtons {
+    margin-bottom: 20px;
+}
+.pageBtns {
+    padding: 5px;
+    background-color: burlywood;
+    font-size: 20px;
+    margin-right: 5px;
+}
+.pageBtns:last-child {
+    margin-right: 0;
+}
+.currentPage {
+    background-color: gold;
+}

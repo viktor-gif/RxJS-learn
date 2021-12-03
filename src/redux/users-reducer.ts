@@ -2,9 +2,12 @@ import { usersPageType, usersType } from "./store"
 
 const FOLLOW_UNFOLLOW = 'FOLLOW_UNFOLLOW'
 const SET_USERS = 'SET_USERS'
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT'
 
 const initialState = {
-    users: null
+    users: null,
+    totalUsersCount: null,
+    pageSize: 10
 }
 
 export const usersReducer = (state: usersPageType = initialState, action: any) => {
@@ -29,11 +32,17 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
                     return u
                 })
             }
+        case SET_TOTAL_USERS_COUNT:
+            return {
+                ...state,
+                totalUsersCount: action.usersCount
+            }
         default: return state
     }
 }
 
 export const usersPageActions = {
     followUnfollow: (userId: number) => ({type: FOLLOW_UNFOLLOW, userId}),
-    setUsers: (users: usersType) => ({type: SET_USERS, users})
+    setUsers: (users: usersType) => ({type: SET_USERS, users}),
+    setTotalUsersCount: (usersCount: number) => ({type: SET_TOTAL_USERS_COUNT, usersCount})
 }

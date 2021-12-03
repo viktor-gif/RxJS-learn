@@ -3,11 +3,15 @@ import { usersType } from "../../../redux/store";
 import s from "./Users.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
 import axios from "axios";
+import { textChangeRangeIsUnchanged } from "typescript";
 
 export type usersPropsType = {
     users: usersType
+    totalUsersCount: number | null
+    pageSize: number
     followUnfollow: (id: number) => void
     setUsers: (users: usersType) => void
+    setCurrentPage: (pageNumber: number) => void
 }
 
 type userPropsType = {
@@ -21,13 +25,42 @@ type userPropsType = {
     setUsers: (users: usersType) => void
 }
 
-export class Users extends React.Component<usersPropsType> {
+type usersStateType = {
+    currentPage: number
+}
+
+export class Users extends React.Component<usersPropsType, usersStateType> {
 
     constructor(props: usersPropsType) {
         super(props)
+        this.state = {
+            currentPage: 1
+        }
     }
 
     render() {
+        console.log(this.props.totalUsersCount)
+        const pagesArr = []
+        const pagesCount = this.props.totalUsersCount 
+            && Math.ceil(this.props.totalUsersCount / this.props.pageSize)
+    
+        if (pagesCount) {
+            for (let i = 1; i <= pagesCount; i++) {
+                pagesArr.push(i)
+            }
+        }
+
+        const pages = pagesArr.map(p => {
+            return <span className={s.pageBtns + ' ' +
+                (this.state.currentPage === p && s.currentPage)}
+                onClick={() => {
+                    this.setState({currentPage: p})
+                    this.props.setCurrentPage(p)
+                }}>
+                    {p}
+                </span>
+        })
+
         const usersItems = this.props.users?.map(u => {
             return <User id={u.id} key={u.id} photoUrl={u.photos.small}
                 name={u.name}
@@ -37,7 +70,12 @@ export class Users extends React.Component<usersPropsType> {
         })
     
         return (
-            <div className={s.usersWrap}>{usersItems}</div>
+            <div className={s.usersWrap}>
+                <div className={s.pagesButtons}>
+                    {pages}
+                </div>
+                {usersItems}
+            </div>
         )
     }
     
