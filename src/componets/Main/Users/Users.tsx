@@ -4,6 +4,7 @@ import s from "./Users.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
 import axios from "axios";
 import { spawn } from "child_process";
+import { Preloader } from "../../preloader/preloader";
 
 export type usersPropsType = {
     users: usersType
@@ -12,6 +13,7 @@ export type usersPropsType = {
     usersCount: number | null
     pageSize: number
     changePageNumber: (pageNumber: number) => void
+    inProgress: boolean
 }
 
 type userPropsType = {
@@ -54,13 +56,19 @@ export const Users = (props: usersPropsType) => {
         </span>
     })
 
+    console.log(props.inProgress)
+
     return (
-        <div className={s.usersWrap}>
-            <div className={s.paginator}>
-                {pages}
+        <>
+        {props.inProgress ? <Preloader /> : 
+            <div className={s.usersWrap}>
+                <div className={s.paginator}>
+                    {pages}
+                </div>
+                {usersItems}
             </div>
-            {usersItems}
-        </div>
+        }
+        </>
     )
 }
 

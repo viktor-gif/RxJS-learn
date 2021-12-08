@@ -9,15 +9,18 @@ export type usersWrapPropsType = {
     users: usersType
     usersCount: number | null
     pageSize: number
+    inProgress: boolean
     followUnfollow: (id: number) => void
     setUsers: (users: usersType) => void
     setUsersCount: (usersCount: number) => void
+    setProgress: (isProgress: boolean) => void
 }
 
 const  UsersWrapMiddle = (props: usersWrapPropsType) => {
     const [usersCount, setUsersCount] = useState(0)
     const pageSize: number = 10
     useEffect(() => {
+        props.setProgress(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=1`, {
             withCredentials: true,
             headers: {
@@ -27,10 +30,12 @@ const  UsersWrapMiddle = (props: usersWrapPropsType) => {
             .then(response => {
                 props.setUsersCount(response.data.totalCount)
                 props.setUsers(response.data.items)
+                props.setProgress(false)
             })
     }, [])
 
     const changePageNumber = (pageNumber: number) => {
+        props.setProgress(true)
         axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${pageNumber}`, {
             withCredentials: true,
             headers: {
@@ -39,6 +44,7 @@ const  UsersWrapMiddle = (props: usersWrapPropsType) => {
         })
             .then(response => {
                 props.setUsers(response.data.items)
+                props.setProgress(false)
             })
     }
 
@@ -47,14 +53,17 @@ const  UsersWrapMiddle = (props: usersWrapPropsType) => {
                 setUsers={props.setUsers}
                 usersCount={props.usersCount}
                 pageSize={props.pageSize}
-                changePageNumber={changePageNumber} />
+                changePageNumber={changePageNumber}
+                inProgress={props.inProgress}
+                 />
 }
 
 const mapStateToProps = (state: stateType) => {
     return {
        users: state.usersPage?.users,
        usersCount: state.usersPage.usersCount,
-       pageSize: state.usersPage.pageSize
+       pageSize: state.usersPage.pageSize,
+       inProgress: state.usersPage.inProgress
     }
 }
 
@@ -62,7 +71,8 @@ const mapDispatchToProps = (dispatch: any) => {
     return {
         followUnfollow: (id: number) => dispatch(usersPageActions.followUnfollow(id)),
         setUsers: (users:usersType) => dispatch(usersPageActions.setUsers(users)),
-        setUsersCount: (usersCount: number) => dispatch(usersPageActions.setUsersCount(usersCount))
+        setUsersCount: (usersCount: number) => dispatch(usersPageActions.setUsersCount(usersCount)),
+        setProgress: (isProgress: boolean) => dispatch(usersPageActions.setProgress(isProgress))
     }
 }
 

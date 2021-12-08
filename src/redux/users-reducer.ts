@@ -3,11 +3,13 @@ import { usersPageType, usersType } from "./store"
 const FOLLOW_UNFOLLOW = 'FOLLOW_UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 const SET_USERS_COUNT = 'SET_USERS_COUNT'
+const SET_PROGRESS = 'SET_PROGRESS'
 
 const initialState = {
     users: null,
     usersCount: null,
     pageSize: 10,
+    inProgress: false
 }
 
 export const usersReducer = (state: usersPageType = initialState, action: any) => {
@@ -37,6 +39,11 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
                     ...state,
                     usersCount: action.usersCount
                 }
+            case SET_PROGRESS:
+                return {
+                    ...state,
+                    inProgress: action.isProgress
+                }
         default: return state
     }
 }
@@ -44,5 +51,6 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
 export const usersPageActions = {
     followUnfollow: (userId: number) => ({type: FOLLOW_UNFOLLOW, userId}),
     setUsers: (users: usersType) => ({type: SET_USERS, users}),
-    setUsersCount: (usersCount: number) => ({type: SET_USERS_COUNT, usersCount})
+    setUsersCount: (usersCount: number) => ({type: SET_USERS_COUNT, usersCount}),
+    setProgress: (isProgress: boolean) => ({type: SET_PROGRESS, isProgress})
 }
