@@ -48,9 +48,7 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
     }
 }
 
-export const usersPageActions = {
-    followUnfollow: (userId: number) => ({type: FOLLOW_UNFOLLOW, userId}),
-    setUsers: (users: usersType) => ({type: SET_USERS, users}),
-    setUsersCount: (usersCount: number) => ({type: SET_USERS_COUNT, usersCount}),
-    setProgress: (isProgress: boolean) => ({type: SET_PROGRESS, isProgress})
-}
+    export const followUnfollow = (userId: number) => ({type: FOLLOW_UNFOLLOW, userId})
+    export const setUsers = (users: usersType) => ({type: SET_USERS, users})
+    export const setUsersCount = (usersCount: number) => ({type: SET_USERS_COUNT, usersCount})
+    export const setProgress = (isProgress: boolean) => ({type: SET_PROGRESS, isProgress})

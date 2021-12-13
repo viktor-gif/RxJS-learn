@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { stateType, usersType } from "../../../redux/store";
 import { connect } from "react-redux";
 import { Users } from "./Users";
-import { usersPageActions } from "../../../redux/users-reducer";
+import { followUnfollow, setProgress, setUsers, setUsersCount } from "../../../redux/users-reducer";
 import axios from "axios";
 
 export type usersWrapPropsType = {
@@ -67,14 +67,16 @@ const mapStateToProps = (state: stateType) => {
     }
 }
 
-const mapDispatchToProps = (dispatch: any) => {
-    return {
-        followUnfollow: (id: number) => dispatch(usersPageActions.followUnfollow(id)),
-        setUsers: (users:usersType) => dispatch(usersPageActions.setUsers(users)),
-        setUsersCount: (usersCount: number) => dispatch(usersPageActions.setUsersCount(usersCount)),
-        setProgress: (isProgress: boolean) => dispatch(usersPageActions.setProgress(isProgress))
-    }
-}
+// const mapDispatchToProps = (dispatch: any) => {
+//     return {
+//         followUnfollow: (id: number) => dispatch(followUnfollow(id)),
+//         setUsers: (users: usersType) => dispatch(setUsers(users)),
+//         setUsersCount: (usersCount: number) => dispatch(setUsersCount(usersCount)),
+//         setProgress: (isProgress: boolean) => dispatch(setProgress(isProgress))
+//     }
+// }
 
-export const UsersWrap = connect(mapStateToProps, mapDispatchToProps)(UsersWrapMiddle)
+export const UsersWrap = connect(mapStateToProps, {
+    followUnfollow, setUsers, setUsersCount, setProgress
+})(UsersWrapMiddle)
 
