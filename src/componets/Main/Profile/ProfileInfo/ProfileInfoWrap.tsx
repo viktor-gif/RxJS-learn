@@ -4,17 +4,22 @@ import { connect } from "react-redux";
 import { profileInfoType, stateType } from "../../../../redux/store";
 import axios from "axios";
 import { setStatus, setProfileInfo } from "../../../../redux/profile-reducer";
+import { withRouter } from "react-router";
 
 type propsType = {
     status: string | null
     profileInfo: profileInfoType
     setStatus: (status: string) => void
     setProfileInfo: (info: profileInfoType) => void
+    match: any
 }
 
 const ProfileInfoWrapMiddle = (props: propsType) => {
+    let userId = props.match.params.userId
+    if(!userId) userId = 2
+    
     useEffect(() => {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/status/2`,
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/status/${userId}`,
             {
                 withCredentials: true,
                 headers: {
@@ -27,7 +32,7 @@ const ProfileInfoWrapMiddle = (props: propsType) => {
             })
     }, [])
     useEffect(() => {
-        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/2`,
+        axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`,
             {
                 withCredentials: true,
                 headers: {
@@ -35,7 +40,6 @@ const ProfileInfoWrapMiddle = (props: propsType) => {
                 }
             }).then(response => {
                 if (response.status === 200) {
-                    console.log(response.data)
                     props.setProfileInfo(response.data)
                 }
             })
@@ -51,6 +55,6 @@ const mapStateToProps = (state: stateType) => ({
     profileInfo: state.profilePage.profileInfo
 })
 
-export const ProfileInfoWrap = connect(mapStateToProps, {
+export const ProfileInfoWrap = withRouter(connect(mapStateToProps, {
     setStatus, setProfileInfo
-})(ProfileInfoWrapMiddle)
+})(ProfileInfoWrapMiddle))

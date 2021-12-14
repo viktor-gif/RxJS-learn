@@ -12,7 +12,6 @@ export const ProfileInfo = (props: profileInfoPropsType) => {
     let info: profileInfoType = props.profileInfo
     let contacts = info && Object.entries(info?.contacts)
     const contactsItems = contacts && contacts.map(c => {
-        console.log(c[0])
         return <li key={c[0]} className={s.contactItem}><span>{
                 c[0][0].toUpperCase() + c[0].slice(1)
             }</span>: {c[1]}</li>
@@ -20,7 +19,7 @@ export const ProfileInfo = (props: profileInfoPropsType) => {
     return (
         <div className={s.profileInfoContainer}>
             <div className={s.ava}>
-                <img src={ava} alt="My_ava" />
+                <img src={info?.photos.large || ava} alt="My_ava" />
             </div>
             <div className={s.profileStatus}>{props.status ? props.status : '---------------------'}</div>
             <div className={s.description}>
