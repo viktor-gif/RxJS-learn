@@ -1,7 +1,9 @@
-import { profilePageType } from "./store";
+import { profileInfoType, profilePageType } from "./store";
 
 const ADD_POST = "ADD_POST"
 const UPDATE_POST_TEXT = "UPDATE_POST_TEXT"
+const SET_STATUS = "SET_STATUS"
+const SET_PROFILE_INFO = "SET_PROFILE_INFO"
 
 const initialState = {
     posts: [
@@ -14,7 +16,9 @@ const initialState = {
         {id: 4, postText: "Bla-bla", likesCount: 129, avaUrl: 
             "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"}
     ],
-    postText: ""
+    postText: "",
+    status: null,
+    profileInfo: null
 }
 
 export const profileReducer = (state: profilePageType = initialState, action: any) => {
@@ -37,6 +41,16 @@ export const profileReducer = (state: profilePageType = initialState, action: an
                 ...state,
                 postText: action.text
             }
+        case SET_STATUS:
+            return {
+                ...state,
+                status: action.status
+            }
+        case SET_PROFILE_INFO:
+            return {
+                ...state,
+                profileInfo: action.info
+            }
         
         default: return state;
         
@@ -47,4 +61,5 @@ export const profilePageActions = {
     addPost: () => ({type: ADD_POST}),
     updatePostText: (text: string) => ({type: UPDATE_POST_TEXT, text})
 }
-
+export const setProfileInfo = (info: profileInfoType) => ({type: SET_PROFILE_INFO, info})
+export const setStatus = (status: string) => ({type: SET_STATUS, status})

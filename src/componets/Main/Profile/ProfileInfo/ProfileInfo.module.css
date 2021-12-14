@@ -1,0 +1,39 @@
+.profileInfoContainer {
+    margin-bottom: 20px;
+}
+
+.ava {
+    margin-bottom: 10px;
+}
+.ava img {
+    width: 200px;
+}
+
+.description {
+    font-size: 18px;
+    line-height: 25px;
+}
+.profileInfoItem span {
+    font-weight: bold;
+}
+.contactsTitle {
+    font-weight: bold;
+    font-size: 20px;
+}
+.contactsListWrap {
+    margin-top: 10px;
+}
+.contactsList {
+    margin-left: 20px;
+}
+.contactItem span {
+    font-weight: bold;
+}
+
+.profileStatus {
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-style:italic;
+    color: #666666;
+}
+

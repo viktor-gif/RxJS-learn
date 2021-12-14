@@ -3,8 +3,8 @@ import { usersType } from "../../../redux/store";
 import s from "./Users.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
 import axios from "axios";
-import { spawn } from "child_process";
 import { Preloader } from "../../preloader/preloader";
+import { NavLink } from "react-router-dom";
 
 export type usersPropsType = {
     users: usersType
@@ -56,8 +56,6 @@ export const Users = (props: usersPropsType) => {
         </span>
     })
 
-    console.log(props.inProgress)
-
     return (
         <>
         {props.inProgress ? <Preloader /> : 
@@ -81,7 +79,9 @@ const User = (props: userPropsType) => {
     return <div className={s.userWrap}>
         
         <div className={s.ava}>
-            <img src={props.photoUrl ? props.photoUrl : avaMale} alt="UserAva" />
+            <NavLink to={`/profile/${props.id}`}>
+                <img src={props.photoUrl ? props.photoUrl : avaMale} alt="UserAva" />
+            </NavLink>
         </div>
         <div className={s.userName}>{props.name}</div>
         <div className={s.status}>{props.status}</div>

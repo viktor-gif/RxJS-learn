@@ -29,7 +29,34 @@ export type dialogsPageType = {
     messages: messagesType,
     newMessageText: string
 };
-export type profilePageType = {posts: postsType, postText: string};
+export type profilePageType = {
+    posts: postsType, postText: string,
+    status: string | null,
+    profileInfo: profileInfoType | null
+};
+export type profileInfoType = {
+    aboutMe: string | null
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string | null
+    fullName: string
+    contacts: contactsType
+    photos: photosType
+} | null
+export type contactsType = {
+    github: string | null
+    vk: string | null
+    facebook: string | null
+    instagram: string | null
+    twitter: string | null
+    website: string | null
+    youtube: string | null
+    mainLink: string | null
+}
+export type photosType = {
+    small: string | null
+    large: string | null
+}
 export type stateType = {
     dialogsPage: dialogsPageType, 
     profilePage: profilePageType, 
@@ -70,7 +97,9 @@ export const store: storeType = {
                 {id: 3, postText: "Never underastimate me!", likesCount: 8, avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"},
                 {id: 4, postText: "Bla-bla", likesCount: 129, avaUrl: "https://occ-0-2433-448.1.nflxso.net/dnm/api/v6/E8vDc_W8CLv7-yMQu8KMEC7Rrr8/AAAABRkq_94V9dYhgOknDbPT9UlnSpLe_wu4KFFNzSeJYRkXPJRFuhZccaJHNhMoAgXwVecjxudZztCYhNuL7nM3Id3VuDny.jpg?r=960"}
             ],
-            postText: ""
+            postText: "",
+            status: "",
+            profileInfo: null
         },
         usersPage: {
             users: [
