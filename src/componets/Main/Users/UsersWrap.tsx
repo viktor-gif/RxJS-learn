@@ -18,10 +18,9 @@ export type usersWrapPropsType = {
 
 const  UsersWrapMiddle = (props: usersWrapPropsType) => {
     const [usersCount, setUsersCount] = useState(0)
-    const pageSize: number = 10
     useEffect(() => {
         props.setProgress(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=1`, {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${props.pageSize}&page=1`, {
             withCredentials: true,
             headers: {
                 "API-KEY": "8844171b-8f1f-4905-bc9a-c6a452eff646"
@@ -36,7 +35,7 @@ const  UsersWrapMiddle = (props: usersWrapPropsType) => {
 
     const changePageNumber = (pageNumber: number) => {
         props.setProgress(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${pageNumber}`, {
+        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${props.pageSize}&page=${pageNumber}`, {
             withCredentials: true,
             headers: {
                 "API-KEY": "8844171b-8f1f-4905-bc9a-c6a452eff646"

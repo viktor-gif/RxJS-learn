@@ -1,0 +1,26 @@
+/* main styles */
+.setWrap {
+    padding: 20px;
+}
+.setLinks {
+    margin-bottom: 30px;
+    font-size: 16px;
+    font-weight: bold;
+}
+.setLink {
+    text-decoration: none;
+    color: #333333;
+}
+.setLink:hover {
+    color: #999999;
+}
+
+/* users-page */
+.usersSetTitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.usersSetContent {
+    margin-bottom: 20px;
+}

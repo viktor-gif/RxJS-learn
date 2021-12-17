@@ -9,15 +9,18 @@ import { withRouter } from "react-router";
 type propsType = {
     status: string | null
     profileInfo: profileInfoType
+    isAuth: boolean
+    userId: number | null
     setStatus: (status: string) => void
     setProfileInfo: (info: profileInfoType) => void
     match: any
 }
 
 const ProfileInfoWrapMiddle = (props: propsType) => {
+    console.log(props.userId)
     let userId = props.match.params.userId
-    if(!userId) userId = 2
-    
+    if(!userId) userId = props.userId
+
     useEffect(() => {
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/status/${userId}`,
             {
@@ -30,7 +33,7 @@ const ProfileInfoWrapMiddle = (props: propsType) => {
                     props.setStatus(response.data) 
                 }
             })
-    }, [])
+    }, [props.userId])
     useEffect(() => {
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`,
             {
@@ -43,16 +46,20 @@ const ProfileInfoWrapMiddle = (props: propsType) => {
                     props.setProfileInfo(response.data)
                 }
             })
-    }, [])
+    }, [props.userId])
     return (
         <ProfileInfo status={props.status}
-                    profileInfo={props.profileInfo} />
+                    profileInfo={props.profileInfo}
+                    isAuth={props.isAuth}
+                    userId={props.userId} />
     )
 }
 
 const mapStateToProps = (state: stateType) => ({
     status: state.profilePage.status,
-    profileInfo: state.profilePage.profileInfo
+    profileInfo: state.profilePage.profileInfo,
+    isAuth: state.auth.isAuth,
+    userId: state.auth.id
 })
 
 export const ProfileInfoWrap = withRouter(connect(mapStateToProps, {

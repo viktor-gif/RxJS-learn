@@ -57,11 +57,18 @@ export type photosType = {
     small: string | null
     large: string | null
 }
+export type authType = {
+    id: number | null
+    email: string | null
+    login: string | null
+    isAuth: boolean
+}
 export type stateType = {
     dialogsPage: dialogsPageType, 
     profilePage: profilePageType, 
     usersPage: usersPageType
     sidebar: any
+    auth: authType
 };
 export type storeType = {
     _state: stateType,
@@ -140,7 +147,13 @@ export const store: storeType = {
             pageSize: 10,
             inProgress: false
         },
-        sidebar:{}
+        sidebar:{},
+        auth: {
+            id: null,
+            email: null,
+            login: null,
+            isAuth: false
+        }
     },
     _callSubscriber: () => {
         alert("Hello!");
