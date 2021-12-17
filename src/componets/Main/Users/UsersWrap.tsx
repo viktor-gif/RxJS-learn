@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { stateType, usersType } from "../../../redux/store";
 import { connect } from "react-redux";
 import { Users } from "./Users";
 import { followUnfollow, setProgress, setUsers, setUsersCount } from "../../../redux/users-reducer";
-import axios from "axios";
+import { usersAPI } from "../../../api/api";
 
 export type usersWrapPropsType = {
     users: usersType
@@ -17,31 +17,33 @@ export type usersWrapPropsType = {
 }
 
 const  UsersWrapMiddle = (props: usersWrapPropsType) => {
-    const [usersCount, setUsersCount] = useState(0)
     useEffect(() => {
-        props.setProgress(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${props.pageSize}&page=1`, {
-            withCredentials: true,
-            headers: {
-                "API-KEY": "8844171b-8f1f-4905-bc9a-c6a452eff646"
-            }
-        })
-            .then(response => {
+        usersAPI.getUsers(props.pageSize).then(response => {
                 props.setUsersCount(response.data.totalCount)
                 props.setUsers(response.data.items)
                 props.setProgress(false)
             })
     }, [])
 
+    const followPost = (userId: number) => {
+        usersAPI.followPost(userId).then(response => {
+                if (response.data.resultCode === 0) {
+                    props.followUnfollow(userId)
+                    
+                }
+            })
+    }
+    const followDelete = (userId: number) => {
+        usersAPI.followDelete(userId).then(response => {
+                if (response.data.resultCode === 0) {
+                    props.followUnfollow(userId)
+                }
+            })
+    }
+
     const changePageNumber = (pageNumber: number) => {
         props.setProgress(true)
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?count=${props.pageSize}&page=${pageNumber}`, {
-            withCredentials: true,
-            headers: {
-                "API-KEY": "8844171b-8f1f-4905-bc9a-c6a452eff646"
-            }
-        })
-            .then(response => {
+        usersAPI.getUsers(props.pageSize, pageNumber).then(response => {
                 props.setUsers(response.data.items)
                 props.setProgress(false)
             })
@@ -54,6 +56,8 @@ const  UsersWrapMiddle = (props: usersWrapPropsType) => {
                 pageSize={props.pageSize}
                 changePageNumber={changePageNumber}
                 inProgress={props.inProgress}
+                followPost={followPost}
+                followDelete={followDelete}
                  />
 }
 
@@ -65,15 +69,6 @@ const mapStateToProps = (state: stateType) => {
        inProgress: state.usersPage.inProgress
     }
 }
-
-// const mapDispatchToProps = (dispatch: any) => {
-//     return {
-//         followUnfollow: (id: number) => dispatch(followUnfollow(id)),
-//         setUsers: (users: usersType) => dispatch(setUsers(users)),
-//         setUsersCount: (usersCount: number) => dispatch(setUsersCount(usersCount)),
-//         setProgress: (isProgress: boolean) => dispatch(setProgress(isProgress))
-//     }
-// }
 
 export const UsersWrap = connect(mapStateToProps, {
     followUnfollow, setUsers, setUsersCount, setProgress

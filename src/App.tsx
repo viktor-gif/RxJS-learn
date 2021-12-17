@@ -6,10 +6,10 @@ import { Nav } from './componets/Nav/Nav';
 import { Footer } from './componets/Footer/Footer';
 import { RxjsLearn } from './componets/rxjs-learn/RxjsLearn';
 import { BrowserRouter, Route } from 'react-router-dom';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { stateType } from './redux/store';
 import { authDataType, setAuthData } from './redux/auth-reducer';
+import { authAPI } from './api/api';
 
 type propsType = {
   userId: number | null
@@ -23,14 +23,7 @@ const App = (props: propsType) => {
 console.log(props.userId)
   useEffect(() => {
     
-    axios.get('https://social-network.samuraijs.com/api/1.0/auth/me', {
-      withCredentials: true,
-      headers: {
-        "API-KEY": "8844171b-8f1f-4905-bc9a-c6a452eff646"
-      }
-    }).then(response => {
-      
-      console.log(response.data)
+    authAPI.getAuthData().then(response => {
       if (response.data.resultCode === 0) {
         props.setAuthData(response.data.data)
       }

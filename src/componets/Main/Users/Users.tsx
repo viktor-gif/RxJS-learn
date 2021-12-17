@@ -8,12 +8,15 @@ import { NavLink } from "react-router-dom";
 
 export type usersPropsType = {
     users: usersType
-    followUnfollow: (id: number) => void
-    setUsers: (users: usersType) => void
     usersCount: number | null
     pageSize: number
-    changePageNumber: (pageNumber: number) => void
     inProgress: boolean
+
+    changePageNumber: (pageNumber: number) => void
+    followUnfollow: (id: number) => void
+    setUsers: (users: usersType) => void
+    followPost: (id: number) => void
+    followDelete: (id: number) => void
 }
 
 type userPropsType = {
@@ -23,8 +26,11 @@ type userPropsType = {
     name: string
     status: string | null
     followed: boolean
+
     followUnfollow: (id: number) => void
     setUsers: (users: usersType) => void
+    followPost: (id: number) => void
+    followDelete: (id: number) => void
 }
 
 export const Users = (props: usersPropsType) => {
@@ -36,7 +42,9 @@ export const Users = (props: usersPropsType) => {
             name={u.name}
             status={u.status}
             followed={u.followed} followUnfollow={props.followUnfollow}
-            setUsers={props.setUsers} />
+            setUsers={props.setUsers}
+            followPost={props.followPost}
+            followDelete={props.followDelete} />
     })
 
     const pagesCount: number | null = props.usersCount && Math.ceil(props.usersCount / props.pageSize)
@@ -72,10 +80,6 @@ export const Users = (props: usersPropsType) => {
 
 const User = (props: userPropsType) => {
 
-    const followUnfollow = (id: number) => {
-        props.followUnfollow(id)
-    }
-
     return <div className={s.userWrap}>
         
         <div className={s.ava}>
@@ -88,30 +92,9 @@ const User = (props: userPropsType) => {
         <div className={s.followButton}>
             <button onClick={() => {
                 if (props.followed === false) {
-                    axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${props.id}`,
-                        {}, {
-                            withCredentials: true,
-                            headers: {
-                                "API-KEY": "8844171b-8f1f-4905-bc9a-c6a452eff646"
-                            }
-                        }).then(response => {
-                            if (response.data.resultCode === 0) {
-                                followUnfollow(props.id)
-                                
-                            }
-                        })
+                    props.followPost(props.id)
                 } else if (props.followed === true) {
-                    axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${props.id}`,
-                         {
-                            withCredentials: true,
-                            headers: {
-                                "API-KEY": "8844171b-8f1f-4905-bc9a-c6a452eff646"
-                            }
-                        }).then(response => {
-                            if (response.data.resultCode === 0) {
-                                followUnfollow(props.id)
-                            }
-                        })
+                    props.followDelete(props.id)
                 }   
             }}>{props.followed === true ? 'unfollow' : 'follow'}</button>
         </div>
