@@ -18,22 +18,18 @@ type propsType = {
 }
 
 const ProfileInfoWrapMiddle = (props: propsType) => {
-    console.log(props.userId)
     let userId = props.match.params.userId
     if(!userId) userId = props.userId
 
+    console.log(profileAPI.getStatus(userId))
     useEffect(() => {
-        profileAPI.getStatus(userId).then(response => {
-                if (response.status === 200) {
-                    props.setStatus(response.data) 
-                }
+        profileAPI.getProfileData(userId).then(response => {
+                props.setProfileInfo(response.data)
             })
     }, [props.userId])
     useEffect(() => {
-        profileAPI.getProfileData(userId).then(response => {
-                if (response.status === 200) {
-                    props.setProfileInfo(response.data)
-                }
+        profileAPI.getStatus(userId).then(response => {
+                props.setStatus(response.data)
             })
     }, [props.userId])
     return (

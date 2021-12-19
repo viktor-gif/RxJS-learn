@@ -22,7 +22,9 @@ export type usersPageType = {
     users: usersType
     usersCount: number | null
     pageSize: number,
-    inProgress: boolean
+    inProgress: boolean,
+    followingInProgress: boolean
+    followingInProgressUsersId: number[]
 }
 export type dialogsPageType = {
     dialogs: dialogsType, 
@@ -145,7 +147,9 @@ export const store: storeType = {
             ],
             usersCount: null,
             pageSize: 10,
-            inProgress: false
+            inProgress: false,
+            followingInProgress: false,
+            followingInProgressUsersId: []
         },
         sidebar:{},
         auth: {

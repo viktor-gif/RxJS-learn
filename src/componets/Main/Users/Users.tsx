@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { usersType } from "../../../redux/store";
 import s from "./Users.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
-import axios from "axios";
 import { Preloader } from "../../preloader/preloader";
 import { NavLink } from "react-router-dom";
 
@@ -11,6 +10,8 @@ export type usersPropsType = {
     usersCount: number | null
     pageSize: number
     inProgress: boolean
+    followingInProgress: boolean
+    followingInProgressUsersId: number[]
 
     changePageNumber: (pageNumber: number) => void
     followUnfollow: (id: number) => void
@@ -26,6 +27,9 @@ type userPropsType = {
     name: string
     status: string | null
     followed: boolean
+    inProgress: boolean
+    followingInProgress: boolean
+    followingInProgressUsersId: number[]
 
     followUnfollow: (id: number) => void
     setUsers: (users: usersType) => void
@@ -33,7 +37,7 @@ type userPropsType = {
     followDelete: (id: number) => void
 }
 
-export const Users = (props: usersPropsType) => {
+export const Users = React.memo((props: usersPropsType) => {
 
     const [currentPage, setCurrentPage] = useState(1)
 
@@ -41,6 +45,10 @@ export const Users = (props: usersPropsType) => {
         return <User id={u.id} key={u.id} photoUrl={u.photos.small}
             name={u.name}
             status={u.status}
+            inProgress={props.inProgress}
+            followingInProgress={props.followingInProgress}
+            followingInProgressUsersId={props.followingInProgressUsersId}
+
             followed={u.followed} followUnfollow={props.followUnfollow}
             setUsers={props.setUsers}
             followPost={props.followPost}
@@ -76,9 +84,11 @@ export const Users = (props: usersPropsType) => {
         }
         </>
     )
-}
+})
 
-const User = (props: userPropsType) => {
+const User = React.memo((props: userPropsType) => {
+    console.log(props.followingInProgress)
+    console.log(props.followingInProgressUsersId)
 
     return <div className={s.userWrap}>
         
@@ -90,7 +100,9 @@ const User = (props: userPropsType) => {
         <div className={s.userName}>{props.name}</div>
         <div className={s.status}>{props.status}</div>
         <div className={s.followButton}>
-            <button onClick={() => {
+            <button disabled={
+                    props.followingInProgressUsersId.some(item => item === props.id)
+                } onClick={() => {
                 if (props.followed === false) {
                     props.followPost(props.id)
                 } else if (props.followed === true) {
@@ -101,4 +113,4 @@ const User = (props: userPropsType) => {
         <div className={s.country}>Country: props.location.country</div>
         <div className={s.city}>City: props.location.city</div>
     </div>
-}
+})

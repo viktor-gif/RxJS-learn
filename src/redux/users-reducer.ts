@@ -4,13 +4,16 @@ const FOLLOW_UNFOLLOW = 'FOLLOW_UNFOLLOW'
 const SET_USERS = 'SET_USERS'
 const SET_USERS_COUNT = 'SET_USERS_COUNT'
 const SET_PROGRESS = 'SET_PROGRESS'
+const SET_FOLLOWING_PROGRESS = 'SET_FOLLOWING_PROGRESS'
 const SET_PAGE_SIZE = 'SET_PAGE_SIZE'
 
 const initialState = {
     users: null,
     usersCount: null,
     pageSize: 10,
-    inProgress: false
+    inProgress: false,
+    followingInProgress: false,
+    followingInProgressUsersId: [],
 }
 
 export const usersReducer = (state: usersPageType = initialState, action: any) => {
@@ -45,6 +48,14 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
                     ...state,
                     inProgress: action.isProgress
                 }
+            case SET_FOLLOWING_PROGRESS:
+                return {...state,
+                    // followingInProgressUsersId: state.followingInProgressUsersId.concat(action.userId),
+                    followingInProgressUsersId: action.isProgress ?
+                    [...state.followingInProgressUsersId, action.userId] :
+                    state.followingInProgressUsersId.filter(item => item !== action.userId),
+                    followingInProgress: action.isProgress
+                }
             case SET_PAGE_SIZE:
                 return {
                     ...state,
@@ -58,4 +69,5 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
     export const setUsers = (users: usersType) => ({type: SET_USERS, users})
     export const setUsersCount = (usersCount: number) => ({type: SET_USERS_COUNT, usersCount})
     export const setProgress = (isProgress: boolean) => ({type: SET_PROGRESS, isProgress})
+    export const setFollowingProgress = (userId: number | null, isProgress: boolean) => ({type: SET_FOLLOWING_PROGRESS, userId, isProgress})
     export const setPageSize = (size: number) => ({type: SET_PAGE_SIZE, size})

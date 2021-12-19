@@ -19,7 +19,7 @@ type propsType = {
   setAuthData: (data: authDataType) => void
 }
 
-const App = (props: propsType) => {
+const App = React.memo((props: propsType) => {
 console.log(props.userId)
   useEffect(() => {
     
@@ -52,7 +52,7 @@ console.log(props.userId)
       </div>
     </BrowserRouter>
   );
-}
+})
 
 const mapStateToProps = (state: stateType) => ({
   userId: state.auth.id,

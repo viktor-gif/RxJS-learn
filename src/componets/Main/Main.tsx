@@ -8,11 +8,12 @@ import { UsersWrap } from "./Users/UsersWrap";
 
 
 
-export const Main = () => {
+export const Main = React.memo(() => {
     return <div className={s.mainContainer}>
         <Route path="/profile/:userId?" render={() => <Profile  />} />
         <Route path="/dialogs" render={() => <DialogsWrap />} />
+        {/* @ts-ignore */}
         <Route path="/users" render={() => <UsersWrap />} />
         <Route path="/settings" render={() => <SettingsWrap />} />
     </div>
-}
+})
