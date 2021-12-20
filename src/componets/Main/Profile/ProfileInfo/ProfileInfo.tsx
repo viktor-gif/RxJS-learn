@@ -31,6 +31,7 @@ export const ProfileInfo = (props: profileInfoPropsType) => {
                     </div>
                     <div className={s.profileStatus}>{props.status ? props.status : '---------------------'}</div>
                     <div className={s.description}>
+                        <div className={s.profileInfoItem}><span>id</span>: {info?.userId}</div>
                         <div className={s.profileInfoItem}><span>User-name</span>: {info?.fullName}</div>
                         <div className={s.profileInfoItem}><span>About me</span>: {info?.aboutMe}</div>
                         <div className={s.profileInfoItem}><span>Look for a job</span>: {

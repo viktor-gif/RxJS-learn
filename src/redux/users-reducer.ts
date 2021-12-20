@@ -6,11 +6,17 @@ const SET_USERS_COUNT = 'SET_USERS_COUNT'
 const SET_PROGRESS = 'SET_PROGRESS'
 const SET_FOLLOWING_PROGRESS = 'SET_FOLLOWING_PROGRESS'
 const SET_PAGE_SIZE = 'SET_PAGE_SIZE'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TERM = 'SET_TERM'
+const SET_IS_FRIEND = 'SET_IS_FRIEND'
 
 const initialState = {
     users: null,
     usersCount: null,
     pageSize: 10,
+    currentPage: 1,
+    term: '',
+    isFriend: false,
     inProgress: false,
     followingInProgress: false,
     followingInProgressUsersId: [],
@@ -50,7 +56,6 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
                 }
             case SET_FOLLOWING_PROGRESS:
                 return {...state,
-                    // followingInProgressUsersId: state.followingInProgressUsersId.concat(action.userId),
                     followingInProgressUsersId: action.isProgress ?
                     [...state.followingInProgressUsersId, action.userId] :
                     state.followingInProgressUsersId.filter(item => item !== action.userId),
@@ -60,6 +65,21 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
                 return {
                     ...state,
                     pageSize: action.size
+                }
+            case SET_CURRENT_PAGE:
+                return {
+                    ...state,
+                    pageNumber: action.page
+                }
+            case SET_TERM:
+                return {
+                    ...state,
+                    term: action.term
+                }
+            case SET_IS_FRIEND:
+                return {
+                    ...state,
+                    isFriend: action.isFriend
                 }
         default: return state
     }
@@ -71,3 +91,6 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
     export const setProgress = (isProgress: boolean) => ({type: SET_PROGRESS, isProgress})
     export const setFollowingProgress = (userId: number | null, isProgress: boolean) => ({type: SET_FOLLOWING_PROGRESS, userId, isProgress})
     export const setPageSize = (size: number) => ({type: SET_PAGE_SIZE, size})
+    export const setCurrentPage = (page: number) => ({type: SET_CURRENT_PAGE, page})
+    export const setTerm = (term: string) => ({type: SET_TERM, term})
+    export const setIsFriend = (isFriend: boolean) => ({type: SET_IS_FRIEND, isFriend})

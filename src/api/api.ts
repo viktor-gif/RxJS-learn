@@ -15,8 +15,8 @@ export const authAPI = {
 }
 
 export const usersAPI = {
-    getUsers(pageSize: number, pageNumber: number = 1) {
-        return instance.get(`users?count=${pageSize}&page=${pageNumber}`)
+    getUsers(pageSize: number, pageNumber: number = 1, term: string = '', isFriend: boolean = false) {
+        return instance.get(`users?count=${pageSize}&page=${pageNumber}&term=${term}&friend=${isFriend}`)
     },
     followPost(userId: number) {
         return instance.post(`follow/${userId}`)

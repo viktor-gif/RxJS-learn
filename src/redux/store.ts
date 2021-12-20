@@ -22,6 +22,9 @@ export type usersPageType = {
     users: usersType
     usersCount: number | null
     pageSize: number,
+    currentPage: number
+    term: string
+    isFriend: boolean
     inProgress: boolean,
     followingInProgress: boolean
     followingInProgressUsersId: number[]
@@ -147,6 +150,9 @@ export const store: storeType = {
             ],
             usersCount: null,
             pageSize: 10,
+            currentPage: 1,
+            term: '',
+            isFriend: false,
             inProgress: false,
             followingInProgress: false,
             followingInProgressUsersId: []

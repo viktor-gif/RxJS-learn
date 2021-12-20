@@ -19,11 +19,11 @@
 .followButton {
     margin-bottom: 10px;
 }
-/* .followButton button {
+.followButton button {
     width: 100px;
     border: none;
     background-color: rgb(194, 157, 157);
-} */
+}
 .status {
     font-size: 16px;
     font-style: italic;
@@ -51,4 +51,23 @@
 
 .currentPage {
     background-color: gold;
+}
+
+.filterUsersBlock {
+    margin-bottom: 20px;
+}
+.filterUsersBlock__term {
+    margin-right: 20px;
+    font-style: italic;
+    border: none;
+    padding: 5px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    color: #333333
+}
+.filterUsersBlock__friends {
+    margin-right: 20px;
+    border: none;
+    padding: 5px;
+    background-color: rgb(194, 157, 157);
 }
