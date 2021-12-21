@@ -10,17 +10,12 @@ export type usersPropsType = {
     usersCount: number | null
     pageSize: number
     inProgress: boolean
-    followingInProgress: boolean
     followingInProgressUsersId: number[]
     currentPage: number
     term: string
     isFriend: boolean
 
-    setTerm: (term: string) => void
-    setIsFriend: (isFriend: boolean) => void
     getUsers: (pageNumber: number, term: string, isFriend: boolean) => void
-    followUnfollow: (id: number) => void
-    setUsers: (users: usersType) => void
     followPost: (id: number) => void
     followDelete: (id: number) => void
 }
@@ -32,12 +27,8 @@ type userPropsType = {
     name: string
     status: string | null
     followed: boolean
-    inProgress: boolean
-    followingInProgress: boolean
     followingInProgressUsersId: number[]
 
-    followUnfollow: (id: number) => void
-    setUsers: (users: usersType) => void
     followPost: (id: number) => void
     followDelete: (id: number) => void
 }
@@ -57,12 +48,8 @@ export const Users = React.memo((props: usersPropsType) => {
         return <User id={u.id} key={u.id} photoUrl={u.photos.small}
             name={u.name}
             status={u.status}
-            inProgress={props.inProgress}
-            followingInProgress={props.followingInProgress}
             followingInProgressUsersId={props.followingInProgressUsersId}
-
-            followed={u.followed} followUnfollow={props.followUnfollow}
-            setUsers={props.setUsers}
+            followed={u.followed}
             followPost={props.followPost}
             followDelete={props.followDelete} />
     })

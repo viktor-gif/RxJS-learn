@@ -1,3 +1,4 @@
+import { usersAPI } from "../api/api"
 import { usersPageType, usersType } from "./store"
 
 const FOLLOW_UNFOLLOW = 'FOLLOW_UNFOLLOW'
@@ -85,12 +86,44 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
     }
 }
 
-    export const followUnfollow = (userId: number) => ({type: FOLLOW_UNFOLLOW, userId})
-    export const setUsers = (users: usersType) => ({type: SET_USERS, users})
-    export const setUsersCount = (usersCount: number) => ({type: SET_USERS_COUNT, usersCount})
-    export const setProgress = (isProgress: boolean) => ({type: SET_PROGRESS, isProgress})
-    export const setFollowingProgress = (userId: number | null, isProgress: boolean) => ({type: SET_FOLLOWING_PROGRESS, userId, isProgress})
-    export const setPageSize = (size: number) => ({type: SET_PAGE_SIZE, size})
-    export const setCurrentPage = (page: number) => ({type: SET_CURRENT_PAGE, page})
-    export const setTerm = (term: string) => ({type: SET_TERM, term})
-    export const setIsFriend = (isFriend: boolean) => ({type: SET_IS_FRIEND, isFriend})
+// action-creators
+export const followUnfollow = (userId: number) => ({type: FOLLOW_UNFOLLOW, userId})
+export const setUsers = (users: usersType) => ({type: SET_USERS, users})
+export const setUsersCount = (usersCount: number) => ({type: SET_USERS_COUNT, usersCount})
+export const setProgress = (isProgress: boolean) => ({type: SET_PROGRESS, isProgress})
+export const setFollowingProgress = (userId: number | null, isProgress: boolean) => ({type: SET_FOLLOWING_PROGRESS, userId, isProgress})
+export const setPageSize = (size: number) => ({type: SET_PAGE_SIZE, size})
+export const setCurrentPage = (page: number) => ({type: SET_CURRENT_PAGE, page})
+export const setTerm = (term: string) => ({type: SET_TERM, term})
+export const setIsFriend = (isFriend: boolean) => ({type: SET_IS_FRIEND, isFriend})
+
+// thunk-creators
+export const getUsers = (pageSize: number, pageNumber: number, term: string, isFriend: boolean) => (dispatch: any) => {
+    dispatch(setCurrentPage(pageNumber))
+    dispatch(setTerm(term))
+    dispatch(setIsFriend(isFriend))
+    dispatch(setProgress(true))
+    usersAPI.getUsers(pageSize, pageNumber, term, isFriend).then(response => {
+        dispatch(setUsersCount(response.data.totalCount))
+        dispatch(setUsers(response.data.items))
+        dispatch(setProgress(false))
+    })
+}
+export const followPost = (userId: number) => (dispatch: any) => {
+    dispatch(setFollowingProgress(userId, true))
+    usersAPI.followPost(userId).then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(followUnfollow(userId))
+                dispatch(setFollowingProgress(userId, false))
+            }
+        })
+}
+export const followDelete = (userId: number) => (dispatch: any) => {
+    dispatch(setFollowingProgress(userId, true))
+    usersAPI.followDelete(userId).then(response => {
+            if (response.data.resultCode === 0) {
+                dispatch(followUnfollow(userId))
+                dispatch(setFollowingProgress(userId, false))
+            }
+        })
+}

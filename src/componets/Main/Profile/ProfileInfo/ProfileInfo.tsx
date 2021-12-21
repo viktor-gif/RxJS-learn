@@ -19,7 +19,6 @@ export const ProfileInfo = (props: profileInfoPropsType) => {
                 c[0][0].toUpperCase() + c[0].slice(1)
             }</span>: {c[1]}</li>
     })
-    console.log(props)
     return (
         
         <div className={s.profileInfoContainer}>

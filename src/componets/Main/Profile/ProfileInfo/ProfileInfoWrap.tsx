@@ -21,7 +21,6 @@ const ProfileInfoWrapMiddle = (props: propsType) => {
     let userId = props.match.params.userId
     if(!userId) userId = props.userId
 
-    console.log(profileAPI.getStatus(userId))
     useEffect(() => {
         profileAPI.getProfileData(userId).then(response => {
                 props.setProfileInfo(response.data)
