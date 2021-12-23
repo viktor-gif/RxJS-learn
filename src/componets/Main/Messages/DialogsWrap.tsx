@@ -3,6 +3,7 @@ import { stateType } from "../../../redux/store";
 import { dialogsPageActions, } from "../../../redux/dialogs-reducer";
 import { Dialogs } from "./Dialogs";
 import { connect } from "react-redux";
+import { withAuthRedirect } from "../../../HOC/WithAuthRedirect";
 
 const mapStateToProps = (state: stateType) => {
     return {
@@ -20,5 +21,5 @@ const mapDispatchToProps = (dispatch: any) => {
     }
 }
 
-export const DialogsWrap = connect(mapStateToProps, mapDispatchToProps)(Dialogs)
+export const DialogsWrap = withAuthRedirect(connect(mapStateToProps, mapDispatchToProps)(Dialogs))
 

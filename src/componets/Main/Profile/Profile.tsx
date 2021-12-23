@@ -4,17 +4,13 @@ import { MyPostsWrap } from "./MyPosts/MyPostsWrap";
 import { ProfileInfoWrap } from "./ProfileInfo/ProfileInfoWrap";
 import { connect } from "react-redux";
 import { stateType } from "../../../redux/store";
-import { Redirect } from "react-router-dom";
+import { withAuthRedirect } from "../../../HOC/WithAuthRedirect";
 
 type profilePropsType = {
-    isAuth: boolean
+
 }
 
-
-
-const Profile = (props: profilePropsType) => {
-
-    if (!props.isAuth) return <Redirect to="login" />
+const Profile = React.memo((props: profilePropsType) => {
 
     return (
         <div className={s.profileContainer}>
@@ -27,10 +23,10 @@ const Profile = (props: profilePropsType) => {
             </div>
         </div>
     )
-}
-
-const mapStateToProps = (state: stateType) => ({
-    isAuth: state.auth.isAuth
 })
 
-export default connect(mapStateToProps, {})(Profile)
+const mapStateToProps = (state: stateType) => ({
+    
+})
+
+export default withAuthRedirect(connect(mapStateToProps, {})(Profile))

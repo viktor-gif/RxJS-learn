@@ -4,7 +4,6 @@ import s from "./Dialogs.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
 import avaFemale from "../../../img/ava_female.png";
 import { NavLink } from "react-router-dom"
-import { Redirect } from "react-router-dom";
 
 type dialogsPropsType = {
     dialogs: dialogsType
@@ -28,13 +27,10 @@ type messagePropsType = {
     isMe: boolean
 }
 
-export const Dialogs = (props: dialogsPropsType) => {
+export const Dialogs = React.memo((props: dialogsPropsType) => {
     const dialogs = props.dialogs;
     const messages = props.messages;
     const newMessageText = props.newMessageText;
-
-    if (!props.isAuth) return <Redirect to="login" />
-
 
     const usersItems = dialogs.map(d => {
         return <Dialog id={d.id} key={d.id} name={d.name} url={d.url} sex={d.sex} />
@@ -73,9 +69,9 @@ export const Dialogs = (props: dialogsPropsType) => {
             </div>
         </div>
     )
-}
+})
 
-export const Dialog = (props: dialogPropsType) => {
+export const Dialog = React.memo((props: dialogPropsType) => {
     return (
         <div className={s.dialog}>
             <NavLink to={`/dialogs/${props.id}`}><div className={s.avatar}>
@@ -84,9 +80,9 @@ export const Dialog = (props: dialogPropsType) => {
             <div className={s.userName}>{props.name}</div></NavLink>
         </div>
     )
-}
+})
 
-export const Message = (props: messagePropsType) => {
+export const Message = React.memo((props: messagePropsType) => {
     return (
         <div className={props.isMe ? s.messageWrap : ""}>
             <div className={s.message + " " + (props.isMe && s.myMessage)}>
@@ -95,5 +91,5 @@ export const Message = (props: messagePropsType) => {
         </div>
         
     )
-}
+})
 
