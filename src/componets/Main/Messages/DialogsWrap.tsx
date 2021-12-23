@@ -4,6 +4,7 @@ import { dialogsPageActions, } from "../../../redux/dialogs-reducer";
 import { Dialogs } from "./Dialogs";
 import { connect } from "react-redux";
 import { withAuthRedirect } from "../../../HOC/WithAuthRedirect";
+import { compose } from "redux";
 
 const mapStateToProps = (state: stateType) => {
     return {
@@ -21,5 +22,10 @@ const mapDispatchToProps = (dispatch: any) => {
     }
 }
 
-export const DialogsWrap = withAuthRedirect(connect(mapStateToProps, mapDispatchToProps)(Dialogs))
+export default compose(
+    withAuthRedirect,
+    connect(mapStateToProps, mapDispatchToProps)
+)(Dialogs)
+
+// export const DialogsWrap = withAuthRedirect(connect(mapStateToProps, mapDispatchToProps)(Dialogs))
 
