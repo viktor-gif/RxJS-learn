@@ -2,10 +2,20 @@ import React from "react";
 import s from "./Profile.module.css";
 import { MyPostsWrap } from "./MyPosts/MyPostsWrap";
 import { ProfileInfoWrap } from "./ProfileInfo/ProfileInfoWrap";
+import { connect } from "react-redux";
+import { stateType } from "../../../redux/store";
+import { Redirect } from "react-router-dom";
 
-type profilePropsType = {}
+type profilePropsType = {
+    isAuth: boolean
+}
 
-export const Profile = (props: profilePropsType) => {
+
+
+const Profile = (props: profilePropsType) => {
+
+    if (!props.isAuth) return <Redirect to="login" />
+
     return (
         <div className={s.profileContainer}>
             <div className={s.mainPhoto}>
@@ -18,3 +28,9 @@ export const Profile = (props: profilePropsType) => {
         </div>
     )
 }
+
+const mapStateToProps = (state: stateType) => ({
+    isAuth: state.auth.isAuth
+})
+
+export default connect(mapStateToProps, {})(Profile)

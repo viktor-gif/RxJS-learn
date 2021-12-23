@@ -9,7 +9,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { stateType } from './redux/store';
 import { getAuthData } from './redux/auth-reducer';
-import { authAPI } from './api/api';
+import { Login } from './componets/Login/Login';
 
 type propsType = {
   userId: number | null
@@ -34,6 +34,9 @@ console.log(props.userId)
             <Header isAuth={props.isAuth} login={props.login} />
           </header>
           <main className="main">
+
+            <Route path="/login" render={() => <Login />} />
+
             <Main />
           </main>
           <nav className="nav">
@@ -42,7 +45,7 @@ console.log(props.userId)
           <footer className="footer">
             <Footer />
           </footer>
-          <Route path="rx" component={RxjsLearn} />
+          <Route path="/rx" component={RxjsLearn} />
         </div>
       </div>
     </BrowserRouter>

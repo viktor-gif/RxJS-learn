@@ -1,15 +1,16 @@
 import React from "react";
-import { dialogsPageType, dialogsType, messagesType } from "../../../redux/store";
-import { dialogsPageActions, } from "../../../redux/dialogs-reducer";
+import { dialogsType, messagesType } from "../../../redux/store";
 import s from "./Dialogs.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
 import avaFemale from "../../../img/ava_female.png";
 import { NavLink } from "react-router-dom"
+import { Redirect } from "react-router-dom";
 
 type dialogsPropsType = {
     dialogs: dialogsType
     messages: messagesType
     newMessageText: string
+    isAuth: boolean
     addMessage: () => void
     updateMessageText: (text: string) => void
 }
@@ -31,6 +32,9 @@ export const Dialogs = (props: dialogsPropsType) => {
     const dialogs = props.dialogs;
     const messages = props.messages;
     const newMessageText = props.newMessageText;
+
+    if (!props.isAuth) return <Redirect to="login" />
+
 
     const usersItems = dialogs.map(d => {
         return <Dialog id={d.id} key={d.id} name={d.name} url={d.url} sex={d.sex} />
