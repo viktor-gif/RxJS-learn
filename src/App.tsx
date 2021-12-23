@@ -8,7 +8,7 @@ import { RxjsLearn } from './componets/rxjs-learn/RxjsLearn';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { stateType } from './redux/store';
-import { authDataType, setAuthData } from './redux/auth-reducer';
+import { getAuthData } from './redux/auth-reducer';
 import { authAPI } from './api/api';
 
 type propsType = {
@@ -16,18 +16,13 @@ type propsType = {
   email: string | null
   login: string | null
   isAuth: boolean
-  setAuthData: (data: authDataType) => void
+  getAuthData: () => void
 }
 
 const App = React.memo((props: propsType) => {
 console.log(props.userId)
   useEffect(() => {
-    
-    authAPI.getAuthData().then(response => {
-      if (response.data.resultCode === 0) {
-        props.setAuthData(response.data.data)
-      }
-    })
+    props.getAuthData()
   }, [])
 
   return (
@@ -62,5 +57,5 @@ const mapStateToProps = (state: stateType) => ({
 })
 
 export default connect(mapStateToProps, {
-  setAuthData
+  getAuthData
 })(App);

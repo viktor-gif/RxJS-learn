@@ -2,18 +2,16 @@ import React, { useEffect } from "react";
 import { ProfileInfo } from "./ProfileInfo";
 import { connect } from "react-redux";
 import { profileInfoType, stateType } from "../../../../redux/store";
-import axios from "axios";
-import { setStatus, setProfileInfo } from "../../../../redux/profile-reducer";
+import { getProfileData, getStatus } from "../../../../redux/profile-reducer";
 import { withRouter } from "react-router";
-import { profileAPI } from "../../../../api/api";
 
 type propsType = {
     status: string | null
     profileInfo: profileInfoType
     isAuth: boolean
     userId: number | null
-    setStatus: (status: string) => void
-    setProfileInfo: (info: profileInfoType) => void
+    getStatus: (userId: number) => void
+    getProfileData: (userId: number) => void
     match: any
 }
 
@@ -22,14 +20,10 @@ const ProfileInfoWrapMiddle = (props: propsType) => {
     if(!userId) userId = props.userId
 
     useEffect(() => {
-        profileAPI.getProfileData(userId).then(response => {
-                props.setProfileInfo(response.data)
-            })
+        props.getStatus(userId)
     }, [props.userId])
     useEffect(() => {
-        profileAPI.getStatus(userId).then(response => {
-                props.setStatus(response.data)
-            })
+        props.getProfileData(userId)
     }, [props.userId])
     return (
         <ProfileInfo status={props.status}
@@ -47,5 +41,5 @@ const mapStateToProps = (state: stateType) => ({
 })
 
 export const ProfileInfoWrap = withRouter(connect(mapStateToProps, {
-    setStatus, setProfileInfo
+    getProfileData, getStatus
 })(ProfileInfoWrapMiddle))

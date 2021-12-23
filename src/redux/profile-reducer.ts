@@ -1,3 +1,4 @@
+import { profileAPI } from "../api/api";
 import { profileInfoType, profilePageType } from "./store";
 
 const ADD_POST = "ADD_POST"
@@ -63,3 +64,16 @@ export const profilePageActions = {
 }
 export const setProfileInfo = (info: profileInfoType) => ({type: SET_PROFILE_INFO, info})
 export const setStatus = (status: string) => ({type: SET_STATUS, status})
+
+// redux-thunk
+export const getProfileData = (userId: number) => (dispatch: any) => {
+    profileAPI.getProfileData(userId).then(response => {
+        dispatch(setProfileInfo(response.data))
+    })
+}
+export const getStatus = (userId: number) => (dispatch: any) => {
+    profileAPI.getStatus(userId).then(response => {
+        dispatch(setStatus(response.data))
+    })
+}
+    
