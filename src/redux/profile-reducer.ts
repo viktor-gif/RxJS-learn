@@ -3,7 +3,7 @@ import { profileInfoType, profilePageType } from "./store";
 
 const ADD_POST = "ADD_POST"
 const UPDATE_POST_TEXT = "UPDATE_POST_TEXT"
-const SET_STATUS = "SET_STATUS"
+const SET_STATUS_TEXT = "SET_STATUS_TEXT"
 const SET_PROFILE_INFO = "SET_PROFILE_INFO"
 
 const initialState = {
@@ -42,7 +42,7 @@ export const profileReducer = (state: profilePageType = initialState, action: an
                 ...state,
                 postText: action.text
             }
-        case SET_STATUS:
+        case SET_STATUS_TEXT:
             return {
                 ...state,
                 status: action.status
@@ -63,7 +63,7 @@ export const profilePageActions = {
     updatePostText: (text: string) => ({type: UPDATE_POST_TEXT, text})
 }
 export const setProfileInfo = (info: profileInfoType) => ({type: SET_PROFILE_INFO, info})
-export const setStatus = (status: string) => ({type: SET_STATUS, status})
+export const setStatusText = (status: string) => ({type: SET_STATUS_TEXT, status})
 
 // redux-thunk
 export const getProfileData = (userId: number) => (dispatch: any) => {
@@ -73,7 +73,14 @@ export const getProfileData = (userId: number) => (dispatch: any) => {
 }
 export const getStatus = (userId: number) => (dispatch: any) => {
     profileAPI.getStatus(userId).then(response => {
-        dispatch(setStatus(response.data))
+        dispatch(setStatusText(response.data))
+    })
+}
+export const setStatus = (status: string, userId: number) => (dispatch: any) => {
+    profileAPI.setStatus(status).then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(getStatus(userId))
+        }
     })
 }
     

@@ -3,12 +3,15 @@ import s from "./ProfileInfo.module.css";
 import ava from "../../../../img/ava_male.jpeg";
 import { profileInfoType } from "../../../../redux/store";
 import { Preloader } from "../../../preloader/preloader";
+import { ProfileStatus } from "./ProfileStatus";
 
 type profileInfoPropsType = {
     status: string | null
     profileInfo: profileInfoType
     isAuth: boolean
     userId: number | null
+
+    setStatus: (status: string, userId: number) => void
 }
 
 export const ProfileInfo = (props: profileInfoPropsType) => {
@@ -28,7 +31,7 @@ export const ProfileInfo = (props: profileInfoPropsType) => {
                     <div className={s.ava}>
                         <img src={info?.photos.large || ava} alt="My_ava" />
                     </div>
-                    <div className={s.profileStatus}>{props.status ? props.status : '---------------------'}</div>
+                    <ProfileStatus status={props.status} setStatus={props.setStatus} userId={props.userId} />
                     <div className={s.description}>
                         <div className={s.profileInfoItem}><span>id</span>: {info?.userId}</div>
                         <div className={s.profileInfoItem}><span>User-name</span>: {info?.fullName}</div>
@@ -47,7 +50,7 @@ export const ProfileInfo = (props: profileInfoPropsType) => {
                         </ul>
                     </div>
                 </div> 
-                : <div>YOU SRE NOT AUTHORIZED</div>}
+                : <div>YOU ARE NOT AUTHORIZED</div>}
             </div>
             
             }

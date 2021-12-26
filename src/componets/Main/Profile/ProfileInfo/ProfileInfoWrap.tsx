@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ProfileInfo } from "./ProfileInfo";
 import { connect } from "react-redux";
 import { profileInfoType, stateType } from "../../../../redux/store";
-import { getProfileData, getStatus } from "../../../../redux/profile-reducer";
+import { getProfileData, getStatus, setStatus } from "../../../../redux/profile-reducer";
 import { withRouter } from "react-router";
 
 type propsType = {
@@ -10,9 +10,11 @@ type propsType = {
     profileInfo: profileInfoType
     isAuth: boolean
     userId: number | null
+    match: any
+
     getStatus: (userId: number) => void
     getProfileData: (userId: number) => void
-    match: any
+    setStatus: (status: string, userId: number) => void
 }
 
 const ProfileInfoWrapMiddle = (props: propsType) => {
@@ -29,7 +31,8 @@ const ProfileInfoWrapMiddle = (props: propsType) => {
         <ProfileInfo status={props.status}
                     profileInfo={props.profileInfo}
                     isAuth={props.isAuth}
-                    userId={props.userId} />
+                    userId={props.userId}
+                    setStatus={props.setStatus} />
     )
 }
 
@@ -41,5 +44,5 @@ const mapStateToProps = (state: stateType) => ({
 })
 
 export const ProfileInfoWrap = withRouter(connect(mapStateToProps, {
-    getProfileData, getStatus
+    getProfileData, getStatus, setStatus
 })(ProfileInfoWrapMiddle))
