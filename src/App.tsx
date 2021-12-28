@@ -9,7 +9,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { stateType } from './redux/store';
 import { getAuthData } from './redux/auth-reducer';
-import { Login } from './componets/Login/Login';
+import Login from './componets/Login/Login';
 
 type propsType = {
   userId: number | null
@@ -20,7 +20,7 @@ type propsType = {
 }
 
 const App = React.memo((props: propsType) => {
-console.log(props.userId)
+
   useEffect(() => {
     props.getAuthData()
   }, [])

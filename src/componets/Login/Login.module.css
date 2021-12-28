@@ -1,0 +1,19 @@
+.loginWrap {
+    padding: 15px;
+}
+.inputItem {
+    margin-bottom: 20px;
+}
+.loginInput {
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.loginLabel {
+    display: block;
+    max-width: 300px;
+    position: relative;
+}
+.loginInputCheckbox {
+    right: 50%;
+}

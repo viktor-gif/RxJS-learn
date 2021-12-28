@@ -16,21 +16,35 @@ export const authReducer = (state: authType = initialState, action: any) => {
             return {
                 ...state,
                 ...action.data,
-                isAuth: true
+                isAuth: action.isAuth
             }
         default: return state
     }
 }
 
-export const setAuthData = (data: authDataType) => {
-    return {type: SET_AUTH_DATA, data}
+export const setAuthData = (data: authDataType, isAuth: boolean) => {
+    return {type: SET_AUTH_DATA, data, isAuth}
 }
 
 // redux-thunk
 export const getAuthData = () => (dispatch: any) => {
     authAPI.getAuthData().then(response => {
         if (response.data.resultCode === 0) {
-          dispatch(setAuthData(response.data.data))
+          dispatch(setAuthData(response.data.data, true))
+        }
+    })
+}
+export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
+    authAPI.login(email, password, rememberMe).then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(getAuthData())
+        }
+    })
+}
+export const logout = () => (dispatch: any) => {
+    authAPI.logout().then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(setAuthData({id: null, email: null, login: null}, false))
         }
     })
 }
