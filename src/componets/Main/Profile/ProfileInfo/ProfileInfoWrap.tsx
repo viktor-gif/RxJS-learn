@@ -11,6 +11,7 @@ type propsType = {
     isAuth: boolean
     userId: number | null
     match: any
+    history: any
 
     getStatus: (userId: number) => void
     getProfileData: (userId: number) => void
@@ -18,8 +19,14 @@ type propsType = {
 }
 
 const ProfileInfoWrapMiddle = (props: propsType) => {
+    
     let userId = props.match.params.userId
-    if(!userId) userId = props.userId
+    if(!userId) {
+        userId = props.userId
+        if (!userId) {
+            props.history.push('/login')
+        }
+    }
 
     useEffect(() => {
         props.getStatus(userId)

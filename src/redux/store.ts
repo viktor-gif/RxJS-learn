@@ -69,12 +69,16 @@ export type authType = {
     isAuth: boolean
     errorMessage: string
 }
+export type appType = {
+    initialized: boolean
+}
 export type stateType = {
     dialogsPage: dialogsPageType, 
     profilePage: profilePageType, 
     usersPage: usersPageType
     sidebar: any
     auth: authType
+    app: appType
 };
 export type storeType = {
     _state: stateType,
@@ -165,6 +169,9 @@ export const store: storeType = {
             login: null,
             isAuth: false,
             errorMessage: ''
+        },
+        app: {
+            initialized: false
         }
     },
     _callSubscriber: () => {

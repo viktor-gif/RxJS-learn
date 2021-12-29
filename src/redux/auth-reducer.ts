@@ -1,6 +1,5 @@
 import { authAPI } from "../api/api"
 import { authType } from "./store"
-import * as formik from "formik"
 
 const SET_AUTH_DATA = 'SET_AUTH_DATA'
 const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
@@ -39,7 +38,7 @@ export const setErrorMessage = ( message: string) => {
 
 // redux-thunk
 export const getAuthData = () => (dispatch: any) => {
-    authAPI.getAuthData().then(response => {
+    return authAPI.getAuthData().then(response => {
         if (response.data.resultCode === 0) {
           dispatch(setAuthData(response.data.data, true))
         }

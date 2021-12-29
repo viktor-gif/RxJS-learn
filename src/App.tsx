@@ -9,21 +9,28 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { stateType } from './redux/store';
 import { getAuthData } from './redux/auth-reducer';
+import { initialize } from './redux/app-reducer';
 import Login from './componets/Login/Login';
+import { Preloader } from './componets/common/preloader/preloader';
 
 type propsType = {
   userId: number | null
   email: string | null
   login: string | null
   isAuth: boolean
+  initialized: boolean
+
   getAuthData: () => void
+  initialize: () => void
 }
 
 const App = React.memo((props: propsType) => {
 
   useEffect(() => {
-    props.getAuthData()
+    props.initialize()
   }, [])
+
+  if (!props.initialized) return <Preloader />
 
   return (
     <BrowserRouter>
@@ -34,10 +41,8 @@ const App = React.memo((props: propsType) => {
             <Header isAuth={props.isAuth} login={props.login} />
           </header>
           <main className="main">
-
-            <Route path="/login" render={() => <Login />} />
-
             <Main />
+            <Route path="/login" render={() => <Login />} />
           </main>
           <nav className="nav">
             <Nav />
@@ -56,9 +61,10 @@ const mapStateToProps = (state: stateType) => ({
   userId: state.auth.id,
   login: state.auth.login,
   email: state.auth.email,
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  initialized: state.app.initialized
 })
 
 export default connect(mapStateToProps, {
-  getAuthData
+  getAuthData, initialize
 })(App);
