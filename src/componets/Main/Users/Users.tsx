@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { usersType } from "../../../redux/store";
 import s from "./Users.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
-import { Preloader } from "../../preloader/preloader";
+import { Preloader } from "../../common/preloader/preloader";
 import { NavLink } from "react-router-dom";
 
 export type usersPropsType = {

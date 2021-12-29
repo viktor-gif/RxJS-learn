@@ -4,15 +4,19 @@ import { stateType } from "../../redux/store"
 import s from "./Login.module.css"
 import {login, logout} from "../../redux/auth-reducer"
 import {Formik, Form, Field} from "formik"
+import { validatioInputs } from "../../utils/validators/validators"
+import { Input } from "../common/upgradedComponents/Inputs"
 
 type loginPropsType = {
     isAuth: boolean
+    errorMessage: string
+
     login: (email: string, password: string, rememberMe: boolean) => void
     logout: () => void
 }
 
 const Login = (props: loginPropsType) => {
-
+    console.log(props.errorMessage)
     return <div className={s.loginWrap}>
         {!props.isAuth ? 
         <Formik
@@ -22,32 +26,40 @@ const Login = (props: loginPropsType) => {
                 rememberMe: false,
             }}
             onSubmit={(val) => {
-                console.log(val)
                 props.login(val.email, val.password, val.rememberMe)
             }}
             >
-            <Form>
-                <div className={s.inputItem}>
-                    <label className={s.loginLabel} htmlFor="email">E-mail:
-                        <Field className={s.loginInput} type="email" id="email"
-                        name="email" placeholder="Email" />
-                    </label>
-                </div>
-                <div className={s.inputItem}>
-                    <label className={s.loginLabel} htmlFor="password">Password:
-                        <Field className={s.loginInput} type="password" id="password"
-                        name="password" placeholder="Password" />
-                    </label>
-                </div>
-                <div className={s.inputItem}>
-                    <label className={s.loginLabel} htmlFor="rememberMe">Remember me:
-                        <Field className={s.loginInput + " " + s.loginInputCheckbox} 
-                        type="checkbox" id="rememberMe" name="rememberMe"/>
-                    </label>
-                </div>
+            
+            {({ errors, touched, validateField, validateForm }) => (
                 
-                <button type="submit">submit</button>
-            </Form>
+                <Form>
+                    
+                    <div className={s.inputItem}>
+                        <label className={s.loginLabel} htmlFor="email">E-mail:
+                            <Field
+                            type="email" id="email" component={Input}
+                            name="email" placeholder="Email" validate={validatioInputs} />
+                        </label>
+                    </div>
+                    <div className={s.inputItem}>
+                        <label className={s.loginLabel} htmlFor="password">Password:
+                            <Field
+                            type="password" id="password" component={Input}
+                            name="password" placeholder="Password" validate={validatioInputs} />
+                        </label>
+                    </div>
+                    <div className={s.inputItem}>
+                        <label className={s.loginLabel} htmlFor="rememberMe">Remember me:
+                            <Field className={s.loginInput + " " + s.loginInputCheckbox} 
+                            type="checkbox" id="rememberMe" name="rememberMe" component='input'/>
+                        </label>
+                    </div>
+
+                    <div className={s.commonErrorMessage}>{props.errorMessage}</div>
+                    
+                    <button type="submit">submit</button>
+                </Form>
+            )}
         </Formik>
         
         : <button onClick={() => props.logout()}>Log out</button>}
@@ -55,13 +67,36 @@ const Login = (props: loginPropsType) => {
 }
 
 const mapStateToProps = (state: stateType) => ({
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    errorMessage: state.auth.errorMessage
 })
 
 // const Login = (props: loginPropsType) => {
 //     const [email, setEmail] = useState('')
 //     const [password, setPassword] = useState('')
 //     const [rememberMe, setRememberMe] = useState(false)
+//     const [isTouched, setTouched] = useState(false)
+
+//     const touchInput = () => {
+//         setTouched(true)
+//     }
+
+//     let localError = (value: string) => {
+//         let errorMessage
+//         if (!value.length || value.length === 0) {
+//             errorMessage = 'Field is required'
+//         } else if (value.length < 4) {
+//             errorMessage = 'Min length is 4 symbols'
+//         } else if (value.length > 30) {
+//             errorMessage = 'Max length is 30 symbols'
+//         }
+//         return errorMessage
+//     }
+
+//     let localErrorEmailMessage = localError(email)
+
+//     let localErrorPasswordMessage = localError(password)
+    
 
 //     const emailChange = (e: any) => {
 //         setEmail(e.target.value)
@@ -73,20 +108,30 @@ const mapStateToProps = (state: stateType) => ({
 //         setRememberMe(e.target.checked)
 //     }
 
+
+//     const hasEmailError = localErrorEmailMessage && isTouched
+//     const hasPasswordError = localErrorPasswordMessage && isTouched
+
 //     return <div className={s.loginWrap}>
 //         {!props.isAuth ? 
 //         <div>
 //             <div className={s.inputItem}>
 //                 <label className={s.loginLabel} htmlFor="email">E-mail:
-//                     <input className={s.loginInput} type="email" id="email"
-//                     value={email} onChange={emailChange} />
+//                     <input className={hasEmailError ? s.errorInput : s.loginInput}
+//                     type="email" id="email"
+//                     value={email} onChange={emailChange}
+//                     onClick={touchInput} />
 //                 </label>
+//                 {hasEmailError && <div className={s.errorMessage}>{localErrorEmailMessage}</div>}
 //             </div>
 //             <div className={s.inputItem}>
 //                 <label className={s.loginLabel} htmlFor="password">Password:
-//                     <input className={s.loginInput} type="password" id="password"
-//                     value={password} onChange={passwordChange} />
+//                     <input className={hasPasswordError ? s.errorInput : s.loginInput}
+//                     type="password" id="password"
+//                     value={password} onChange={passwordChange}
+//                     onClick={touchInput} />
 //                 </label>
+//                 {hasPasswordError && <div className={s.errorMessage}>{localErrorPasswordMessage}</div>}
 //             </div>
 //             <div className={s.inputItem}>
 //                 <label className={s.loginLabel} htmlFor="rememberMe">Remember me:
@@ -94,15 +139,13 @@ const mapStateToProps = (state: stateType) => ({
 //                     type="checkbox" id="rememberMe"/>
 //                 </label>
 //             </div>
+
+//             <div className={s.commonErrorMessage}>{props.errorMessage}</div>
             
 //             <button onClick={() => props.login(email, password,rememberMe)}>submit</button>
 //         </div>
 //         : <button onClick={() => props.logout()}>Log out</button>}
 //     </div>
 // }
-
-// const mapStateToProps = (state: stateType) => ({
-//     isAuth: state.auth.isAuth
-// })
 
 export default connect(mapStateToProps, {login, logout})(Login)

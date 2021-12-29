@@ -67,6 +67,7 @@ export type authType = {
     email: string | null
     login: string | null
     isAuth: boolean
+    errorMessage: string
 }
 export type stateType = {
     dialogsPage: dialogsPageType, 
@@ -162,7 +163,8 @@ export const store: storeType = {
             id: null,
             email: null,
             login: null,
-            isAuth: false
+            isAuth: false,
+            errorMessage: ''
         }
     },
     _callSubscriber: () => {

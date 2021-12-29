@@ -2,7 +2,7 @@ import React from "react";
 import s from "./ProfileInfo.module.css";
 import ava from "../../../../img/ava_male.jpeg";
 import { profileInfoType } from "../../../../redux/store";
-import { Preloader } from "../../../preloader/preloader";
+import { Preloader } from "../../../common/preloader/preloader";
 import { ProfileStatus } from "./ProfileStatus";
 
 type profileInfoPropsType = {

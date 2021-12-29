@@ -4,6 +4,7 @@
 .inputItem {
     margin-bottom: 20px;
 }
+
 .loginInput {
     position: absolute;
     top: 0;
@@ -16,4 +17,21 @@
 }
 .loginInputCheckbox {
     right: 50%;
+}
+
+.errorInput {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 2px solid red;
+}
+.errorMessage {
+    color: red;
+    margin-top: 10px;
+}
+.commonErrorMessage {
+    color: red;
+    margin-bottom: 20px;
+    font-size: 20px;
+    text-transform: uppercase;
 }
