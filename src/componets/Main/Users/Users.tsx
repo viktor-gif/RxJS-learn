@@ -63,7 +63,7 @@ export const Users = React.memo((props: usersPropsType) => {
         }
     }
     const pages = pagesNumbers.map(p => {
-        return <span className={s.page + ' ' + (currentPage === p ? s.currentPage : '')} onClick={() => {
+        return <span key={p} className={s.page + ' ' + (currentPage === p ? s.currentPage : '')} onClick={() => {
             props.getUsers(p, props.term, props.isFriend);
             setCurrentPage(p);
             }}>

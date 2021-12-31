@@ -28,6 +28,7 @@ export type usersPageType = {
     inProgress: boolean,
     followingInProgress: boolean
     followingInProgressUsersId: number[]
+    fake: number
 }
 export type dialogsPageType = {
     dialogs: dialogsType, 
@@ -160,7 +161,8 @@ export const store: storeType = {
             isFriend: false,
             inProgress: false,
             followingInProgress: false,
-            followingInProgressUsersId: []
+            followingInProgressUsersId: [],
+            fake: 10
         },
         sidebar:{},
         auth: {

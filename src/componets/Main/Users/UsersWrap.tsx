@@ -3,6 +3,7 @@ import { stateType, usersType } from "../../../redux/store";
 import { connect } from "react-redux";
 import { Users } from "./Users";
 import { getUsers, followPost, followDelete } from "../../../redux/users-reducer";
+import { getUsersRes } from "../../../selectors/users-selectors";
 
 export type usersWrapPropsType = {
     users: usersType
@@ -20,7 +21,7 @@ export type usersWrapPropsType = {
 }
 
 const  UsersWrapMiddle = React.memo((props: usersWrapPropsType) => {
-
+    console.log('usersWrap')
     const getUsers = (pageNumber: number, term: string, isFriend: boolean) => {
         props.getUsers(props.pageSize, pageNumber, term, isFriend)
     }
@@ -41,8 +42,9 @@ const  UsersWrapMiddle = React.memo((props: usersWrapPropsType) => {
 })
 
 const mapStateToProps = (state: stateType) => {
+    console.log('mapStateToProps')
     return {
-       users: state.usersPage?.users,
+       users: getUsersRes(state),
        usersCount: state.usersPage.usersCount,
        pageSize: state.usersPage.pageSize,
        currentPage: state.usersPage.currentPage,
@@ -55,5 +57,6 @@ const mapStateToProps = (state: stateType) => {
 
 export const UsersWrap = connect(mapStateToProps, { getUsers,
     followPost, followDelete
+    //@ts-ignore
 })(UsersWrapMiddle)
 

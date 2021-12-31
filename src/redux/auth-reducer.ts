@@ -9,11 +9,12 @@ const initialState = {
     email: null,
     login: null,
     isAuth: false,
-    errorMessage: ''
+    errorMessage: '',
 }
 
 export const authReducer = (state: authType = initialState, action: any) => {
     switch (action.type) {
+        
         case SET_AUTH_DATA:
             return {
                 ...state,

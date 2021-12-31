@@ -12,6 +12,7 @@ import { getAuthData } from './redux/auth-reducer';
 import { initialize } from './redux/app-reducer';
 import Login from './componets/Login/Login';
 import { Preloader } from './componets/common/preloader/preloader';
+import store from "./redux/redux-store"
 
 type propsType = {
   userId: number | null
@@ -25,6 +26,10 @@ type propsType = {
 }
 
 const App = React.memo((props: propsType) => {
+
+  setInterval(() => {
+    store.dispatch({type: 'FAKE'})
+  }, 1000)
 
   useEffect(() => {
     props.initialize()

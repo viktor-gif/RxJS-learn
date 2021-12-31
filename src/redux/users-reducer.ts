@@ -21,11 +21,13 @@ const initialState = {
     inProgress: false,
     followingInProgress: false,
     followingInProgressUsersId: [],
+    fake: 10
 }
 
 export const usersReducer = (state: usersPageType = initialState, action: any) => {
    
     switch (action.type) {
+        case 'FAKE': return {...state, fake: state.fake + 1}
         case SET_USERS:
             return {
                 ...state,
