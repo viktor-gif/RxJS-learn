@@ -18,7 +18,7 @@
 
 .header {
   grid-area: header;
-  background-color: aqua;
+  background-color: rgb(48, 71, 5);
 }
 .main {
   grid-area: main;
