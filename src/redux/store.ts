@@ -28,7 +28,6 @@ export type usersPageType = {
     inProgress: boolean,
     followingInProgress: boolean
     followingInProgressUsersId: number[]
-    fake: number
 }
 export type dialogsPageType = {
     dialogs: dialogsType, 
@@ -73,6 +72,9 @@ export type authType = {
 export type appType = {
     initialized: boolean
 }
+export type asideType = {
+    friends: usersType;
+}
 export type stateType = {
     dialogsPage: dialogsPageType, 
     profilePage: profilePageType, 
@@ -80,6 +82,7 @@ export type stateType = {
     sidebar: any
     auth: authType
     app: appType
+    aside: asideType
 };
 export type storeType = {
     _state: stateType,
@@ -162,7 +165,6 @@ export const store: storeType = {
             inProgress: false,
             followingInProgress: false,
             followingInProgressUsersId: [],
-            fake: 10
         },
         sidebar:{},
         auth: {
@@ -174,6 +176,9 @@ export const store: storeType = {
         },
         app: {
             initialized: false
+        },
+        aside: {
+            friends: null
         }
     },
     _callSubscriber: () => {

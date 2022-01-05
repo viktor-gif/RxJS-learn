@@ -21,7 +21,6 @@ export type usersWrapPropsType = {
 }
 
 const  UsersWrapMiddle = React.memo((props: usersWrapPropsType) => {
-    console.log('usersWrap')
     const getUsers = (pageNumber: number, term: string, isFriend: boolean) => {
         props.getUsers(props.pageSize, pageNumber, term, isFriend)
     }
@@ -42,7 +41,6 @@ const  UsersWrapMiddle = React.memo((props: usersWrapPropsType) => {
 })
 
 const mapStateToProps = (state: stateType) => {
-    console.log('mapStateToProps')
     return {
        users: getUsersRes(state),
        usersCount: state.usersPage.usersCount,

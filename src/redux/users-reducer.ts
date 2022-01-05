@@ -21,13 +21,11 @@ const initialState = {
     inProgress: false,
     followingInProgress: false,
     followingInProgressUsersId: [],
-    fake: 10
 }
 
 export const usersReducer = (state: usersPageType = initialState, action: any) => {
    
     switch (action.type) {
-        case 'FAKE': return {...state, fake: state.fake + 1}
         case SET_USERS:
             return {
                 ...state,
@@ -101,6 +99,7 @@ export const setIsFriend = (isFriend: boolean) => ({type: SET_IS_FRIEND, isFrien
 
 // thunk-creators
 export const getUsers = (pageSize: number, pageNumber: number, term: string, isFriend: boolean) => (dispatch: any) => {
+    
     dispatch(setCurrentPage(pageNumber))
     dispatch(setTerm(term))
     dispatch(setIsFriend(isFriend))

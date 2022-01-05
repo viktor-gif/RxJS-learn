@@ -24,9 +24,10 @@
   grid-area: main;
   background-color: rgb(231, 231, 231);
 }
-.nav {
+.aside {
   grid-area: nav;
   background-color: rgb(240, 226, 180);
+  padding: 15px;
 }
 .footer {
   grid-area: footer;

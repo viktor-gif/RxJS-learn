@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import Header from './componets/Header/Header';
 import { Main } from './componets/Main/Main';
-import { Nav } from './componets/Nav/Nav';
+import { Nav } from './componets/Aside/Nav/Nav';
 import { Footer } from './componets/Footer/Footer';
 import { RxjsLearn } from './componets/rxjs-learn/RxjsLearn';
 import { BrowserRouter, Route } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { initialize } from './redux/app-reducer';
 import Login from './componets/Login/Login';
 import { Preloader } from './componets/common/preloader/preloader';
 import store from "./redux/redux-store"
+import Friends from './componets/Aside/Friends/Friends';
 
 type propsType = {
   userId: number | null
@@ -26,10 +27,6 @@ type propsType = {
 }
 
 const App = React.memo((props: propsType) => {
-
-  setInterval(() => {
-    store.dispatch({type: 'FAKE'})
-  }, 1000)
 
   useEffect(() => {
     props.initialize()
@@ -49,9 +46,10 @@ const App = React.memo((props: propsType) => {
             <Main />
             <Route path="/login" render={() => <Login />} />
           </main>
-          <nav className="nav">
+          <aside className="aside">
             <Nav />
-          </nav>
+            <Friends />
+          </aside>
           <footer className="footer">
             <Footer />
           </footer>

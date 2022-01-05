@@ -1,0 +1,12 @@
+.demoBlock {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    justify-content: space-between;
+}
+.demoItem {
+    
+}
+.demoImg img {
+    width: 70px;
+}
