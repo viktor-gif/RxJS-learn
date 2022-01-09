@@ -3,6 +3,7 @@
     background-color: #00000025;
 }
 
+
 .demoBlock {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -41,4 +42,45 @@
     justify-content: space-between;
     font-size: 1.5em;
     color: #64613d
+}
+.allFriendsLink {
+    cursor: pointer;
+}
+
+.allFriends {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    height: 90vh;
+    overflow: auto;
+}
+.friendsBlockActive {
+    display: block;
+}
+.allFriendsBlock {
+    background-color: #e2dcf3;
+    padding: 20px;
+}
+.closeFriendsBlock {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    width: 20px;
+    height: 3px;
+    background-color: #5a5a5a85;
+    transform: rotate(45deg);
+    border-radius: 2px;
+    cursor: pointer;
+}
+.closeFriendsBlock:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 3px;
+    background-color: #5a5a5a85;
+    transform: rotate(90deg);
+    border-radius: 3px;
 }

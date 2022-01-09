@@ -1,19 +1,26 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { getFriends, setFriendsCount } from "../../../redux/aside-reducer"
 import { stateType, usersType } from "../../../redux/store"
 import userPhoto from "../../../img/ava_male.jpeg"
 import s from "./Friends.module.css"
 import { NavLink } from "react-router-dom"
+import { User } from "../../Main/Users/Users"
+import { followPost, followDelete } from "../../../redux/users-reducer"
 
 type propsType = {
     friends: usersType
     friendsCount: number
+    followingInProgressUsersId: number[]
 
     getFriends: () => void
+    followPost: (id: number) => void
+    followDelete: (id: number) => void
 }
 
-const Friends = (props: propsType) => {
+const Friends = React.memo((props: propsType) => {
+
+    const [isFriendsBlock, setFriendsBlock] = useState(false)
 
     useEffect(() => {
         props.getFriends()
@@ -31,7 +38,7 @@ const Friends = (props: propsType) => {
     const friendsDemo = shuffledFriends?.map(f => {
         let shortName = f.name.slice(0, 7)
         return <div key={f.id} className={s.demoItem}>
-            <NavLink to={`/profile/${f.id}`} className={s.navLinkFriend}>
+            <NavLink to={`/profile/${f.id}`} exact className={s.navLinkFriend}>
                 <div className={s.demoImg}>
                     <img src={f.photos.small || userPhoto} alt="Friend" />
                 </div>
@@ -40,23 +47,45 @@ const Friends = (props: propsType) => {
         </div>
     }).slice(0, 6)
 
+    const allFriends = props.friends?.map(f => {
+        return <User id={f.id} key={f.id}
+            photoUrl={f.photos.small}
+            name={f.name} status={f.status}
+            followingInProgressUsersId={props.followingInProgressUsersId}
+            followed={f.followed}
+            followPost={props.followPost}
+            followDelete={props.followDelete} />
+    })
+
+
     return (
         <div className={s.friendsBlock}>
             <div className={s.navFriends}>
-                <span>All friends</span>
+                <span className={s.allFriendsLink}
+                    onClick={() => setFriendsBlock(true)}>
+                    All friends
+                </span>
                 <span>{props.friendsCount}</span>
             </div>
             <div className={s.demoBlock}>
                 {friendsDemo}
             </div>
-            
+            <div className={s.allFriends + " " + (isFriendsBlock && s.friendsBlockActive)}>
+                <div className={s.closeFriendsBlock} onClick={() => setFriendsBlock(false)}></div>
+                <div className={s.allFriendsBlock}>
+                    {allFriends}
+                </div>
+            </div>
         </div>
     )
-}
+})
 
 const mapStateToProps = (state: stateType) => ({
     friends: state.aside.friends,
-    friendsCount: state.aside.totalFriendsCount
+    friendsCount: state.aside.totalFriendsCount,
+    followingInProgressUsersId: state.usersPage.followingInProgressUsersId
 })
 
-export default connect(mapStateToProps, {getFriends})(Friends)
+export default connect(mapStateToProps, {
+    getFriends, followPost, followDelete
+})(Friends)

@@ -30,10 +30,10 @@ const ProfileInfoWrapMiddle = (props: propsType) => {
 
     useEffect(() => {
         props.getStatus(userId)
-    }, [props.userId])
+    }, [props.userId, userId])
     useEffect(() => {
         props.getProfileData(userId)
-    }, [props.userId])
+    }, [props.userId, userId])
     return (
         <ProfileInfo status={props.status}
                     profileInfo={props.profileInfo}

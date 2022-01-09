@@ -109,7 +109,7 @@ export const Users = React.memo((props: usersPropsType) => {
     )
 })
 
-const User = React.memo((props: userPropsType) => {
+export const User = React.memo((props: userPropsType) => {
 
     return <div className={s.userWrap}>
         
