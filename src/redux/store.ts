@@ -74,6 +74,7 @@ export type appType = {
 }
 export type asideType = {
     friends: usersType;
+    totalFriendsCount: number
 }
 export type stateType = {
     dialogsPage: dialogsPageType, 
@@ -178,7 +179,8 @@ export const store: storeType = {
             initialized: false
         },
         aside: {
-            friends: null
+            friends: null,
+            totalFriendsCount: 0
         }
     },
     _callSubscriber: () => {

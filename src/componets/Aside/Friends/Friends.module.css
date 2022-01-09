@@ -1,12 +1,44 @@
+.friendsBlock {
+    padding: 15px;
+    background-color: #00000025;
+}
+
 .demoBlock {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto;
     justify-content: space-between;
-}
-.demoItem {
+    align-items: center;
+    gap: 20px;
+    text-align: center;
     
 }
+
+.navLinkFriend {
+    text-decoration: none;
+    color: #333333;
+}
+.demoItem {
+
+    width: fit-content;
+    background-color: #00000025;
+}
+/* .demoImg {
+    margin-bottom: 10px;
+} */
 .demoImg img {
-    width: 70px;
+    max-width: 100px;
+    min-width: 50px;
+    max-height: auto;
+}
+.demoName {
+    padding: 5px;
+}
+
+.navFriends {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5em;
+    color: #64613d
 }
