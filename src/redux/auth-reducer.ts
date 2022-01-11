@@ -1,8 +1,8 @@
 import { authAPI } from "../api/api"
 import { authType } from "./store"
 
-const SET_AUTH_DATA = 'SET_AUTH_DATA'
-const SET_ERROR_MESSAGE = 'SET_ERROR_MESSAGE'
+const SET_AUTH_DATA = 'Viktor-gif/auth/SET_AUTH_DATA'
+const SET_ERROR_MESSAGE = 'Viktor-gif/auth/SET_ERROR_MESSAGE'
 
 const initialState = {
     id: null,

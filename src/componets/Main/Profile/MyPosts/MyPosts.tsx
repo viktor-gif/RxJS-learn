@@ -17,7 +17,8 @@ type postPropsType = {
     likesCount: number
 }
 
-export const MyPosts = (props: myPostsPropsType) => {
+export const MyPosts = React.memo((props: myPostsPropsType) => {
+    console.log('renderM my posts')
     const postsItems = props.posts.map(p => {
         return <Post id={p.id} key={p.id} 
                 postText={p.postText} likesCount={p.likesCount} />
@@ -51,9 +52,9 @@ export const MyPosts = (props: myPostsPropsType) => {
             {postsItems}
         </div>
     )
-}
+})
 
-export const Post = (props: postPropsType) => {
+export const Post = React.memo((props: postPropsType) => {
     return (
         <div className={s.post}>
             <div className={s.postAva}>
@@ -63,4 +64,4 @@ export const Post = (props: postPropsType) => {
             <div className={s.likes}><span>Likes</span>: {props.likesCount}</div>
         </div>
     )
-}
+})

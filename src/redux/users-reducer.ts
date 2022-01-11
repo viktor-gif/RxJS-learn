@@ -1,15 +1,15 @@
 import { usersAPI } from "../api/api"
 import { usersPageType, usersType } from "./store"
 
-const FOLLOW_UNFOLLOW = 'FOLLOW_UNFOLLOW'
-const SET_USERS = 'SET_USERS'
-const SET_USERS_COUNT = 'SET_USERS_COUNT'
-const SET_PROGRESS = 'SET_PROGRESS'
-const SET_FOLLOWING_PROGRESS = 'SET_FOLLOWING_PROGRESS'
-const SET_PAGE_SIZE = 'SET_PAGE_SIZE'
-const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
-const SET_TERM = 'SET_TERM'
-const SET_IS_FRIEND = 'SET_IS_FRIEND'
+const FOLLOW_UNFOLLOW = 'Viktor-gif/users/FOLLOW_UNFOLLOW'
+const SET_USERS = 'Viktor-gif/users/SET_USERS'
+const SET_USERS_COUNT = 'Viktor-gif/users/SET_USERS_COUNT'
+const SET_PROGRESS = 'Viktor-gif/users/SET_PROGRESS'
+const SET_FOLLOWING_PROGRESS = 'Viktor-gif/users/SET_FOLLOWING_PROGRESS'
+const SET_PAGE_SIZE = 'Viktor-gif/users/SET_PAGE_SIZE'
+const SET_CURRENT_PAGE = 'Viktor-gif/users/SET_CURRENT_PAGE'
+const SET_TERM = 'Viktor-gif/users/SET_TERM'
+const SET_IS_FRIEND = 'Viktor-gif/users/SET_IS_FRIEND'
 
 const initialState = {
     users: null,

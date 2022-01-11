@@ -1,8 +1,8 @@
 import { usersAPI } from "../api/api";
 import { asideType, usersType } from "./store";
 
-const SET_FRIENDS = 'SET_FRIENDS'
-const SET_FRIENDS_COUNT = 'SET_FRIENDS_COUNT'
+const SET_FRIENDS = 'Viktor-gif/aside/SET_FRIENDS'
+const SET_FRIENDS_COUNT = 'Viktor-gif/aside/SET_FRIENDS_COUNT'
 
 const initialState = {
     friends: null,

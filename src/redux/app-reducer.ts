@@ -2,7 +2,7 @@
 import { getAuthData } from "./auth-reducer"
 import { appType } from "./store"
 
-const INITIALIZE_SUCCESS = 'INITIALIZE_SUCCESS'
+const INITIALIZE_SUCCESS = 'Viktor-gif/app/INITIALIZE_SUCCESS'
 
 const initialState = {
     initialized: false

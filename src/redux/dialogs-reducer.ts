@@ -1,8 +1,8 @@
 import { dialogsPageType } from "./store";
 
 
-const ADD_MESSAGE = "ADD_MESSAGE"
-const MESSAGE_TEXT_CHANGE = "MESSAGE_TEXT_CHANGE"
+const ADD_MESSAGE = "Viktor-gif/dialogs/ADD_MESSAGE"
+const MESSAGE_TEXT_CHANGE = "Viktor-gif/dialogs/MESSAGE_TEXT_CHANGE"
 
 const initialState = {
     dialogs: [

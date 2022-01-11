@@ -2,9 +2,9 @@ import { profileAPI } from "../api/api";
 import { profileInfoType, profilePageType } from "./store";
 
 const ADD_POST = "ADD_POST"
-const UPDATE_POST_TEXT = "UPDATE_POST_TEXT"
-const SET_STATUS_TEXT = "SET_STATUS_TEXT"
-const SET_PROFILE_INFO = "SET_PROFILE_INFO"
+const UPDATE_POST_TEXT = "Viktor-gif/profile/UPDATE_POST_TEXT"
+const SET_STATUS_TEXT = "Viktor-gif/profile/SET_STATUS_TEXT"
+const SET_PROFILE_INFO = "Viktor-gif/profile/SET_PROFILE_INFO"
 
 const initialState = {
     posts: [

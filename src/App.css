@@ -2,6 +2,7 @@
   margin: 0 auto;
   max-width: 1240px;
   background-color: #fff;
+  position: relative;
 }
 .content-wrapper {
   margin: 0 20px;
