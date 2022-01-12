@@ -34,23 +34,8 @@
     line-height: 26px;
 }
 
-.paginator {
-    margin-bottom: 15px;
-}
-.page {
-    padding: 5px;
-    font-size: 20px;
-    line-height: 40px;
-    background-color: rgb(182, 182, 141);
-    margin-right: 5px;
-    cursor: pointer;
-}
 .page:last-child {
     margin-right: 0;
-}
-
-.currentPage {
-    background-color: gold;
 }
 
 .filterUsersBlock {

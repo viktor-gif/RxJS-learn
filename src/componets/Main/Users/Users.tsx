@@ -4,6 +4,7 @@ import s from "./Users.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
 import { Preloader } from "../../common/preloader/preloader";
 import { NavLink } from "react-router-dom";
+import { Paginator } from "../../common/paginator/Paginator";
 
 export type usersPropsType = {
     users: usersType
@@ -35,15 +36,16 @@ type userPropsType = {
 
 export const Users = React.memo((props: usersPropsType) => {
 
-    const [currentPage, setCurrentPage] = useState(1)
     const [term, setTerm] = useState('')
     const [isFriend, setIsFriend] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [currentPorsion, setCurrentPorsion] = useState(1)
 
     useEffect(() => {
         // parameters is gettinng from redux-state, users-reducer
         props.getUsers(props.currentPage, props.term, props.isFriend)
     }, [])
-
+    
     const usersItems = props.users?.map(u => {
         return <User id={u.id} key={u.id} photoUrl={u.photos.small}
             name={u.name}
@@ -54,22 +56,6 @@ export const Users = React.memo((props: usersPropsType) => {
             followDelete={props.followDelete} />
     })
 
-    const pagesCount: number | null = props.usersCount && Math.ceil(props.usersCount / props.pageSize)
-
-    let pagesNumbers = []
-    if (pagesCount) {
-        for (let i = 1; i <= pagesCount; i++) {
-            pagesNumbers.push(i)
-        }
-    }
-    const pages = pagesNumbers.map(p => {
-        return <span key={p} className={s.page + ' ' + (currentPage === p ? s.currentPage : '')} onClick={() => {
-            props.getUsers(p, props.term, props.isFriend);
-            setCurrentPage(p);
-            }}>
-            {p}
-        </span>
-    })
     const isFriendClick = () => {
         if (isFriend) {
             setIsFriend(false)
@@ -81,15 +67,17 @@ export const Users = React.memo((props: usersPropsType) => {
     }
     function changeTermInput(e: any) {
         setTerm(e.target.value)
-        
     }
+
     return (
         <>
         {props.inProgress ? <Preloader /> : 
             <div className={s.usersWrap}>
-                <div className={s.paginator}>
-                    {pages}
-                </div>
+                <Paginator usersCount={props.usersCount} pageSize={props.pageSize}
+                    term={props.term} isFriend={props.isFriend} getUsers={props.getUsers}
+                    currentPage={currentPage} setCurrentPage={setCurrentPage}
+                    currentPorsion={currentPorsion} setCurrentPorsion={setCurrentPorsion}
+                />
                 <div className={s.filterUsersBlock}>
                     
                     <input className={s.filterUsersBlock__term} value={term} 

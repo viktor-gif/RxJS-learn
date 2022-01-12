@@ -1,0 +1,35 @@
+.paginator {
+    margin-bottom: 15px;
+}
+
+.pages {
+    margin: 0 10px;
+}
+.page {
+    padding: 5px;
+    font-size: 20px;
+    line-height: 40px;
+    background-color: rgb(182, 182, 141);
+    margin-right: 5px;
+    cursor: pointer;
+}
+.page:last-child {
+    margin-right: 0
+}
+.currentPage {
+    background-color: gold;
+}
+
+.arrows {
+    font-size: 27px;
+    color: #666868;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px #00000055;
+    padding: 4px 5px 0px 5px;
+    position: relative;
+    left: 0;
+    top: 4px;
+    cursor: pointer;
+    
+}
