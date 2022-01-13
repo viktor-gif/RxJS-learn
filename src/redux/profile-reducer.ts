@@ -1,10 +1,11 @@
 import { profileAPI } from "../api/api";
-import { profileInfoType, profilePageType } from "./store";
+import { photosType, profileInfoType, profilePageType } from "./store";
 
 const ADD_POST = "ADD_POST"
 const UPDATE_POST_TEXT = "Viktor-gif/profile/UPDATE_POST_TEXT"
 const SET_STATUS_TEXT = "Viktor-gif/profile/SET_STATUS_TEXT"
 const SET_PROFILE_INFO = "Viktor-gif/profile/SET_PROFILE_INFO"
+const UPDATE_PHOTO = "UPDATE_PHOTO"
 
 const initialState = {
     posts: [
@@ -52,6 +53,14 @@ export const profileReducer = (state: profilePageType = initialState, action: an
                 ...state,
                 profileInfo: action.info
             }
+        case UPDATE_PHOTO:
+            return {
+                ...state,
+                profileInfo: {
+                    ...state.profileInfo,
+                    photos: action.photos
+                }
+            }
         
         default: return state;
         
@@ -64,6 +73,7 @@ export const profilePageActions = {
 }
 export const setProfileInfo = (info: profileInfoType) => ({type: SET_PROFILE_INFO, info})
 export const setStatusText = (status: string) => ({type: SET_STATUS_TEXT, status})
+export const updatePhoto = (photos: photosType) => ({type: UPDATE_PHOTO, photos})
 
 // redux-thunk
 export const getProfileData = (userId: number) => (dispatch: any) => {
@@ -80,6 +90,14 @@ export const setStatus = (status: string, userId: number) => (dispatch: any) => 
     profileAPI.setStatus(status).then(response => {
         if (response.data.resultCode === 0) {
             dispatch(getStatus(userId))
+        }
+    })
+}
+export const savePhoto = (photo: File) => (dispatch: any) => {
+    profileAPI.savePhoto(photo).then(response => {
+        console.log(response)
+        if (response.data.resultCode === 0) {
+            dispatch(updatePhoto(response.data.data.photos))
         }
     })
 }

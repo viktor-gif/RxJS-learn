@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ProfileInfo } from "./ProfileInfo";
 import { connect } from "react-redux";
 import { profileInfoType, stateType } from "../../../../redux/store";
-import { getProfileData, getStatus, setStatus } from "../../../../redux/profile-reducer";
+import { getProfileData, getStatus, setStatus, savePhoto } from "../../../../redux/profile-reducer";
 import { withRouter } from "react-router";
 
 type propsType = {
@@ -16,6 +16,7 @@ type propsType = {
     getStatus: (userId: number) => void
     getProfileData: (userId: number) => void
     setStatus: (status: string, userId: number) => void
+    savePhoto: (photo: File) => void
 }
 
 const ProfileInfoWrapMiddle = (props: propsType) => {
@@ -39,7 +40,9 @@ const ProfileInfoWrapMiddle = (props: propsType) => {
                     profileInfo={props.profileInfo}
                     isAuth={props.isAuth}
                     userId={props.userId}
-                    setStatus={props.setStatus} />
+                    setStatus={props.setStatus}
+                    isOwner={!props.match.params.userId}
+                    savePhoto={props.savePhoto} />
     )
 }
 
@@ -51,5 +54,5 @@ const mapStateToProps = (state: stateType) => ({
 })
 
 export const ProfileInfoWrap = withRouter(connect(mapStateToProps, {
-    getProfileData, getStatus, setStatus
+    getProfileData, getStatus, setStatus, savePhoto
 })(ProfileInfoWrapMiddle))

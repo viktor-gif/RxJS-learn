@@ -33,6 +33,16 @@ export const usersAPI = {
 }
 
 export const profileAPI = {
+    savePhoto(photoFile: File) {
+        const photoData = new FormData();
+        photoData.append("image", photoFile)
+
+        return instance.put(`profile/photo/`, photoData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
+    },
     setStatus(status: string) {
         return instance.put(`profile/status/`, {status: status})
     },

@@ -3,11 +3,57 @@
 }
 
 .ava {
+    position: relative;
+    width: 200px;
+    height: auto;
     margin-bottom: 10px;
 }
+
 .ava img {
     width: 200px;
 }
+
+/* input avatar-image start */
+.ava:hover .inputFile {
+    opacity: 1;
+}
+.inputFile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #84d64d85;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity .2s linear;
+}
+.inputFile input {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+}
+.inputButton {
+    box-sizing: border-box;
+}
+.inputButtonIcon img {
+    height: 29px;
+    width: 29px;
+}
+.inputButtonText {
+    padding: 5px;
+    background: linear-gradient(#adebb2 0%, #39aa04 30%);
+    position: relative;
+    top: 2px;
+    left: 0;
+    font-size: 16px;
+    border: 1px solid #39aa04;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+/* input avatar-image end */
 
 .description {
     font-size: 18px;

@@ -12,6 +12,7 @@
     background-color: rgb(182, 182, 141);
     margin-right: 5px;
     cursor: pointer;
+    user-select: none;
 }
 .page:last-child {
     margin-right: 0
@@ -31,5 +32,5 @@
     left: 0;
     top: 4px;
     cursor: pointer;
-    
+    user-select: none;
 }
