@@ -5,6 +5,7 @@ import avaMale from "../../../img/ava_male.jpeg";
 import { Preloader } from "../../common/preloader/preloader";
 import { NavLink } from "react-router-dom";
 import { Paginator } from "../../common/paginator/Paginator";
+import { SearchInput } from "../../common/searchInput/SearchInput";
 
 export type usersPropsType = {
     users: usersType
@@ -69,6 +70,13 @@ export const Users = React.memo((props: usersPropsType) => {
         setTerm(e.target.value)
     }
 
+    const onEnterKeyPress = (e: any) => {
+        if (e.charCode === 13) {
+            setTerm('')
+            props.getUsers(props.currentPage, term, props.isFriend);
+        }
+    }
+
     return (
         <>
         {props.inProgress ? <Preloader /> : 
@@ -79,16 +87,12 @@ export const Users = React.memo((props: usersPropsType) => {
                     currentPorsion={currentPorsion} setCurrentPorsion={setCurrentPorsion}
                 />
                 <div className={s.filterUsersBlock}>
+
+                    <SearchInput placeholder="Search users"
+                        value={term} onChange={changeTermInput}
+                        onKeyPress={onEnterKeyPress} />
                     
-                    <input className={s.filterUsersBlock__term} value={term} 
-                        onChange={changeTermInput} placeholder="Find user"
-                        onKeyPress={(e: any) => {
-                            if (e.charCode === 13) {
-                                setTerm('')
-                                props.getUsers(props.currentPage, term, props.isFriend);
-                            }
-                    }} />
-                    <button className={s.filterUsersBlock__friends} onClick={isFriendClick}>{isFriend ? 'All Users' : 'Only friends'}</button>
+                    <button className={s.searchUsersButton} onClick={isFriendClick}>{isFriend ? 'All Users' : 'Only friends'}</button>
                 </div>
                 {usersItems}
             </div>
