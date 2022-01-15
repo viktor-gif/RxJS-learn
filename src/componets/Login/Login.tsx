@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
 import { stateType } from "../../redux/store"
 import s from "./Login.module.css"
@@ -10,13 +10,14 @@ import { Input } from "../common/upgradedComponents/Inputs"
 type loginPropsType = {
     isAuth: boolean
     errorMessage: string
+    captchaUrl: string | null
 
-    login: (email: string, password: string, rememberMe: boolean) => void
+    login: (email: string, password: string, rememberMe: boolean, captcha: string | null) => void
     logout: () => void
 }
 
 const Login = (props: loginPropsType) => {
-    console.log(props.errorMessage)
+    
     return <div className={s.loginWrap}>
         {!props.isAuth ? 
         <Formik
@@ -24,9 +25,10 @@ const Login = (props: loginPropsType) => {
                 email: '',
                 password: '',
                 rememberMe: false,
+                captcha: null
             }}
             onSubmit={(val) => {
-                props.login(val.email, val.password, val.rememberMe)
+                props.login(val.email, val.password, val.rememberMe, val.captcha)
             }}
             >
             
@@ -54,7 +56,16 @@ const Login = (props: loginPropsType) => {
                             type="checkbox" id="rememberMe" name="rememberMe" component='input'/>
                         </label>
                     </div>
-
+                    {props.captchaUrl && 
+                        <div className={s.captchaBlock}>
+                            <img src={props.captchaUrl} alt="captcha" />
+                            <label className={s.loginLabel} htmlFor="email">
+                                <Field
+                                type="text" id="captcha" component={Input}
+                                name="captcha" placeholder="Enter symbols from image" />
+                            </label>
+                        </div>
+                    }
                     <div className={s.commonErrorMessage}>{props.errorMessage}</div>
                     
                     <button type="submit">submit</button>
@@ -68,7 +79,8 @@ const Login = (props: loginPropsType) => {
 
 const mapStateToProps = (state: stateType) => ({
     isAuth: state.auth.isAuth,
-    errorMessage: state.auth.errorMessage
+    errorMessage: state.auth.errorMessage,
+    captchaUrl: state.auth.captchaUrl
 })
 
 // const Login = (props: loginPropsType) => {

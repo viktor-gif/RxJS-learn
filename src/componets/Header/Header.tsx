@@ -30,8 +30,6 @@ const Header = (props: propsType) => {
 
         document.addEventListener('click', (e) => {
 
-
-            console.log(e.target)
             if (e.target !== headerMenu && e.target !== headerMenu?.children[0] ) {
                 setDropdownActive(false)
             }

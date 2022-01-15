@@ -67,6 +67,7 @@ export type authType = {
     email: string | null
     login: string | null
     isAuth: boolean
+    captchaUrl: string | null
     errorMessage: string
 }
 export type appType = {
@@ -173,6 +174,7 @@ export const store: storeType = {
             email: null,
             login: null,
             isAuth: false,
+            captchaUrl: null,
             errorMessage: ''
         },
         app: {

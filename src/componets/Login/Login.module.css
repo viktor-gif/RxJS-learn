@@ -35,3 +35,7 @@
     font-size: 20px;
     text-transform: uppercase;
 }
+
+.captchaBlock {
+    margin-bottom: 40px;
+}

@@ -14,11 +14,15 @@ export const authAPI = {
     getAuthData() {
         return instance.get('auth/me')
     },
-    login(email: string, password: string, rememberMe: boolean) {
-        return instance.post(`auth/login`, {email, password, rememberMe})
+    login(email: string, password: string, rememberMe: boolean, captcha: string | null) {
+        console.log(captcha)
+        return instance.post(`auth/login`, {email, password, rememberMe, captcha})
     },
     logout() {
         return instance.delete(`auth/login`)
+    },
+    getCaptchaUrl() {
+        return instance.get(`security/get-captcha-url`)
     }
 }
 

@@ -3,12 +3,14 @@ import { authType } from "./store"
 
 const SET_AUTH_DATA = 'Viktor-gif/auth/SET_AUTH_DATA'
 const SET_ERROR_MESSAGE = 'Viktor-gif/auth/SET_ERROR_MESSAGE'
+const SET_CAPTCHA_URL = 'Viktor-gif/auth/SET_CAPTCHA_URL'
 
 const initialState = {
     id: null,
     email: null,
     login: null,
     isAuth: false,
+    captchaUrl: null,
     errorMessage: '',
 }
 
@@ -26,6 +28,11 @@ export const authReducer = (state: authType = initialState, action: any) => {
                 ...state,
                 errorMessage: action.message
             }
+        case SET_CAPTCHA_URL:
+            return {
+                ...state,
+                captchaUrl: action.captchaUrl
+            }
         default: return state
     }
 }
@@ -36,6 +43,9 @@ export const setAuthData = (data: authDataType, isAuth: boolean) => {
 export const setErrorMessage = ( message: string) => {
     return {type: SET_ERROR_MESSAGE, message}
 }
+export const setCaptchaUrl = (captchaUrl: string | null) => {
+    return {type: SET_CAPTCHA_URL, captchaUrl}
+}
 
 // redux-thunk
 export const getAuthData = () => (dispatch: any) => {
@@ -45,16 +55,18 @@ export const getAuthData = () => (dispatch: any) => {
         }
     })
 }
-export const login = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
-    // console.log(formik)
-    // return
-    authAPI.login(email, password, rememberMe).then(response => {
+export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null) => (dispatch: any) => {
+    
+    authAPI.login(email, password, rememberMe, captcha).then(response => {
         if (response.data.resultCode === 0) {
             console.log(response)
             dispatch(getAuthData())
             dispatch(setErrorMessage(''))
+            dispatch(setCaptchaUrl(null))
+        } else if (response.data.resultCode === 10){
+            dispatch(getCaptchaUrl())
+            dispatch (setErrorMessage(response.data.messages[0]))
         } else {
-            console.log(response)
             dispatch (setErrorMessage(response.data.messages[0]))
         }
     })
@@ -63,7 +75,14 @@ export const logout = () => (dispatch: any) => {
     authAPI.logout().then(response => {
         if (response.data.resultCode === 0) {
             dispatch(setAuthData({id: null, email: null, login: null}, false))
+            dispatch(setCaptchaUrl(null))
         }
+    })
+}
+export const getCaptchaUrl = () => (dispatch: any) => {
+    authAPI.getCaptchaUrl().then(response => {
+        console.log(response.data.url)
+        dispatch(setCaptchaUrl(response.data.url))
     })
 }
 
