@@ -83,3 +83,10 @@
     color: #666666;
 }
 
+.editProfileErrorMessage {
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+

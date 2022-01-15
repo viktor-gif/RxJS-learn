@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { ProfileInfo } from "./ProfileInfo";
+import { ProfileInfo, profileInfoTypeWithoutPhotos } from "./ProfileInfo";
 import { connect } from "react-redux";
 import { profileInfoType, stateType } from "../../../../redux/store";
-import { getProfileData, getStatus, setStatus, savePhoto } from "../../../../redux/profile-reducer";
+import { getProfileData, getStatus, setStatus, savePhoto, updateProfileInfo } from "../../../../redux/profile-reducer";
 import { withRouter } from "react-router";
 
 type propsType = {
@@ -17,6 +17,7 @@ type propsType = {
     getProfileData: (userId: number) => void
     setStatus: (status: string, userId: number) => void
     savePhoto: (photo: File) => void
+    updateProfileInfo: (setEdit: any, setErrorMessage: any, userId: number | null, profileInfo: profileInfoTypeWithoutPhotos) => void
 }
 
 const ProfileInfoWrapMiddle = (props: propsType) => {
@@ -42,7 +43,8 @@ const ProfileInfoWrapMiddle = (props: propsType) => {
                     userId={props.userId}
                     setStatus={props.setStatus}
                     isOwner={!props.match.params.userId}
-                    savePhoto={props.savePhoto} />
+                    savePhoto={props.savePhoto}
+                    updateProfileInfo={props.updateProfileInfo} />
     )
 }
 
@@ -54,5 +56,5 @@ const mapStateToProps = (state: stateType) => ({
 })
 
 export const ProfileInfoWrap = withRouter(connect(mapStateToProps, {
-    getProfileData, getStatus, setStatus, savePhoto
+    getProfileData, getStatus, setStatus, savePhoto, updateProfileInfo
 })(ProfileInfoWrapMiddle))

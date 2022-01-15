@@ -5,6 +5,7 @@ import { ProfileInfoWrap } from "./ProfileInfo/ProfileInfoWrap";
 import { connect } from "react-redux";
 import { stateType } from "../../../redux/store";
 import { withAuthRedirect } from "../../../HOC/WithAuthRedirect";
+import { Input } from "../../common/upgradedComponents/Inputs";
 
 type profilePropsType = {
 

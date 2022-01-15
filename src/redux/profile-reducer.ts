@@ -1,4 +1,5 @@
 import { profileAPI } from "../api/api";
+import { profileInfoTypeWithoutPhotos } from "../componets/Main/Profile/ProfileInfo/ProfileInfo";
 import { photosType, profileInfoType, profilePageType } from "./store";
 
 const ADD_POST = "ADD_POST"
@@ -98,6 +99,25 @@ export const savePhoto = (photo: File) => (dispatch: any) => {
         console.log(response)
         if (response.data.resultCode === 0) {
             dispatch(updatePhoto(response.data.data.photos))
+        }
+    })
+}
+export const updateProfileInfo = (setEdit: any, 
+    setErrorMessage: any, userId: number | null, 
+    profileInfo: profileInfoTypeWithoutPhotos) => (dispatch: any) => {
+
+    // setEdit and setErrorMessage came from "ProfileInfo.tsx"
+    profileAPI.updateProfileInfo(profileInfo).then(response => {
+        console.log(response.data.messages[0])
+        if (response.data.resultCode === 0) {
+            if (userId) {
+                dispatch(getProfileData(userId))
+                setEdit(false)
+                setErrorMessage('')
+            }
+            
+        } else if (response.data.resultCode === 1) {
+            setErrorMessage(response.data.messages[0])
         }
     })
 }

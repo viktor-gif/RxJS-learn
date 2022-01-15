@@ -1,4 +1,6 @@
 import axios from "axios"
+import { profileInfoTypeWithoutPhotos } from "../componets/Main/Profile/ProfileInfo/ProfileInfo"
+
 
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
@@ -42,6 +44,9 @@ export const profileAPI = {
                 "Content-Type": "multipart/form-data"
             }
         })
+    },
+    updateProfileInfo(profileInfo: profileInfoTypeWithoutPhotos) {
+        return instance.put(`profile`, profileInfo)
     },
     setStatus(status: string) {
         return instance.put(`profile/status/`, {status: status})
