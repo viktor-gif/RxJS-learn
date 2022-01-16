@@ -62,3 +62,9 @@ export const profileAPI = {
         return instance.get(`profile/${userId}`)
     }
 }
+
+export const dialogsAPI = {
+    getDialogs() {
+        return instance.get(`dialogs`)
+    }
+}

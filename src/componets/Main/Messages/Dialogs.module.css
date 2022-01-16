@@ -12,21 +12,48 @@
 
 .messagesWrap {
     padding: 0 20px;
+    overflow: auto;
+    max-height: 100vh;
 }
+
 .messageWrap {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr 5fr;
+    grid-template-areas: "image message"
+                      "name message";
+    margin-bottom: 20px;
+}
+.messageWrapOwner {
+    grid-template-columns: 5fr 1fr;
+    grid-template-areas: "message image"
+                      "message name";
     text-align: right;
 }
+.userPhotoContainer {
+    grid-area: image;
+}
+.userName {
+    grid-area: name;
+}
 .message {
-    margin-bottom: 20px;
+    grid-area: message;
+    margin-bottom: 5px;
+}
+.message span {
     background-color: rgba(111, 199, 123, 0.5);
     padding: 20px;
     border-radius: 20px 20px 20px 0;
     display: inline-block;
 }
-.myMessage {
+/* .myMessage {
     background-color: rgba(209, 207, 76, 0.5);
     border-radius: 20px 20px 0 20px;
     text-align: right;
+} */
+.myMessage span {
+    background-color: rgba(209, 207, 76, 0.5);
+    border-radius: 20px 20px 0 20px;
 }
 
 .dialog {
@@ -60,4 +87,9 @@
     border: none;
     background-color: rgb(176, 165, 212);
     border-radius: 5px;
+}
+.userPhoto {
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
 }
