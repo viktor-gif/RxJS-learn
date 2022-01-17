@@ -88,8 +88,20 @@
     background-color: rgb(176, 165, 212);
     border-radius: 5px;
 }
+.sendMessage:disabled {
+    background-color: #999;
+    color: #666;
+}
 .userPhoto {
     width: 40px;
     border-radius: 50%;
     margin-right: 10px;
+}
+
+.errorMessage {
+    margin-bottom: 20px;
+    font-size: 18px;
+    text-transform: uppercase;
+    color: red;
+
 }

@@ -37,22 +37,61 @@ type messagesType = {
     photo: string | null
 }
 
-let ws = new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx")
+
 
 const Dialogs = React.memo((props: dialogsPropsType) => {
     const [messages, setMessages] = useState<messagesType[] | null>(null)
     const [messageText, setMessageText] = useState('')
-
+    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [sendMessageState, setSendMessageState] = useState<'pending' | 'ready'>('pending')
+    const [wsChannel, setWsChannel] = useState<WebSocket | null>(null)
     
-    console.log(ws)
+    useEffect(() => {
+        let ws: WebSocket | null = null
+        const closeHandler = () => {
+            console.log('CLOSE WS')
+            setSendMessageState('pending')
+            setTimeout(() => createChannel(), 3000)
+        }
+        function createChannel() {
+            ws?.removeEventListener('close', closeHandler)
+            ws?.close()
+            ws =  new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx")
+            ws.addEventListener('close', closeHandler)
+            setWsChannel(ws)
+        }
+        createChannel()
+        
+        return () => {
+            ws?.removeEventListener('close', closeHandler)
+            ws?.close()
+            setWsChannel(null)
+        }
+    }, [])
 
     useEffect(() => {
-        ws.addEventListener('message', (e: MessageEvent) => {
+        const messageHandler = (e: MessageEvent) => {
             console.log(JSON.parse(e.data))
             let newMessages = JSON.parse(e.data)
             setMessages((prev) => prev ? [...prev, ...newMessages] : newMessages)
-        })
-    }, [])
+        }
+        wsChannel?.addEventListener('message', messageHandler)
+
+        return () => {
+            wsChannel?.removeEventListener('message', messageHandler)
+        }
+    }, [wsChannel])
+
+    useEffect(() => {
+        const openHandler = () => {
+            setSendMessageState('ready')
+        }
+        wsChannel?.addEventListener('open', openHandler)
+
+        return () => {
+            wsChannel?.removeEventListener('open', openHandler)
+        }
+    }, [wsChannel])
 
     const dialogs = props.dialogs;
 
@@ -65,9 +104,18 @@ const Dialogs = React.memo((props: dialogsPropsType) => {
     })
 
     const sendMessage = () => {
-        if (!messageText || messageText.length < 1) return
-        ws.send(messageText)
-        setMessageText('')
+        if (!messageText || messageText.length < 1) {
+            setErrorMessage("You can not send an empty message")
+            return
+        } else if (messageText.length >= 100) {
+            setErrorMessage("Max length is 100 symbols")
+            return
+        } else {
+            wsChannel?.send(messageText)
+            setMessageText('')
+            setErrorMessage(null)
+        }
+        
     }
 
     const onMessageTextChange = (e: any) => {
@@ -86,7 +134,9 @@ const Dialogs = React.memo((props: dialogsPropsType) => {
                     <textarea value={messageText}
                         onChange={onMessageTextChange}></textarea>
                 </div>
-                <button className={s.sendMessage} onClick={sendMessage}>
+                <div className={s.errorMessage}>{errorMessage}</div>
+                <button className={s.sendMessage} onClick={sendMessage}
+                    disabled={wsChannel === null || sendMessageState === 'pending'} >
                     Send message
                 </button>
             </div>
