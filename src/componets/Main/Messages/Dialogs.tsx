@@ -46,11 +46,13 @@ const Dialogs = React.memo((props: dialogsPropsType) => {
     const dispatch = useDispatch()
 
     const messages = useSelector((state: stateType) => state.chat.messages)
+    console.log(messages)
     
     useEffect(() => {
         dispatch(startMessagesListening())
         return () => {
-            stopMessagesListening()
+            dispatch(stopMessagesListening())
+
         }
     }, [])
 
