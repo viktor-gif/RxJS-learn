@@ -1,7 +1,49 @@
 import React from "react"
+import { chatMessageType } from "../componets/Main/Messages/Dialogs"
 
-let ws = new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx")
+let subscribers = [] as subscriberType[]
 
-const chatAPI = {
+let ws: WebSocket | null = null
+    const closeHandler = () => {
+        console.log('CLOSE WS')
+        setTimeout(() => createChannel(), 3000)
+    }
+    const messageHandler = (e: MessageEvent) => {
+        console.log(JSON.parse(e.data))
+        let newMessages = JSON.parse(e.data)
+        subscribers.forEach(s => s(newMessages))        
+    }
+    function createChannel() {
+        ws?.removeEventListener('close', closeHandler)
+        ws?.close()
+        ws =  new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx")
+        ws.addEventListener('close', closeHandler)
+        ws.addEventListener('message', messageHandler)
+    }
+
+export const chatAPI = {
     
+    subscribe(callback: subscriberType) {
+        subscribers.push(callback)
+        return () => {
+            subscribers.filter(s => s !== callback)
+        }
+    },
+    unsubscribe(callback: subscriberType) {
+        subscribers = subscribers.filter(s => s !== callback)
+    },
+    sendMessage(message: string) {
+        ws?.send(message)
+    },
+    start() {
+        createChannel()
+    },
+    stop() {
+        subscribers = []
+        ws?.close()
+        ws?.removeEventListener('close', closeHandler)
+        ws?.removeEventListener('message', messageHandler)
+    },
 }
+
+export type subscriberType = ((messages: chatMessageType[]) => void)

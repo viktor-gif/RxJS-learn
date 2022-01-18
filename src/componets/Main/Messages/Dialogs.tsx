@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { dialogsType } from "../../../redux/store";
-// import { messagesType } from "../../../redux/store";
+import { dialogsType, stateType } from "../../../redux/store";
 import s from "./Dialogs.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
 import avaFemale from "../../../img/ava_female.png";
 import { NavLink } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux";
+import { sendMessage, startMessagesListening, stopMessagesListening } from "../../../redux/chat-reducer";
 
 type dialogsPropsType = {
     dialogs: dialogsType
@@ -30,7 +31,7 @@ type messagePropsType = {
     userName: string
 }
 
-type messagesType = {
+export type chatMessageType = {
     userId: number
     userName: string
     message: string
@@ -38,60 +39,20 @@ type messagesType = {
 }
 
 
-
 const Dialogs = React.memo((props: dialogsPropsType) => {
-    const [messages, setMessages] = useState<messagesType[] | null>(null)
     const [messageText, setMessageText] = useState('')
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
-    const [sendMessageState, setSendMessageState] = useState<'pending' | 'ready'>('pending')
-    const [wsChannel, setWsChannel] = useState<WebSocket | null>(null)
+
+    const dispatch = useDispatch()
+
+    const messages = useSelector((state: stateType) => state.chat.messages)
     
     useEffect(() => {
-        let ws: WebSocket | null = null
-        const closeHandler = () => {
-            console.log('CLOSE WS')
-            setSendMessageState('pending')
-            setTimeout(() => createChannel(), 3000)
-        }
-        function createChannel() {
-            ws?.removeEventListener('close', closeHandler)
-            ws?.close()
-            ws =  new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx")
-            ws.addEventListener('close', closeHandler)
-            setWsChannel(ws)
-        }
-        createChannel()
-        
+        dispatch(startMessagesListening())
         return () => {
-            ws?.removeEventListener('close', closeHandler)
-            ws?.close()
-            setWsChannel(null)
+            stopMessagesListening()
         }
     }, [])
-
-    useEffect(() => {
-        const messageHandler = (e: MessageEvent) => {
-            console.log(JSON.parse(e.data))
-            let newMessages = JSON.parse(e.data)
-            setMessages((prev) => prev ? [...prev, ...newMessages] : newMessages)
-        }
-        wsChannel?.addEventListener('message', messageHandler)
-
-        return () => {
-            wsChannel?.removeEventListener('message', messageHandler)
-        }
-    }, [wsChannel])
-
-    useEffect(() => {
-        const openHandler = () => {
-            setSendMessageState('ready')
-        }
-        wsChannel?.addEventListener('open', openHandler)
-
-        return () => {
-            wsChannel?.removeEventListener('open', openHandler)
-        }
-    }, [wsChannel])
 
     const dialogs = props.dialogs;
 
@@ -103,7 +64,7 @@ const Dialogs = React.memo((props: dialogsPropsType) => {
         return <Message id={m.userId} key={index} isMe={m.userId === props.ownerId} message={m.message} ava={m.photo} userName={m.userName} />
     })
 
-    const sendMessage = () => {
+    const onsendMessage = () => {
         if (!messageText || messageText.length < 1) {
             setErrorMessage("You can not send an empty message")
             return
@@ -111,9 +72,8 @@ const Dialogs = React.memo((props: dialogsPropsType) => {
             setErrorMessage("Max length is 100 symbols")
             return
         } else {
-            wsChannel?.send(messageText)
+            dispatch(sendMessage(messageText))
             setMessageText('')
-            setErrorMessage(null)
         }
         
     }
@@ -135,14 +95,120 @@ const Dialogs = React.memo((props: dialogsPropsType) => {
                         onChange={onMessageTextChange}></textarea>
                 </div>
                 <div className={s.errorMessage}>{errorMessage}</div>
-                <button className={s.sendMessage} onClick={sendMessage}
-                    disabled={wsChannel === null || sendMessageState === 'pending'} >
+                <button className={s.sendMessage} onClick={onsendMessage}
+                    disabled={false} >
                     Send message
                 </button>
             </div>
         </div>
     )
 })
+
+
+// const Dialogs = React.memo((props: dialogsPropsType) => {
+//     const [messages, setMessages] = useState<messagesType[] | null>(null)
+//     const [messageText, setMessageText] = useState('')
+//     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+//     const [sendMessageState, setSendMessageState] = useState<'pending' | 'ready'>('pending')
+//     const [wsChannel, setWsChannel] = useState<WebSocket | null>(null)
+    
+//     useEffect(() => {
+//         let ws: WebSocket | null = null
+//         const closeHandler = () => {
+//             console.log('CLOSE WS')
+//             setSendMessageState('pending')
+//             setTimeout(() => createChannel(), 3000)
+//         }
+//         function createChannel() {
+//             ws?.removeEventListener('close', closeHandler)
+//             ws?.close()
+//             ws =  new WebSocket("wss://social-network.samuraijs.com/handlers/ChatHandler.ashx")
+//             ws.addEventListener('close', closeHandler)
+//             setWsChannel(ws)
+//         }
+//         createChannel()
+        
+//         return () => {
+//             ws?.removeEventListener('close', closeHandler)
+//             ws?.close()
+//             setWsChannel(null)
+//         }
+//     }, [])
+
+//     useEffect(() => {
+//         const messageHandler = (e: MessageEvent) => {
+//             console.log(JSON.parse(e.data))
+//             let newMessages = JSON.parse(e.data)
+//             setMessages((prev) => prev ? [...prev, ...newMessages] : newMessages)
+//         }
+//         wsChannel?.addEventListener('message', messageHandler)
+
+//         return () => {
+//             wsChannel?.removeEventListener('message', messageHandler)
+//         }
+//     }, [wsChannel])
+
+//     useEffect(() => {
+//         const openHandler = () => {
+//             setSendMessageState('ready')
+//         }
+//         wsChannel?.addEventListener('open', openHandler)
+
+//         return () => {
+//             wsChannel?.removeEventListener('open', openHandler)
+//         }
+//     }, [wsChannel])
+
+//     const dialogs = props.dialogs;
+
+//     const usersItems = dialogs.map(d => {
+//         return <Dialog id={d.id} key={d.id} name={d.name} url={d.url} sex={d.sex} />
+//     })
+
+//     const messagesItems = messages?.map((m, index) => {
+//         return <Message id={m.userId} key={index} isMe={m.userId === props.ownerId} message={m.message} ava={m.photo} userName={m.userName} />
+//     })
+
+//     const sendMessage = () => {
+//         if (!messageText || messageText.length < 1) {
+//             setErrorMessage("You can not send an empty message")
+//             return
+//         } else if (messageText.length >= 100) {
+//             setErrorMessage("Max length is 100 symbols")
+//             return
+//         } else {
+//             wsChannel?.send(messageText)
+//             setMessageText('')
+//             setErrorMessage(null)
+//         }
+        
+//     }
+
+//     const onMessageTextChange = (e: any) => {
+//         setMessageText(e.target.value);
+        
+//     }
+
+//     return (
+//         <div className={s.messagesContainer}>
+//             <div className={s.usersWrap}>
+//                 {usersItems}
+//             </div>
+//             <div className={s.messagesWrap}>
+//                 {messagesItems}
+//                 <div className={s.messageInput}>
+//                     <textarea value={messageText}
+//                         onChange={onMessageTextChange}></textarea>
+//                 </div>
+//                 <div className={s.errorMessage}>{errorMessage}</div>
+//                 <button className={s.sendMessage} onClick={sendMessage}
+//                     disabled={wsChannel === null || sendMessageState === 'pending'} >
+//                     Send message
+//                 </button>
+//             </div>
+//         </div>
+//     )
+// })
 
 export const Dialog = React.memo((props: dialogPropsType) => {
     return (

@@ -1,7 +1,9 @@
 
+import { chatMessageType } from "../componets/Main/Messages/Dialogs";
 import { dialogsReducer } from "./dialogs-reducer";
 import { profileReducer } from "./profile-reducer";
 import { sidebarReducer } from "./sidebar-reducer";
+
 
 export type dialogType = {id: number, name: string, sex: string, url: string};
 export type dialogsType = Array<dialogType>;
@@ -77,6 +79,9 @@ export type asideType = {
     friends: usersType;
     totalFriendsCount: number
 }
+export type chatType = {
+    messages: chatMessageType[]
+}
 export type stateType = {
     dialogsPage: dialogsPageType, 
     profilePage: profilePageType, 
@@ -85,6 +90,7 @@ export type stateType = {
     auth: authType
     app: appType
     aside: asideType
+    chat: chatType
 };
 export type storeType = {
     _state: stateType,
@@ -183,6 +189,9 @@ export const store: storeType = {
         aside: {
             friends: null,
             totalFriendsCount: 0
+        },
+        chat: {
+            messages: []
         }
     },
     _callSubscriber: () => {

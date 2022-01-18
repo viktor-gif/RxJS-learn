@@ -7,6 +7,7 @@ import { usersReducer } from "./users-reducer";
 import thunk from "redux-thunk";
 import { appReducer } from "./app-reducer";
 import { asideReducer } from "./aside-reducer";
+import { chatReducer } from "./chat-reducer";
 
 const reducers = combineReducers({
     profilePage: profileReducer,
@@ -15,7 +16,8 @@ const reducers = combineReducers({
     usersPage: usersReducer,
     auth: authReducer,
     app: appReducer,
-    aside: asideReducer
+    aside: asideReducer,
+    chat: chatReducer
 });
 
 const store = createStore(reducers, applyMiddleware(thunk));
