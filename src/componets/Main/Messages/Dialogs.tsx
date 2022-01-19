@@ -6,6 +6,7 @@ import avaFemale from "../../../img/ava_female.png";
 import { NavLink } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { sendMessage, startMessagesListening, stopMessagesListening } from "../../../redux/chat-reducer";
+import { Preloader } from "../../common/preloader/preloader";
 
 type dialogsPropsType = {
     dialogs: dialogsType
@@ -46,9 +47,11 @@ const Dialogs = React.memo((props: dialogsPropsType) => {
     const dispatch = useDispatch()
 
     const messages = useSelector((state: stateType) => state.chat.messages)
-    console.log(messages)
+    const status = useSelector((state: stateType) => state.chat.status)
+    
     
     useEffect(() => {
+        
         dispatch(startMessagesListening())
         return () => {
             dispatch(stopMessagesListening())
@@ -85,12 +88,21 @@ const Dialogs = React.memo((props: dialogsPropsType) => {
         
     }
 
+    if (messages.length < 1) {
+        return <Preloader />
+    }
+
+    if (status === "error") {
+        console.log("Error Chat")
+    }
+
     return (
         <div className={s.messagesContainer}>
             <div className={s.usersWrap}>
                 {usersItems}
             </div>
             <div className={s.messagesWrap}>
+                {status === "error" && <div style={{color: "red", fontSize: "20px"}}>Some error</div>}
                 {messagesItems}
                 <div className={s.messageInput}>
                     <textarea value={messageText}
@@ -98,7 +110,7 @@ const Dialogs = React.memo((props: dialogsPropsType) => {
                 </div>
                 <div className={s.errorMessage}>{errorMessage}</div>
                 <button className={s.sendMessage} onClick={onsendMessage}
-                    disabled={false} >
+                    disabled={status !== "ready"} >
                     Send message
                 </button>
             </div>

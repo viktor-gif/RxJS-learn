@@ -1,4 +1,5 @@
 
+import { statusType } from "../api/chat-api";
 import { chatMessageType } from "../componets/Main/Messages/Dialogs";
 import { dialogsReducer } from "./dialogs-reducer";
 import { profileReducer } from "./profile-reducer";
@@ -81,6 +82,7 @@ export type asideType = {
 }
 export type chatType = {
     messages: chatMessageType[]
+    status: statusType
 }
 export type stateType = {
     dialogsPage: dialogsPageType, 
@@ -191,7 +193,8 @@ export const store: storeType = {
             totalFriendsCount: 0
         },
         chat: {
-            messages: []
+            messages: [],
+            status: 'pending'
         }
     },
     _callSubscriber: () => {
