@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { dialogsType, stateType } from "../../../redux/store";
 import s from "./Dialogs.module.css";
 import avaMale from "../../../img/ava_male.jpeg";
@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux";
 import { sendMessage, startMessagesListening, stopMessagesListening } from "../../../redux/chat-reducer";
 import { Preloader } from "../../common/preloader/preloader";
+import { firstValueFrom } from "rxjs";
 
 type dialogsPropsType = {
     dialogs: dialogsType
@@ -43,11 +44,15 @@ export type chatMessageType = {
 const Dialogs = React.memo((props: dialogsPropsType) => {
     const [messageText, setMessageText] = useState('')
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [isAutoscroll, setAutoscroll] = useState(true)
 
     const dispatch = useDispatch()
 
     const messages = useSelector((state: stateType) => state.chat.messages)
     const status = useSelector((state: stateType) => state.chat.status)
+
+    const messagesAnchorRef = useRef<HTMLDivElement>(null)
+    console.log(messagesAnchorRef)
     
     
     useEffect(() => {
@@ -58,6 +63,10 @@ const Dialogs = React.memo((props: dialogsPropsType) => {
 
         }
     }, [])
+
+    useEffect(() => {
+        isAutoscroll && messagesAnchorRef.current?.scrollIntoView({behavior: "smooth"})
+    }, [messages])
 
     const dialogs = props.dialogs;
 
@@ -96,25 +105,48 @@ const Dialogs = React.memo((props: dialogsPropsType) => {
         console.log("Error Chat")
     }
 
+    const messagesScrollHandler = (e: any) => {
+        setAutoscroll(false)
+        console.log(`clientHeight: ${e.target.clientHeight}, 
+            offsetHeight: ${e.target.offsetHeight}, 
+            scrollHeight: ${e.target.scrollHeight}, 
+            scrollTop: ${e.target.scrollTop}, 
+            scrollTopMax: ${e.target.scrollTopMax},
+            `)
+        if (e.target.scrollTopMax - e.target.scrollTop < 100)
+            setAutoscroll(true)
+        
+    }
+
     return (
-        <div className={s.messagesContainer}>
-            <div className={s.usersWrap}>
-                {usersItems}
-            </div>
-            <div className={s.messagesWrap}>
-                {status === "error" && <div style={{color: "red", fontSize: "20px"}}>Some error</div>}
-                {messagesItems}
-                <div className={s.messageInput}>
-                    <textarea value={messageText}
-                        onChange={onMessageTextChange}></textarea>
+        
+            <div className={s.messagesContainer}>
+                <div className={s.usersWrap}>
+                    {usersItems}
                 </div>
-                <div className={s.errorMessage}>{errorMessage}</div>
-                <button className={s.sendMessage} onClick={onsendMessage}
-                    disabled={status !== "ready"} >
-                    Send message
-                </button>
+                <div className={s.messagesWithInput}>
+                    <div className={s.messagesWrap} onScroll={messagesScrollHandler}>
+                    
+                        {status === "error" && <div style={{color: "red", fontSize: "20px"}}>Some error</div>}
+                        {messagesItems}
+                        
+                        <div ref={messagesAnchorRef}></div>
+                    
+                    </div>
+                    <div className={s.messagesInputBlock}>
+                        <div className={s.messageInput}>
+                            <textarea value={messageText}
+                                onChange={onMessageTextChange}></textarea>
+                        </div>
+                        <div className={s.errorMessage}>{errorMessage}</div>
+                        <button className={s.sendMessage} onClick={onsendMessage}
+                            disabled={status !== "ready"} >
+                            Send message
+                        </button>
+                    </div>
+                </div>
             </div>
-        </div>
+            
     )
 })
 
@@ -241,7 +273,7 @@ export const Message = React.memo((props: messagePropsType) => {
             <div className={s.userPhotoContainer}>
                 <img className={s.userPhoto} src={props.ava || avaMale} alt="AVA" />
             </div>
-            <div>{props.userName.slice(0, 8) + "..."}</div>
+            <div>{props.userName}</div>
             <div className={s.message + " " + (props.isMe && s.myMessage)}>
                 <span>{props.message}</span>
             </div>
