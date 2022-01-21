@@ -69,7 +69,6 @@ const changeStatusHandlerCreator = (dispatch: Dispatch) => {
 
 // redux-thunk
 export const startMessagesListening = () => async(dispatch: any) => {
-    
     chatAPI.start()
     chatAPI.subscribe("messages-received", newMessageHandlerCreator(dispatch))
     chatAPI.subscribe("status-changed", changeStatusHandlerCreator(dispatch))

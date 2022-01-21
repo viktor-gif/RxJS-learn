@@ -58,7 +58,6 @@ export const chatAPI = {
         ws?.send(message)
     },
     start() {
-        if (ws) return
         createChannel()
     },
     stop() {
