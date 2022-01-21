@@ -1,5 +1,4 @@
 import React from "react"
-import { chatMessageType } from "../componets/Main/Messages/Dialogs"
 
 let subscribers = {
     "messages-received": [] as messagesSubscriberType[],
@@ -14,7 +13,6 @@ const closeHandler = () => {
     subscribers["status-changed"].forEach(s => s("pending"))
 }
 const messageHandler = (e: MessageEvent) => {
-    console.log(JSON.parse(e.data))
     let newMessages = JSON.parse(e.data)
     subscribers["messages-received"].forEach(s => s(newMessages))
 }
@@ -22,6 +20,7 @@ const openHandler = () => {
     subscribers["status-changed"].forEach(s => s("ready"))
 }
 const errorHandler = () => {
+    console.log('ERROR<<<<<<')
     subscribers["status-changed"].forEach(s => s("error"))
 }
 function createChannel() {
@@ -69,8 +68,15 @@ export const chatAPI = {
     },
 }
 
-export type messagesSubscriberType = ((messages: chatMessageType[]) => void)
+export type messagesSubscriberType = ((messages: chatMessageAPIType[]) => void)
 export type statusSubscriberType = ((status: statusType) => void)
 
 export type eventType = "messages-received" | "status-changed"
 export type statusType = "pending" | "ready" | "error"
+
+export type chatMessageAPIType = {
+    userId: number
+    userName: string
+    message: string
+    photo: string | null
+}

@@ -1,8 +1,9 @@
 
 import { Dispatch } from "redux"
-import { chatAPI, statusType } from "../api/chat-api"
+import { chatAPI, chatMessageAPIType, statusType } from "../api/chat-api"
 import { chatMessageType } from "../componets/Main/Messages/Dialogs"
 import { chatType } from "./store"
+import { v1 } from "uuid"
 
 const UPDATE_MESSAGES = 'Viktor-gif/chat/UPDATE_MESSAGES'
 const REMOVE_MESSAGES = 'Viktor-gif/chat/REMOVE_MESSAGES'
@@ -16,11 +17,13 @@ const initialState = {
 export const chatReducer = (state: chatType = initialState, action: any) => {
     switch (action.type) {
         case UPDATE_MESSAGES:
-            
+            action.messages && console.log(...action.messages)
             return {
                 ...state,
-                messages: [...state.messages, ...action.newMessages]
+                messages: [...state.messages, ...action.newMessages.map((m: any) => ({...m, id: v1()}))]
+                    .filter((m, index, array) => index >= array.length - 100 )
             }
+            
         case REMOVE_MESSAGES:
             return {
                 ...state,
@@ -35,12 +38,12 @@ export const chatReducer = (state: chatType = initialState, action: any) => {
     }
 }
 
-export const updateMessages = (newMessages: chatMessageType[]) => ({type: UPDATE_MESSAGES, newMessages})
+export const updateMessages = (newMessages: chatMessageAPIType[]) => ({type: UPDATE_MESSAGES, newMessages})
 export const setStatus = (status: statusType) => ({type: SET_STATUS, status})
 export const removeMessages = () => ({type: REMOVE_MESSAGES})
 
 // new messages from WebSocket (chat)
-let _newMessageHandler: ((messages: chatMessageType[]) => void) | null = null
+let _newMessageHandler: ((messages: chatMessageAPIType[]) => void) | null = null
 const newMessageHandlerCreator = (dispatch: Dispatch) => {
     
     if (_newMessageHandler === null) {
