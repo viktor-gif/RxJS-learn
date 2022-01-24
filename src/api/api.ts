@@ -2,7 +2,7 @@ import axios from "axios"
 import { profileInfoTypeWithoutPhotos } from "../componets/Main/Profile/ProfileInfo/ProfileInfo"
 
 
-const instance = axios.create({
+export const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
     headers: {
@@ -63,8 +63,3 @@ export const profileAPI = {
     }
 }
 
-export const dialogsAPI = {
-    getDialogs() {
-        return instance.get(`dialogs`)
-    }
-}

@@ -1,7 +1,7 @@
 
 import { Dispatch } from "redux"
 import { chatAPI, chatMessageAPIType, statusType } from "../api/chat-api"
-import { chatMessageType } from "../componets/Main/Messages/Dialogs"
+import { chatMessageType } from "../componets/Main/Chat/Chat"
 import { chatType } from "./store"
 import { v1 } from "uuid"
 
@@ -10,7 +10,7 @@ const REMOVE_MESSAGES = 'Viktor-gif/chat/REMOVE_MESSAGES'
 const SET_STATUS = 'Viktor-gif/chat/SET_STATUS'
 
 const initialState = {
-    messages: [] as chatMessageType[],
+    messages: null as chatMessageType[] | null,
     status: "pending" as statusType
 }
 
@@ -20,7 +20,10 @@ export const chatReducer = (state: chatType = initialState, action: any) => {
             action.messages && console.log(...action.messages)
             return {
                 ...state,
-                messages: [...state.messages, ...action.newMessages.map((m: any) => ({...m, id: v1()}))]
+                messages: state.messages 
+                    ? [...state.messages, ...action.newMessages.map((m: any) => ({...m, id: v1()}))]
+                    .filter((m, index, array) => index >= array.length - 100 )
+                    : [...action.newMessages.map((m: any) => ({...m, id: v1()}))]
                     .filter((m, index, array) => index >= array.length - 100 )
             }
             
