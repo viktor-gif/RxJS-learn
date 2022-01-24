@@ -5,10 +5,13 @@ import { dialogsPageType, dialogsType } from "./store";
 
 const SET_DIALOGS = "Viktor-gif/dialogs/SET_DIALOGS"
 const SET_DIALOG_MESSAGES = "Viktor-gif/dialogs/SET_DIALOG_MESSAGES"
+const CLEAN_DIALOG_MESSAGES = "Viktor-gif/dialogs/CLEAN_DIALOG_MESSAGES"
+const SET_DIALOG_ID = "Viktor-gif/dialogs/SET_DIALOG_ID"
 
 const initialState = {
     dialogMessages: null,
-    dialogs: null
+    dialogs: null,
+    currentDialogId: null
 }
 
 export const dialogsReducer = (state: dialogsPageType = initialState, action: any) => {
@@ -25,6 +28,16 @@ export const dialogsReducer = (state: dialogsPageType = initialState, action: an
                 dialogMessages: [...action.messages]
                 .filter((m, index, array) => index >= array.length - 100 )
             }
+        case CLEAN_DIALOG_MESSAGES:
+            return {
+                ...state,
+                dialogMessages: null
+            }
+        case SET_DIALOG_ID:
+            return {
+                ...state,
+                currentDialogId: action.id
+            }
         default: return state
     }
 }
@@ -33,6 +46,8 @@ export const dialogsReducer = (state: dialogsPageType = initialState, action: an
 export const dialogsPageActions = {
     setDialogs: (dialogs: dialogsType) => ({type: SET_DIALOGS, dialogs}),
     setDialogMessages: (messages: dialogsType) => ({type: SET_DIALOG_MESSAGES, messages}),
+    cleanDialogMessages: () => ({type: CLEAN_DIALOG_MESSAGES}),
+    setDialogId: (id: number) => ({type: SET_DIALOG_ID, id}),
 }
 
 // thunks
@@ -44,5 +59,12 @@ export const getDialogs = () => (dispatch: Dispatch) => {
 export const getDialogMessages = (dialogId: number) => (dispatch: Dispatch) => {
     dialogsAPI.getDialogMessages(dialogId).then(response => {
         dispatch(dialogsPageActions.setDialogMessages(response.data.items))
+    })
+}
+export const sendDialogMessage = (text: string, dialogId: number) => (dispatch: any) => {
+    dialogsAPI.sendDialogMessage(text, dialogId).then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(getDialogMessages(dialogId))
+        }
     })
 }

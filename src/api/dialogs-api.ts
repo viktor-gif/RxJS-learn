@@ -6,6 +6,9 @@ export const dialogsAPI = {
     },
     getDialogMessages(dialogId: number) {
         return instance.get(`dialogs/${dialogId}/messages`)
+    },
+    sendDialogMessage(message: string, dialogId: number) {
+        return instance.post(`dialogs/${dialogId}/messages`, {body: message})
     }
 }
 

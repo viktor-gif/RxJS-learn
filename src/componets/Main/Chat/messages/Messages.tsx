@@ -14,6 +14,7 @@ type propsType = {
     status: statusType
     chatMessages: chatMessageType[] | null
     dialogMessages: dialogMessageType[] | null
+    currentDialogId: number
 }
 
 export type chatMessageType = chatMessageAPIType & {id: string}
@@ -67,7 +68,7 @@ export const Messages = React.memo((props: propsType) => {
                 <div ref={messagesAnchorRef}></div>
             
             </div>
-            <MessagesForm status={props.status} />
+            <MessagesForm currentDialogId={props.currentDialogId} chatMessages={props.chatMessages} status={props.status} />
         </div>
             
     )

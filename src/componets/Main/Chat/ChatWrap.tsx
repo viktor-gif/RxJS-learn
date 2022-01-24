@@ -16,6 +16,7 @@ type propsType = {
     chatMessages: chatMessageType[] | null
     chatStatus: statusType
     dialogMessages: dialogMessageType[] | null
+    currentDialogId: number
 
     getDialogs: () => void
     getDialogMessages: (dialogId: number) => void
@@ -27,7 +28,7 @@ const ChatsWrap = (props: propsType) => {
             <Chat dialogs={props.dialogs} ownerId={props.ownerId}
                 getDialogs={props.getDialogs} getDialogMessages={props.getDialogMessages}
                 chatMessages={props.chatMessages} chatStatus={props.chatStatus}
-                dialogMessages={props.dialogMessages} />
+                dialogMessages={props.dialogMessages} currentDialogId={props.currentDialogId} />
         </Suspense>
         
     </div>
@@ -39,7 +40,8 @@ const mapStateToProps = (state: stateType) => {
         ownerId: state.profilePage.profileInfo?.userId,
         chatMessages: state.chat.messages,
         chatStatus: state.chat.status,
-        dialogMessages: state.dialogsPage.dialogMessages
+        dialogMessages: state.dialogsPage.dialogMessages,
+        currentDialogId: state.dialogsPage.currentDialogId
     }
 }
 

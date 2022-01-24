@@ -3,9 +3,13 @@ import s from "./Messages.module.css";
 import { useDispatch } from "react-redux";
 import { sendMessage } from "../../../../redux/chat-reducer";
 import { statusType } from "../../../../api/chat-api";
+import { chatMessageType } from "./Messages";
+import { sendDialogMessage } from "../../../../redux/dialogs-reducer";
 
 type propsType = {
     status: statusType
+    chatMessages: chatMessageType[] | null
+    currentDialogId: number
 }
 
 export const MessagesForm = React.memo((props: propsType) => {
@@ -24,7 +28,9 @@ export const MessagesForm = React.memo((props: propsType) => {
             setErrorMessage("Max length is 100 symbols")
             return
         } else {
-            dispatch(sendMessage(messageText))
+            props.chatMessages 
+                ? dispatch(sendMessage(messageText)) 
+                : dispatch(sendDialogMessage(messageText, props.currentDialogId))
             setMessageText('')
             setErrorMessage(null)
         }
@@ -44,7 +50,7 @@ export const MessagesForm = React.memo((props: propsType) => {
             </div>
             <div className={s.errorMessage}>{errorMessage}</div>
             <button className={s.sendMessage} onClick={onsendMessage}
-                disabled={props.status !== "ready"} >
+                disabled={props.chatMessages ? props.status !== "ready" : false} >
                 Send message
             </button>
         </div>

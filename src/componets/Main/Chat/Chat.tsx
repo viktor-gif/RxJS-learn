@@ -12,6 +12,7 @@ type propsType = {
     chatMessages: chatMessageType[] | null
     chatStatus: statusType
     dialogMessages: dialogMessageType[] | null
+    currentDialogId: number
 
     getDialogs: () => void
     getDialogMessages: (dialogId: number) => void
@@ -26,7 +27,7 @@ const Chat = React.memo((props: propsType) => {
         <div className={s.chatContainer}>
             <Dialogs dialogs={props.dialogs} getDialogs={props.getDialogs} getDialogMessages={props.getDialogMessages} />
             <Messages chatMessages={props.chatMessages} dialogMessages={props.dialogMessages} status={props.chatStatus}
-                ownerId={props.ownerId} />
+                ownerId={props.ownerId} currentDialogId={props.currentDialogId} />
             
             {/* <Route path="chat" render={() => <Messages messages={props.chatMessages} status={props.chatStatus}
                 ownerId={props.ownerId} />} /> */}

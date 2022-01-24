@@ -18,7 +18,8 @@ export type dialogType = {
 export type dialogsType = Array<dialogType> | null;
 export type dialogsPageType = {
     dialogs: dialogsType
-    dialogMessages: dialogMessageType[] | null
+    dialogMessages: dialogMessageType[] | null,
+    currentDialogId: number | null
 };
 
 
@@ -128,7 +129,8 @@ export const store: storeType = {
                     }
                 }
             ],
-            dialogMessages: null
+            dialogMessages: null,
+            currentDialogId: null
         },
         
         profilePage: {

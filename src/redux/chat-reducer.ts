@@ -30,7 +30,7 @@ export const chatReducer = (state: chatType = initialState, action: any) => {
         case REMOVE_MESSAGES:
             return {
                 ...state,
-                messages: []
+                messages: null
             }
         case SET_STATUS:
             return {
@@ -43,7 +43,7 @@ export const chatReducer = (state: chatType = initialState, action: any) => {
 
 export const updateMessages = (newMessages: chatMessageAPIType[]) => ({type: UPDATE_MESSAGES, newMessages})
 export const setStatus = (status: statusType) => ({type: SET_STATUS, status})
-export const removeMessages = () => ({type: REMOVE_MESSAGES})
+export const removeChatMessages = () => ({type: REMOVE_MESSAGES})
 
 // new messages from WebSocket (chat)
 let _newMessageHandler: ((messages: chatMessageAPIType[]) => void) | null = null
@@ -81,7 +81,7 @@ export const stopMessagesListening = () => (dispatch: any) => {
     chatAPI.stop()
     chatAPI.unsubscribe("messages-received", newMessageHandlerCreator(dispatch))
     chatAPI.unsubscribe("status-changed", changeStatusHandlerCreator(dispatch))
-    dispatch(removeMessages())
+    dispatch(removeChatMessages())
 }
 export const sendMessage = (message: string) => (dispatch: any) => {
     
