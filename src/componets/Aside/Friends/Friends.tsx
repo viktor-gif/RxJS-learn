@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
-import { getFriends, setFriendsCount } from "../../../redux/aside-reducer"
+import { getFriends } from "../../../redux/aside-reducer"
 import { stateType, usersType } from "../../../redux/store"
 import userPhoto from "../../../img/ava_male.jpeg"
 import s from "./Friends.module.css"

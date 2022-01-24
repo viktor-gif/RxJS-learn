@@ -1,8 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import s from "./Messages.module.css";
-import { useDispatch } from "react-redux";
-import { startMessagesListening, stopMessagesListening } from "../../../../redux/chat-reducer";
-import { Preloader } from "../../../common/preloader/preloader";
 import { chatMessageAPIType, statusType } from "../../../../api/chat-api";
 import { Message } from "./Message";
 import { MessagesForm } from "./MessagesForm";
@@ -36,13 +33,9 @@ export const Messages = React.memo((props: propsType) => {
         return <Message userId={m.userId} key={m.id} isMe={m.userId === props.ownerId} message={m.message} ava={m.photo} userName={m.userName} />
     })
     const dialogMessagesItems = props.dialogMessages?.map((m) => {
-        return <Message userId={m.id} key={m.id.toString()} isMe={m.senderId === props.ownerId || m.recipientId === props.ownerId}
+        return <Message userId={m.id} key={m.id.toString()} isMe={m.senderId === props.ownerId}
             message={m.body} ava={avaMale} userName={m.senderName} />
     })
-
-    // if (props.messages && props.messages.length < 1) {
-    //     return <Preloader />
-    // }
 
     if (props.status && props.status === "error") {
         console.log("Error Chat")

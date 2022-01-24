@@ -14,3 +14,23 @@
 .navList a.active {
     color: gold;
 }
+
+@media(max-width: 575px) {
+    .navContainer {
+        margin-bottom: 0;
+        padding: 15px;
+    }
+    .navList {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .navList a {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+    .navList a li {
+        font-size: 20px;
+        line-height: 40px;
+    }
+}

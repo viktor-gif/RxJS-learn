@@ -84,3 +84,9 @@
     transform: rotate(90deg);
     border-radius: 3px;
 }
+
+@media(max-width: 575px) {
+    .friendsBlock {
+        display: none;
+    }
+}

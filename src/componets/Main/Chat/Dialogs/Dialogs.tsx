@@ -67,7 +67,7 @@ export const Dialog = React.memo((props: dialogPropsType) => {
             <div className={s.avatar} onClick={getDialogMessages}>
                 <img src={props.url || avaMale} alt="User" />
             </div>
-            <div className={s.userName}>{props.name}</div>
+            <div className={s.userName}>{props.name.slice(0, 5) + "..."}</div>
         </div>
     )
 })

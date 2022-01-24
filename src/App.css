@@ -34,3 +34,15 @@
   background-color: rgb(71, 71, 71);
 }
 
+@media(max-width: 575px) {
+  .content-wrapper {
+    margin: 0 20px;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr;
+    grid-template-areas: "header"
+                        "nav"
+                        "main"
+                        "footer"
+  }
+}
+

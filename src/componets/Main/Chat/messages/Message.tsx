@@ -13,7 +13,7 @@ type propsType = {
 }
 
 export const Message = React.memo((props: propsType) => {
-    
+    console.log(props.isMe)
     return (
         <div className={s.messageWrap + " " + (props.isMe && s.messageWrapOwner)}>
             <div className={s.userPhotoContainer}>
@@ -21,7 +21,7 @@ export const Message = React.memo((props: propsType) => {
                     <img className={s.userPhoto} src={props.ava || avaMale} alt="AVA" />
                 </NavLink>
             </div>
-            <div>{props.userName}</div>
+            <div>{props.userName.slice(0, 5) + "..."}</div>
             <div className={s.message + " " + (props.isMe && s.myMessage)}>
                 <span>{props.message}</span>
             </div>
