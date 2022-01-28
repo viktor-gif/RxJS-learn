@@ -9,6 +9,12 @@ export const dialogsAPI = {
     },
     sendDialogMessage(message: string, dialogId: number) {
         return instance.post(`dialogs/${dialogId}/messages`, {body: message})
+    },
+    updateOrAddDialog(userId: number) {
+        return instance.put(`dialogs/${userId}`)
+    },
+    deleteMessage(id: number | string) {
+        return instance.delete(`dialogs/messages/${id}`)
     }
 }
 

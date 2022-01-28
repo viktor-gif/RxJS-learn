@@ -5,7 +5,6 @@
   position: relative;
 }
 .content-wrapper {
-  margin: 0 20px;
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: 1fr 3fr;
@@ -34,15 +33,96 @@
   background-color: rgb(71, 71, 71);
 }
 
+.chatWrap {
+  background-color: antiquewhite;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  min-width: 320px;
+  max-width: 600px;
+  max-height: 500px;
+  overflow: auto;
+  padding-top: 20px;
+  box-sizing: border-box;
+  transition: bottom .5s ease-out;
+}
+.isCollapsedChat {
+  bottom: -450px;
+}
+
+.chatOptions {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  display: flex;
+}
+.chatOptionsItems {
+  margin-right: 10px;
+}
+.chatOptionsItems:last-child {
+  margin-right: 0;
+}
+.chatCloseButton,
+.chaCollapseButton,
+.chatExpandButton {
+  position: relative;
+  width: 15px;
+  height: 15px;
+}
+.chatCloseButton::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  content: "";
+  background-color: #666;
+  width: 15px;
+  height: 3px;
+  transform: rotate(45deg);
+}
+.chatCloseButton::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  content: "";
+  background-color: #666;
+  width: 15px;
+  height: 3px;
+  transform: rotate(135deg);
+}
+.chaCollapseButton::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  background-color: #666;
+  width: 15px;
+  height: 3px;
+}
+.chatExpandButton::before {
+  box-sizing: border-box;
+  content: "";
+  position: absolute;
+  right: 0;
+  top: -4px;
+  border: 3px solid #666;
+  width: 15px;
+  height: 10px;
+}
+
 @media(max-width: 575px) {
   .content-wrapper {
-    margin: 0 20px;
     grid-template-rows: auto;
     grid-template-columns: 1fr;
     grid-template-areas: "header"
                         "nav"
                         "main"
                         "footer"
+  }
+  .isCollapsedChat {
+    bottom: -250px;
+  }
+  .chatWrap {
+    max-height: 300px;
   }
 }
 

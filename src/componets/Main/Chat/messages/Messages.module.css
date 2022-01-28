@@ -81,3 +81,28 @@
 .messagesForm {
     padding: 15px;
 }
+
+.deleteMessageButton {
+    width: 200%;
+}
+
+@media(max-width: 575px) {
+    .message span {
+        padding: 10px;
+        border-radius: 20px 20px 20px 0;
+    }
+    .userPhoto {
+        width: 30px;
+        margin-right: 10px;
+    }
+    .message {
+        grid-area: message;
+        margin-bottom: 0;
+        font-size: 12px;
+    }
+    .messagesWrap {
+        padding: 0 10px;
+        overflow: auto;
+        max-height: 300px;
+    }
+}

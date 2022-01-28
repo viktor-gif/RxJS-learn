@@ -4,7 +4,7 @@ import s from "./Dialogs.module.css"
 import avaMale from "../../../../img/ava_male.jpeg";
 import { useDispatch } from "react-redux";
 import { startMessagesListening, stopMessagesListening } from "../../../../redux/chat-reducer";
-import { dialogsPageActions } from "../../../../redux/dialogs-reducer";
+import { dialogsPageActions, updateOrAddDialog } from "../../../../redux/dialogs-reducer";
 
 
 type dialogsPropsType = {
@@ -60,6 +60,7 @@ export const Dialog = React.memo((props: dialogPropsType) => {
         dispatch(stopMessagesListening())
         props.getDialogMessages(props.id)
         dispatch(dialogsPageActions.setDialogId(props.id))
+        dispatch(updateOrAddDialog(props.id))
     }
 
     return (

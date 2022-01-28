@@ -94,6 +94,6 @@
 @media(max-width: 575px) {
     .chatContainer {
         padding: 10px;
-        grid-template-columns: 1fr 6fr;
+        grid-template-columns: 1fr 4fr;
     }
 }

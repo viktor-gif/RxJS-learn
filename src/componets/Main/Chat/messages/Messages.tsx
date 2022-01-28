@@ -12,6 +12,8 @@ type propsType = {
     chatMessages: chatMessageType[] | null
     dialogMessages: dialogMessageType[] | null
     currentDialogId: number
+
+    deleteMessage: (id: number | string, dialogId: number) => void
 }
 
 export type chatMessageType = chatMessageAPIType & {id: string}
@@ -27,14 +29,17 @@ export const Messages = React.memo((props: propsType) => {
         isAutoscroll && messagesAnchorRef.current?.scrollIntoView({behavior: "smooth"})
     }, [props.chatMessages, props.dialogMessages])
 
-
-
     const chatMessagesItems = props.chatMessages?.map((m) => {
-        return <Message userId={m.userId} key={m.id} isMe={m.userId === props.ownerId} message={m.message} ava={m.photo} userName={m.userName} />
+        return <Message id={m.userId} key={m.id} isMe={m.userId === props.ownerId}
+            message={m.message} ava={m.photo} userName={m.userName}
+            messageType={"commonChat"} deleteMessage = {props.deleteMessage}
+            senderId={1} recipientId={1} />
     })
     const dialogMessagesItems = props.dialogMessages?.map((m) => {
-        return <Message userId={m.id} key={m.id.toString()} isMe={m.senderId === props.ownerId}
-            message={m.body} ava={avaMale} userName={m.senderName} />
+        return <Message id={m.id} key={m.id.toString()} isMe={m.senderId === props.ownerId}
+            message={m.body} ava={avaMale} userName={m.senderName}
+            messageType={"dialog"}deleteMessage = {props.deleteMessage}
+            senderId={m.senderId} recipientId={m.recipientId} />
     })
 
     if (props.status && props.status === "error") {

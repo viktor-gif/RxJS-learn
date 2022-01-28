@@ -6,8 +6,6 @@ import { Preloader } from "../../../common/preloader/preloader";
 import { ProfileStatus } from "./ProfileStatus";
 import downLoadIcon from "../../../../img/profile/icons/download_button.png"
 import {Formik, Form, Field} from "formik"
-import { Input } from "../../../common/upgradedComponents/Inputs";
-import { setegid } from "process";
 
 export type profileInfoTypeWithoutPhotos = {
     aboutMe: string | null
@@ -28,6 +26,9 @@ type profileInfoPropsType = {
     setStatus: (status: string, userId: number) => void
     savePhoto: (photo: File) => void
     updateProfileInfo: (setEdit: any, setErrorMessage: any, userId: number | null, profileInfo: profileInfoTypeWithoutPhotos) => void
+    setOpenChat: (isOpen: boolean) => void
+    updateOrAddDialog: (userId: number) => void
+    getDialogMessages: (dialogId: number) => void
 
 }
 
@@ -57,6 +58,12 @@ export const ProfileInfo = (props: profileInfoPropsType) => {
         if(e.target.files.length) {
             props.savePhoto(e.target.files[0])
         }
+    }
+
+    const onSendMessageClick = () => {
+        props.setOpenChat(true)
+        info && props.updateOrAddDialog(info.userId)
+        info && props.getDialogMessages(info.userId)
     }
 
     return (
@@ -102,7 +109,9 @@ export const ProfileInfo = (props: profileInfoPropsType) => {
                                 {contactsItems}
                             </ul>
                         </ul>
-                        <button onClick={() => setEdit(true)}>Edit profile info</button>
+                        {props.isOwner 
+                            ? <button onClick={() => setEdit(true)}>Edit profile info</button>
+                            : <button onClick={onSendMessageClick}>Send message</button>}
                     </div>
                     :
                     <Formik

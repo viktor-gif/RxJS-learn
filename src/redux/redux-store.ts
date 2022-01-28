@@ -20,7 +20,7 @@ const reducers = combineReducers({
     chat: chatReducer
 });
 
-const store = createStore(reducers, applyMiddleware(thunk));
+export const store = createStore(reducers, applyMiddleware(thunk));
 
 //@ts-ignore
 window.store = store;

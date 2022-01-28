@@ -2,7 +2,6 @@
 import { statusType } from "../api/chat-api";
 import { dialogMessageType } from "../api/dialogs-api";
 import { chatMessageType } from "../componets/Main/Chat/Chat";
-import { dialogsReducer } from "./dialogs-reducer";
 import { profileReducer } from "./profile-reducer";
 import { sidebarReducer } from "./sidebar-reducer";
 
@@ -86,6 +85,7 @@ export type authType = {
 }
 export type appType = {
     initialized: boolean
+    isOpendChat: boolean
 }
 export type asideType = {
     friends: usersType;
@@ -198,7 +198,8 @@ export const store: storeType = {
             errorMessage: ''
         },
         app: {
-            initialized: false
+            initialized: false,
+            isOpendChat: false
         },
         aside: {
             friends: null,

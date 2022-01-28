@@ -2,6 +2,7 @@
 
 .dialogsWrap {
     border-right: 2px solid #999;
+    overflow: auto;
 }
 .commonChatBtn {
     margin-bottom: 20px;
@@ -26,6 +27,9 @@
 }
 
 @media(max-width: 575px) {
+    .dialogsWrap {
+        max-height: 300px;
+    }
     .avatar img {
         width: 50px;
     }

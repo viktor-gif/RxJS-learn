@@ -68,3 +68,17 @@ export const sendDialogMessage = (text: string, dialogId: number) => (dispatch: 
         }
     })
 }
+export const updateOrAddDialog = (userId: number) => (dispatch: any) => {
+    dialogsAPI.updateOrAddDialog(userId).then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(getDialogs())
+        }
+    })
+}
+export const deleteMessage = (id: number | string, dialogId: number) => (dispatch: any) => {
+    dialogsAPI.deleteMessage(id).then(response => {
+        if (response.data.resultCode === 0) {
+            dispatch(getDialogMessages(dialogId))
+        }
+    })
+}

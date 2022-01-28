@@ -4,6 +4,9 @@ import { connect } from "react-redux";
 import { profileInfoType, stateType } from "../../../../redux/store";
 import { getProfileData, getStatus, setStatus, savePhoto, updateProfileInfo } from "../../../../redux/profile-reducer";
 import { withRouter } from "react-router";
+import { setOpenChat } from "../../../../redux/app-reducer"
+import { updateOrAddDialog } from "../../../../redux/dialogs-reducer"
+import { getDialogMessages } from "../../../../redux/dialogs-reducer"
 
 type propsType = {
     status: string | null
@@ -18,7 +21,12 @@ type propsType = {
     setStatus: (status: string, userId: number) => void
     savePhoto: (photo: File) => void
     updateProfileInfo: (setEdit: any, setErrorMessage: any, userId: number | null, profileInfo: profileInfoTypeWithoutPhotos) => void
+    setOpenChat: (isOpen: boolean) => void
+    updateOrAddDialog: (userId: number) => void
+    getDialogMessages: (dialogId: number) => void
 }
+
+
 
 const ProfileInfoWrapMiddle = (props: propsType) => {
     
@@ -44,7 +52,10 @@ const ProfileInfoWrapMiddle = (props: propsType) => {
                     setStatus={props.setStatus}
                     isOwner={!props.match.params.userId}
                     savePhoto={props.savePhoto}
-                    updateProfileInfo={props.updateProfileInfo} />
+                    updateProfileInfo={props.updateProfileInfo}
+                    setOpenChat={props.setOpenChat}
+                    updateOrAddDialog={props.updateOrAddDialog}
+                    getDialogMessages={props.getDialogMessages} />
     )
 }
 
@@ -56,5 +67,6 @@ const mapStateToProps = (state: stateType) => ({
 })
 
 export const ProfileInfoWrap = withRouter(connect(mapStateToProps, {
-    getProfileData, getStatus, setStatus, savePhoto, updateProfileInfo
+    getProfileData, getStatus, setStatus, savePhoto, updateProfileInfo,
+    setOpenChat, updateOrAddDialog, getDialogMessages
 })(ProfileInfoWrapMiddle))
