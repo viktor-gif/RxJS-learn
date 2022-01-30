@@ -10,15 +10,19 @@
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: 1fr 5fr;
-    grid-template-areas: "image message"
-                      "name message";
+    grid-template-areas: "image name"
+                      "message message"
+                      "deleteButton deleteButton";
     margin-bottom: 20px;
+    align-items: center;
+    gap: 10px;
 }
 .messageWrapOwner {
     grid-template-columns: 5fr 1fr;
-    grid-template-areas: "message image"
-                      "message name";
-    text-align: right;
+    grid-template-areas: "name image"
+                      "message message"
+                      "deleteButton deleteButton";
+    justify-items: end;
 }
 .userPhotoContainer {
     grid-area: image;
@@ -28,7 +32,15 @@
 }
 .message {
     grid-area: message;
-    margin-bottom: 5px;
+}
+.deleteMessageButton {
+    display: inline;
+    grid-area: deleteButton;
+    width: fit-content;
+    border: none;
+    background-color: rgb(235, 115, 115);
+    padding: 5px;
+    font-size: 10px;
 }
 .message span {
     background-color: rgba(111, 199, 123, 0.5);
@@ -82,9 +94,7 @@
     padding: 15px;
 }
 
-.deleteMessageButton {
-    width: 200%;
-}
+
 
 @media(max-width: 575px) {
     .message span {

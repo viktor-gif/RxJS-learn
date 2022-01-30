@@ -33,7 +33,7 @@ export const Message = React.memo((props: propsType) => {
                     <img className={s.userPhoto} src={props.ava || avaMale} alt="AVA" />
                 </NavLink>
             </div>
-            <div>{props.userName.slice(0, 5) + "..."}</div>
+            <div>{props.userName}</div>
             <div className={s.message + " " + (props.isMe && s.myMessage)}>
                 <span>{props.message}</span>
             </div>
