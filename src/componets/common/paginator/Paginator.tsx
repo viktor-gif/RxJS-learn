@@ -14,7 +14,7 @@ type paginatorPropsType = {
     getUsers: (pageNumber: number, term: string, isFriend: boolean) => void
 }
 
-export const Paginator = React.memo((props: paginatorPropsType) => {
+export const Paginator: React.FC<paginatorPropsType> = React.memo((props: paginatorPropsType) => {
 
     const pagesCount: number | null = props.usersCount && Math.ceil(props.usersCount / props.pageSize)
 

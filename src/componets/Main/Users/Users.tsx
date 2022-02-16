@@ -6,6 +6,7 @@ import { Preloader } from "../../common/preloader/preloader";
 import { NavLink } from "react-router-dom";
 import { Paginator } from "../../common/paginator/Paginator";
 import { SearchInput } from "../../common/searchInput/SearchInput";
+import { usersAPI } from "../../../api/api";
 
 export type usersPropsType = {
     users: usersType
@@ -37,14 +38,20 @@ type userPropsType = {
 
 export const Users = React.memo((props: usersPropsType) => {
 
-    const [term, setTerm] = useState('')
-    const [isFriend, setIsFriend] = useState(false)
-    const [currentPage, setCurrentPage] = useState(1)
-    const [currentPorsion, setCurrentPorsion] = useState(1)
+    const [term, setTerm] = useState<string>('')
+    const [isFriend, setIsFriend] = useState<boolean>(false)
+    const [currentPage, setCurrentPage] = useState<number>(1)
+    const [currentPorsion, setCurrentPorsion] = useState<number>(1)
 
     useEffect(() => {
         // parameters is gettinng from redux-state, users-reducer
         props.getUsers(props.currentPage, props.term, props.isFriend)
+    }, [])
+
+    useEffect(() => {
+        usersAPI.getUsersMy()
+        .then(res => console.log(res))
+        
     }, [])
     
     const usersItems = props.users?.map(u => {

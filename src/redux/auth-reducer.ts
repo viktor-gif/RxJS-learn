@@ -14,7 +14,7 @@ const initialState = {
     errorMessage: '',
 }
 
-export const authReducer = (state: authType = initialState, action: any) => {
+export const authReducer = (state: authType = initialState, action: any): authType => {
     switch (action.type) {
         
         case SET_AUTH_DATA:
@@ -37,7 +37,8 @@ export const authReducer = (state: authType = initialState, action: any) => {
     }
 }
 
-export const setAuthData = (data: authDataType, isAuth: boolean) => {
+type setAuthDataType = {type: typeof SET_AUTH_DATA, isAuth: boolean, data: authDataType}
+export const setAuthData = (data: authDataType, isAuth: boolean): setAuthDataType => {
     return {type: SET_AUTH_DATA, data, isAuth}
 }
 export const setErrorMessage = ( message: string) => {

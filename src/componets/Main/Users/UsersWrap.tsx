@@ -4,8 +4,9 @@ import { connect } from "react-redux";
 import { Users } from "./Users";
 import { getUsers, followPost, followDelete } from "../../../redux/users-reducer";
 import { getUsersRes } from "../../../selectors/users-selectors";
+import { appStateType } from "../../../redux/redux-store";
 
-export type usersWrapPropsType = {
+type mapStatePropstype = {
     users: usersType
     usersCount: number | null
     pageSize: number
@@ -14,13 +15,16 @@ export type usersWrapPropsType = {
     isFriend: boolean
     inProgress: boolean
     followingInProgressUsersId: number[]
-
+}
+type mapDispatchPropsType = {
     getUsers: (pageSize: number, pageNumber: number, term: string, isFriend: boolean) => void
     followPost: (userId: number) => void
     followDelete: (userId: number) => void
 }
+type ownPropsType = {}
+type propsType = mapStatePropstype & mapDispatchPropsType & ownPropsType
 
-const  UsersWrapMiddle = React.memo((props: usersWrapPropsType) => {
+const  UsersWrapMiddle: React.FC<propsType> = React.memo((props: propsType) => {
     const getUsers = (pageNumber: number, term: string, isFriend: boolean) => {
         props.getUsers(props.pageSize, pageNumber, term, isFriend)
     }
@@ -40,7 +44,7 @@ const  UsersWrapMiddle = React.memo((props: usersWrapPropsType) => {
                  />
 })
 
-const mapStateToProps = (state: stateType) => {
+const mapStateToProps = (state: appStateType) => {
     return {
        users: getUsersRes(state),
        usersCount: state.usersPage.usersCount,
@@ -53,7 +57,7 @@ const mapStateToProps = (state: stateType) => {
     }
 }
 
-export const UsersWrap = connect(mapStateToProps, { getUsers,
+export const UsersWrap = connect<mapStatePropstype, mapDispatchPropsType, ownPropsType, appStateType>(mapStateToProps, { getUsers,
     followPost, followDelete
     //@ts-ignore
 })(UsersWrapMiddle)

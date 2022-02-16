@@ -9,7 +9,7 @@ import { appReducer } from "./app-reducer";
 import { asideReducer } from "./aside-reducer";
 import { chatReducer } from "./chat-reducer";
 
-const reducers = combineReducers({
+const rootReducer = combineReducers({
     profilePage: profileReducer,
     dialogsPage: dialogsReducer,
     sidebar: sidebarReducer,
@@ -20,9 +20,12 @@ const reducers = combineReducers({
     chat: chatReducer
 });
 
-export const store = createStore(reducers, applyMiddleware(thunk));
+type rootReducerType = typeof rootReducer
+export type appStateType = ReturnType<rootReducerType>
+
+export const store = createStore(rootReducer, applyMiddleware(thunk));
 
 //@ts-ignore
-window.store = store;
+window.store = store
 
-export default store;
+export default store

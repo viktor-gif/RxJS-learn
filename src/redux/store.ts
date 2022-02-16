@@ -27,7 +27,7 @@ export type messagesType = Array<messageType>;
 export type postType = {id: number, postText: string, likesCount: number, avaUrl: string};
 export type postsType = Array<postType>;
 export type usersType = Array<userType> | null;
-type userType = {
+export type userType = {
     id: number
     name: string
     followed: boolean

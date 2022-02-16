@@ -3,7 +3,7 @@ import s from "./Messages.module.css";
 import { chatMessageAPIType, statusType } from "../../../../api/chat-api";
 import { Message } from "./Message";
 import { MessagesForm } from "./MessagesForm";
-import { dialogMessageType } from "../../../../api/dialogs-api";
+import { dialogMessageType, dialogsAPI } from "../../../../api/dialogs-api";
 import avaMale from "../../../../img/ava_male.jpeg";
 
 type propsType = {

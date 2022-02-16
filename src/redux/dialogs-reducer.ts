@@ -63,6 +63,8 @@ export const getDialogMessages = (dialogId: number) => (dispatch: Dispatch) => {
 }
 export const sendDialogMessage = (text: string, dialogId: number) => (dispatch: any) => {
     dialogsAPI.sendDialogMessage(text, dialogId).then(response => {
+        
+        
         if (response.data.resultCode === 0) {
             dispatch(getDialogMessages(dialogId))
         }

@@ -15,6 +15,9 @@ export const dialogsAPI = {
     },
     deleteMessage(id: number | string) {
         return instance.delete(`dialogs/messages/${id}`)
+    },
+    restoreMessage() {
+        return instance.put(`dialogs/messages/cb0e0c26-3993-4498-9660-a9f6981205cb/restore`)
     }
 }
 

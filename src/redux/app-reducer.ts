@@ -10,12 +10,12 @@ const initialState = {
     isOpendChat: false
 }
 
-export const appReducer = (state: appType = initialState, action: any) => {
+export const appReducer = (state: appType = initialState, action: initializeSuccessType | setOpenChatType): appType => {
     switch (action.type) {
         case INITIALIZE_SUCCESS:
             return {
                 ...state,
-                initialized: true
+                initialized: true,
             }
         case SET_OPEN_CHAT:
             return {
@@ -26,8 +26,11 @@ export const appReducer = (state: appType = initialState, action: any) => {
     }
 }
 
-export const initializeSuccess = () => ({type: INITIALIZE_SUCCESS})
-export const setOpenChat = (isOpened: boolean) => ({type: SET_OPEN_CHAT, isOpened})
+type initializeSuccessType = {type: typeof INITIALIZE_SUCCESS}
+export const initializeSuccess = (): initializeSuccessType => ({type: INITIALIZE_SUCCESS})
+
+type setOpenChatType = {type: typeof SET_OPEN_CHAT, isOpened: boolean}
+export const setOpenChat = (isOpened: boolean): setOpenChatType => ({type: SET_OPEN_CHAT, isOpened})
 
 // redux-thunk
 export const initialize = () => (dispatch: any) => {

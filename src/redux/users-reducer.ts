@@ -1,5 +1,5 @@
 import { usersAPI } from "../api/api"
-import { usersPageType, usersType } from "./store"
+import { usersPageType, usersType, userType } from "./store"
 
 const FOLLOW_UNFOLLOW = 'Viktor-gif/users/FOLLOW_UNFOLLOW'
 const SET_USERS = 'Viktor-gif/users/SET_USERS'
@@ -11,19 +11,21 @@ const SET_CURRENT_PAGE = 'Viktor-gif/users/SET_CURRENT_PAGE'
 const SET_TERM = 'Viktor-gif/users/SET_TERM'
 const SET_IS_FRIEND = 'Viktor-gif/users/SET_IS_FRIEND'
 
+type initialStateType = typeof initialState
+
 const initialState = {
-    users: null,
-    usersCount: null,
+    users: null as Array<userType> | null,
+    usersCount: null as number | null,
     pageSize: 10,
     currentPage: 1,
     term: '',
     isFriend: false,
     inProgress: false,
     followingInProgress: false,
-    followingInProgressUsersId: [],
+    followingInProgressUsersId: [] as Array<number>,
 }
 
-export const usersReducer = (state: usersPageType = initialState, action: any) => {
+export const usersReducer = (state: initialStateType = initialState, action: any): initialStateType => {
    
     switch (action.type) {
         case SET_USERS:
@@ -34,7 +36,7 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
         case FOLLOW_UNFOLLOW:
             return {
                 ...state,
-                users: state.users?.map(u => {
+                users: state.users ? state.users.map(u => {
                     if (u.id === action.userId) {
                         if (u.followed === false) {
                             return {...u, followed: true}
@@ -43,7 +45,7 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
                         }
                     }
                     return u
-                })
+                }) : null
             }
             case SET_USERS_COUNT:
                 return {
@@ -70,7 +72,7 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
             case SET_CURRENT_PAGE:
                 return {
                     ...state,
-                    pageNumber: action.page
+                    currentPage: action.page
                 }
             case SET_TERM:
                 return {
@@ -87,7 +89,8 @@ export const usersReducer = (state: usersPageType = initialState, action: any) =
 }
 
 // action-creators
-export const followUnfollow = (userId: number) => ({type: FOLLOW_UNFOLLOW, userId})
+type followUnfollowType = {type: typeof FOLLOW_UNFOLLOW, userId: number}
+export const followUnfollow = (userId: number): followUnfollowType => ({type: FOLLOW_UNFOLLOW, userId})
 export const setUsers = (users: usersType) => ({type: SET_USERS, users})
 export const setUsersCount = (usersCount: number) => ({type: SET_USERS_COUNT, usersCount})
 export const setProgress = (isProgress: boolean) => ({type: SET_PROGRESS, isProgress})

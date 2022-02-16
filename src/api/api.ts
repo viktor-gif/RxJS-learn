@@ -35,6 +35,9 @@ export const usersAPI = {
     getUsers(pageSize: number, pageNumber: number = 1, term: string = '', isFriend: boolean = false) {
         return instance.get(`users?count=${pageSize}&page=${pageNumber}&term=${term}&friend=${isFriend}`)
     },
+    getUsersMy() {
+        return fetch(`/users`)
+    },
     followPost(userId: number) {
         return instance.post(`follow/${userId}`)
     },
