@@ -1,0 +1,79 @@
+.button {
+    position: relative;
+    bottom: 0;
+    /* height: 35px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+    border: none;
+    padding: 0.3em 1.5em;
+    outline: none;
+    box-sizing: border-box;
+    font-size: 1.1em;
+    color: #555;
+    background: linear-gradient(#dbdae1, #a3aaba);
+    box-shadow: .4em .4em .4em rgba(0, 0, 0, 0.1),
+                .7em .7em 1em rgba(0, 0, 0, 0.1),
+                inset .05em .05em .1em #fff;
+    transition: .2s
+}
+.button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: .4em;
+    height: 100%;
+    background: linear-gradient(#fff, #fff, #e3e3e3);
+    z-index: 1;
+    filter: blur(1px);
+}
+.button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -1px;
+    width: .3em;
+    height: 100%;
+    background: #9d9d9d;
+    z-index: 1;
+    filter: blur(1px);
+}
+.button:hover {
+    background: linear-gradient(#dbdae1, #767b88);
+    bottom: .1em;
+}
+
+/* additional styles for all types of buttons */
+.settings {
+    font-size: .9em;
+}
+.usersFriendsSearch {
+    font-size: 1.1em;
+}
+.followUnfollow {
+    font-size: .9em;
+}
+.profileInfoButton {
+    font-size: 1em;
+}
+.addPost {
+    font-size: 1em;
+}
+.addMessage {
+    font-size: 1em;
+}
+.commonChat {
+    font-size: .8em;
+    padding: .8em 1em;
+    margin-right: 15px;
+}
+.deleteMessage {
+    font-size: .6em;
+    background: linear-gradient(#e2b3cd, #8f5555);
+}
+.deleteMessage:hover {
+    background: linear-gradient(#e2b3cd, #5f3737);
+}
