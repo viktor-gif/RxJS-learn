@@ -3,6 +3,7 @@ import s from "./Messages.module.css";
 import avaMale from "../../../../img/ava_male.jpeg";
 import { NavLink } from "react-router-dom"
 import { profilePageActions } from "../../../../redux/profile-reducer";
+import { Button } from "../../../common/buttons/Button";
 
 type propsType = {
     id: number | string
@@ -38,10 +39,7 @@ export const Message = React.memo((props: propsType) => {
                 <span>{props.message}</span>
             </div>
             {props.messageType === "dialog" && 
-                <button className={s.deleteMessageButton}
-                    onClick={deleteMessage}>
-                    Delete message
-                </button>
+                <Button click={deleteMessage} value="Delete message" buttonType="deleteMessage" />
             }
         </div>
             

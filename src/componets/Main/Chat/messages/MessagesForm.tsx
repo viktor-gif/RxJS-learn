@@ -5,6 +5,7 @@ import { sendMessage } from "../../../../redux/chat-reducer";
 import { statusType } from "../../../../api/chat-api";
 import { chatMessageType } from "./Messages";
 import { sendDialogMessage } from "../../../../redux/dialogs-reducer";
+import { Button } from "../../../common/buttons/Button";
 
 type propsType = {
     status: statusType
@@ -49,10 +50,8 @@ export const MessagesForm = React.memo((props: propsType) => {
                     onChange={onMessageTextChange}></textarea>
             </div>
             <div className={s.errorMessage}>{errorMessage}</div>
-            <button className={s.sendMessage} onClick={onsendMessage}
-                disabled={props.chatMessages ? props.status !== "ready" : false} >
-                Send message
-            </button>
+            <Button click={onsendMessage} value="Send message" buttonType="sendMessage"
+                disabled={props.chatMessages ? props.status !== "ready" : false} />
         </div>
     )
 })

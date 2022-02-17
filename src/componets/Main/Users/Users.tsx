@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 import { Paginator } from "../../common/paginator/Paginator";
 import { SearchInput } from "../../common/searchInput/SearchInput";
 import { usersAPI } from "../../../api/api";
+import { Button } from "../../common/buttons/Button";
 
 export type usersPropsType = {
     users: usersType
@@ -99,7 +100,7 @@ export const Users = React.memo((props: usersPropsType) => {
                         value={term} onChange={changeTermInput}
                         onKeyPress={onEnterKeyPress} />
                     
-                    <button className={s.searchUsersButton} onClick={isFriendClick}>{isFriend ? 'All Users' : 'Only friends'}</button>
+                    <Button buttonType="usersFriendsSearch" click={isFriendClick} value={isFriend ? 'All Users' : 'Only friends'} />
                 </div>
                 {usersItems}
             </div>
@@ -109,6 +110,14 @@ export const Users = React.memo((props: usersPropsType) => {
 })
 
 export const User = React.memo((props: userPropsType) => {
+
+    const followUnfollowClickHandler = () => {
+        if (props.followed === false) {
+            props.followPost(props.id)
+        } else if (props.followed === true) {
+            props.followDelete(props.id)
+        }   
+    }
 
     return <div className={s.userWrap}>
         
@@ -120,15 +129,10 @@ export const User = React.memo((props: userPropsType) => {
         <div className={s.userName}>{props.name}</div>
         <div className={s.status}>{props.status}</div>
         <div className={s.followButton}>
-            <button disabled={
-                    props.followingInProgressUsersId.some(item => item === props.id)
-                } onClick={() => {
-                if (props.followed === false) {
-                    props.followPost(props.id)
-                } else if (props.followed === true) {
-                    props.followDelete(props.id)
-                }   
-            }}>{props.followed === true ? 'unfollow' : 'follow'}</button>
+            <Button value={props.followed === true ? 'unfollow' : 'follow'}
+                click={followUnfollowClickHandler}
+                buttonType="followUnfollow"
+                disabled={props.followingInProgressUsersId.some(item => item === props.id)} />
         </div>
         <div className={s.country}>Country: props.location.country</div>
         <div className={s.city}>City: props.location.city</div>

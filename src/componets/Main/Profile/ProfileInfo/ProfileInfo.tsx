@@ -6,6 +6,7 @@ import { Preloader } from "../../../common/preloader/preloader";
 import { ProfileStatus } from "./ProfileStatus";
 import downLoadIcon from "../../../../img/profile/icons/download_button.png"
 import {Formik, Form, Field} from "formik"
+import { Button } from "../../../common/buttons/Button";
 
 export type profileInfoTypeWithoutPhotos = {
     aboutMe: string | null
@@ -110,8 +111,9 @@ export const ProfileInfo = (props: profileInfoPropsType) => {
                             </ul>
                         </ul>
                         {props.isOwner 
-                            ? <button onClick={() => setEdit(true)}>Edit profile info</button>
-                            : <button onClick={onSendMessageClick}>Send message</button>}
+                            ? <Button click={() => setEdit(true)} buttonType="profileInfoButton" value="Edit profile info" />
+                            : <Button click={onSendMessageClick} buttonType="profileInfoButton" value="Send message" />
+                            }
                     </div>
                     :
                     <Formik
@@ -179,7 +181,7 @@ export const ProfileInfo = (props: profileInfoPropsType) => {
                                     </ul>
                                 </div>
                                 <div className={s.editProfileErrorMessage}>{errorMessage}</div>
-                                <button type="submit">Submit</button>
+                                <Button buttonType="profileInfoButton" value="Submit" />
                             </Form>
                         )}
                         

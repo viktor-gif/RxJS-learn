@@ -2,6 +2,7 @@ import React from "react";
 import { postsType } from "../../../../redux/store";
 import s from "./MyPosts.module.css";
 import ava from "../../../../img/ava_male.jpeg";
+import { Button } from "../../../common/buttons/Button";
 
 
 type myPostsPropsType = {
@@ -47,7 +48,7 @@ export const MyPosts = React.memo((props: myPostsPropsType) => {
                             id="addPost"></textarea>
 
                 </div>
-                <button onClick={addPost} className={s.submitBtn}>Submit</button>
+                <Button click={addPost} buttonType="addPost" value="Submit" />
             {/* </form> */}
             {postsItems}
         </div>

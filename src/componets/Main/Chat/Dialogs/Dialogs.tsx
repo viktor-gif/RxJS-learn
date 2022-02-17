@@ -5,6 +5,7 @@ import avaMale from "../../../../img/ava_male.jpeg";
 import { useDispatch } from "react-redux";
 import { startMessagesListening, stopMessagesListening } from "../../../../redux/chat-reducer";
 import { dialogsPageActions, updateOrAddDialog } from "../../../../redux/dialogs-reducer";
+import { Button } from "../../../common/buttons/Button";
 
 
 type dialogsPropsType = {
@@ -45,7 +46,7 @@ export const Dialogs = React.memo((props: dialogsPropsType) => {
     return (
         <div className={s.dialogsWrap}>
                 <div className={s.commonChatBtn}>
-                    <button onClick={getChatMessages}>Common chat</button>
+                    <Button click={getChatMessages} value="Common chat" buttonType="commonChat" />
                 </div>
             {dialogsItems}
         </div>

@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { Button } from "../../../common/buttons/Button"
 import s from "../Settings.module.css"
 
 type propsType = {
@@ -33,8 +34,8 @@ export const SettingsUsers = (props: propsType) => {
             </div>
             <div className={s.usersSetButtons}>
                 {!isEditState ? 
-                    <button onClick={() => setEditState(true)}>Edit settings</button> 
-                    : <button onClick={submitChanges}>Save settings</button>
+                    <Button buttonType="settings" click={() => setEditState(true)} value="Edit settings" />
+                    : <Button buttonType="settings" click={submitChanges} value="Submit" />
                 }
             </div>
             
