@@ -1,4 +1,4 @@
-import { authAPI } from "../api/api"
+import { authAPI, resultCodeEnum, resultCodeForCaptchaEnum } from "../api/api"
 import { authType } from "./store"
 
 const SET_AUTH_DATA = 'Viktor-gif/auth/SET_AUTH_DATA'
@@ -51,7 +51,7 @@ export const setCaptchaUrl = (captchaUrl: string | null) => {
 // redux-thunk
 export const getAuthData = () => (dispatch: any) => {
     return authAPI.getAuthData().then(response => {
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === resultCodeEnum.Success) {
           dispatch(setAuthData(response.data.data, true))
         }
     })
@@ -59,12 +59,12 @@ export const getAuthData = () => (dispatch: any) => {
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null) => (dispatch: any) => {
     
     authAPI.login(email, password, rememberMe, captcha).then(response => {
-        if (response.data.resultCode === 0) {
+        if (response.data.resultCode === resultCodeEnum.Success) {
             console.log(response)
             dispatch(getAuthData())
             dispatch(setErrorMessage(''))
             dispatch(setCaptchaUrl(null))
-        } else if (response.data.resultCode === 10){
+        } else if (response.data.resultCode === resultCodeForCaptchaEnum.CaptchaIsRequired){
             dispatch(getCaptchaUrl())
             dispatch (setErrorMessage(response.data.messages[0]))
         } else {

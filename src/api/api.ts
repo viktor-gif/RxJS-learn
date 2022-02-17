@@ -14,14 +14,33 @@ export const instance = axios.create({
     }
 })
 
+export enum resultCodeEnum {
+    Success = 0,
+    Error = 1
+}
+export enum resultCodeForCaptchaEnum {
+    CaptchaIsRequired = 10
+}
+
+type authResponseType = {
+    data: {id: number, email: string, login: string}
+    resultCode: resultCodeEnum
+    messages: string[]
+}
+
+type loginResponseType = {
+    data: {userId: number}
+    resultCode: resultCodeForCaptchaEnum | resultCodeEnum
+    messages: string[]
+}
 
 export const authAPI = {
     getAuthData() {
-        return instance.get('auth/me')
+        return instance.get<authResponseType>('auth/me')
     },
     login(email: string, password: string, rememberMe: boolean, captcha: string | null) {
         console.log(captcha)
-        return instance.post(`auth/login`, {email, password, rememberMe, captcha})
+        return instance.post<loginResponseType>(`auth/login`, {email, password, rememberMe, captcha})
     },
     logout() {
         return instance.delete(`auth/login`)
@@ -30,6 +49,7 @@ export const authAPI = {
         return instance.get(`security/get-captcha-url`)
     }
 }
+authAPI.getAuthData().then(res => res.data)
 
 export const usersAPI = {
     getUsers(pageSize: number, pageNumber: number = 1, term: string = '', isFriend: boolean = false) {

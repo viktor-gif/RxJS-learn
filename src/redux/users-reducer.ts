@@ -1,5 +1,8 @@
+import { Dispatch } from "react"
+import { ThunkAction } from "redux-thunk"
 import { usersAPI } from "../api/api"
-import { usersPageType, usersType, userType } from "./store"
+import { appStateType, inferActionsTypes } from "./redux-store"
+import { usersType, userType } from "./store"
 
 const FOLLOW_UNFOLLOW = 'Viktor-gif/users/FOLLOW_UNFOLLOW'
 const SET_USERS = 'Viktor-gif/users/SET_USERS'
@@ -25,7 +28,7 @@ const initialState = {
     followingInProgressUsersId: [] as Array<number>,
 }
 
-export const usersReducer = (state: initialStateType = initialState, action: any): initialStateType => {
+export const usersReducer = (state: initialStateType = initialState, action: actionsTypes): initialStateType => {
    
     switch (action.type) {
         case SET_USERS:
@@ -59,9 +62,13 @@ export const usersReducer = (state: initialStateType = initialState, action: any
                 }
             case SET_FOLLOWING_PROGRESS:
                 return {...state,
-                    followingInProgressUsersId: action.isProgress ?
-                    [...state.followingInProgressUsersId, action.userId] :
+                    //@ts-ignore
+                    followingInProgressUsersId: action.isProgress 
+                    ?
+                    [...state.followingInProgressUsersId, action.userId]
+                    : 
                     state.followingInProgressUsersId.filter(item => item !== action.userId),
+
                     followingInProgress: action.isProgress
                 }
             case SET_PAGE_SIZE:
@@ -88,46 +95,55 @@ export const usersReducer = (state: initialStateType = initialState, action: any
     }
 }
 
+type actionsTypes = inferActionsTypes<typeof usersActions>
+
 // action-creators
-type followUnfollowType = {type: typeof FOLLOW_UNFOLLOW, userId: number}
-export const followUnfollow = (userId: number): followUnfollowType => ({type: FOLLOW_UNFOLLOW, userId})
-export const setUsers = (users: usersType) => ({type: SET_USERS, users})
-export const setUsersCount = (usersCount: number) => ({type: SET_USERS_COUNT, usersCount})
-export const setProgress = (isProgress: boolean) => ({type: SET_PROGRESS, isProgress})
-export const setFollowingProgress = (userId: number | null, isProgress: boolean) => ({type: SET_FOLLOWING_PROGRESS, userId, isProgress})
-export const setPageSize = (size: number) => ({type: SET_PAGE_SIZE, size})
-export const setCurrentPage = (page: number) => ({type: SET_CURRENT_PAGE, page})
-export const setTerm = (term: string) => ({type: SET_TERM, term})
-export const setIsFriend = (isFriend: boolean) => ({type: SET_IS_FRIEND, isFriend})
+export const usersActions = {
+    followUnfollow: (userId: number) => ({type: FOLLOW_UNFOLLOW, userId} as const),
+    setUsers: (users: usersType) => ({type: SET_USERS, users} as const),
+    setUsersCount: (usersCount: number) => ({type: SET_USERS_COUNT, usersCount} as const),
+    setProgress: (isProgress: boolean) => ({type: SET_PROGRESS, isProgress} as const),
+    setFollowingProgress: (userId: number | null, isProgress: boolean) => ({type: SET_FOLLOWING_PROGRESS, userId, isProgress} as const),
+    setPageSize: (size: number) => ({type: SET_PAGE_SIZE, size} as const),
+    setCurrentPage: (page: number) => ({type: SET_CURRENT_PAGE, page} as const),
+    setTerm: (term: string) => ({type: SET_TERM, term} as const),
+    setIsFriend: (isFriend: boolean) => ({type: SET_IS_FRIEND, isFriend} as const),
+}
+
 
 // thunk-creators
-export const getUsers = (pageSize: number, pageNumber: number, term: string, isFriend: boolean) => (dispatch: any) => {
+type dispatchType = Dispatch<actionsTypes>
+type thunkType = ThunkAction<void, appStateType, unknown, actionsTypes>
+
+export const getUsers = (pageSize: number, pageNumber: number, term: string, isFriend: boolean) => 
+    (dispatch: dispatchType) => {
     
-    dispatch(setCurrentPage(pageNumber))
-    dispatch(setTerm(term))
-    dispatch(setIsFriend(isFriend))
-    dispatch(setProgress(true))
+    dispatch(usersActions.setCurrentPage(pageNumber))
+    dispatch(usersActions.setTerm(term))
+    dispatch(usersActions.setIsFriend(isFriend))
+    dispatch(usersActions.setProgress(true))
     usersAPI.getUsers(pageSize, pageNumber, term, isFriend).then(response => {
-        dispatch(setUsersCount(response.data.totalCount))
-        dispatch(setUsers(response.data.items))
-        dispatch(setProgress(false))
+        dispatch(usersActions.setUsersCount(response.data.totalCount))
+        dispatch(usersActions.setUsers(response.data.items))
+        dispatch(usersActions.setProgress(false))
     })
 }
-export const followPost = (userId: number) => (dispatch: any) => {
-    dispatch(setFollowingProgress(userId, true))
+export const followPost = (userId: number) => (dispatch: dispatchType) => {
+    dispatch(usersActions.setFollowingProgress(userId, true))
     usersAPI.followPost(userId).then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(followUnfollow(userId))
-                dispatch(setFollowingProgress(userId, false))
+                dispatch(usersActions.followUnfollow(userId))
+                dispatch(usersActions.setFollowingProgress(userId, false))
             }
         })
 }
-export const followDelete = (userId: number) => (dispatch: any) => {
-    dispatch(setFollowingProgress(userId, true))
+export const followDelete = (userId: number): thunkType => 
+(dispatch) => {
+    dispatch(usersActions.setFollowingProgress(userId, true))
     usersAPI.followDelete(userId).then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(followUnfollow(userId))
-                dispatch(setFollowingProgress(userId, false))
+                dispatch(usersActions.followUnfollow(userId))
+                dispatch(usersActions.setFollowingProgress(userId, false))
             }
         })
 }
