@@ -4,12 +4,6 @@
 .inputItem {
     margin-bottom: 20px;
 }
-
-.loginInput {
-    position: absolute;
-    top: 0;
-    right: 0;
-}
 .loginLabel {
     display: block;
     max-width: 300px;
@@ -19,15 +13,8 @@
     right: 50%;
 }
 
-.errorInput {
-    position: absolute;
-    top: 0;
-    right: 0;
-    border: 2px solid red;
-}
-.errorMessage {
-    color: red;
-    margin-top: 10px;
+.captchaBlock {
+    margin-bottom: 40px;
 }
 .commonErrorMessage {
     color: red;
@@ -35,7 +22,10 @@
     font-size: 20px;
     text-transform: uppercase;
 }
-
-.captchaBlock {
-    margin-bottom: 40px;
+.fieldDescriotion {
+    display: inline-block;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #696666;
+    margin-bottom: .5em;
 }

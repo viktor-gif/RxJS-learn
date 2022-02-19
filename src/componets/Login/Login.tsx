@@ -5,7 +5,9 @@ import s from "./Login.module.css"
 import {login, logout} from "../../redux/auth-reducer"
 import {Formik, Form, Field} from "formik"
 import { validatioInputs } from "../../utils/validators/validators"
-import { Input } from "../common/upgradedComponents/Inputs"
+import { InputFormik } from "../common/inputFormik/InputFormik"
+import { Button } from "../common/buttons/Button"
+import { Checkbox } from "../common/checkbox/Checkbox"
 
 type loginPropsType = {
     isAuth: boolean
@@ -29,46 +31,48 @@ const Login = (props: loginPropsType) => {
             }}
             onSubmit={(val) => {
                 props.login(val.email, val.password, val.rememberMe, val.captcha)
+                console.log(val)
             }}
             >
             
             {({ errors, touched, validateField, validateForm }) => (
                 
                 <Form>
-                    
                     <div className={s.inputItem}>
-                        <label className={s.loginLabel} htmlFor="email">E-mail:
+                        <label className={s.loginLabel} htmlFor="email">
+                            <span className={s.fieldDescriotion}>E-mail:</span>
                             <Field
-                            type="email" id="email" component={Input}
+                            type="email" id="email" component={InputFormik}
                             name="email" placeholder="Email" validate={validatioInputs} />
                         </label>
                     </div>
                     <div className={s.inputItem}>
-                        <label className={s.loginLabel} htmlFor="password">Password:
+                        <label className={s.loginLabel} htmlFor="password">
+                            <span className={s.fieldDescriotion}>Password:</span>
                             <Field
-                            type="password" id="password" component={Input}
+                            type="password" id="password" component={InputFormik}
                             name="password" placeholder="Password" validate={validatioInputs} />
                         </label>
                     </div>
                     <div className={s.inputItem}>
-                        <label className={s.loginLabel} htmlFor="rememberMe">Remember me:
-                            <Field className={s.loginInput + " " + s.loginInputCheckbox} 
-                            type="checkbox" id="rememberMe" name="rememberMe" component='input'/>
-                        </label>
+                        <span className={s.fieldDescriotion}>Remember me:</span>
+                            <Field type="checkbox" id="rememberMe" name="rememberMe" 
+                                component={Checkbox} />
+                        
                     </div>
                     {props.captchaUrl && 
                         <div className={s.captchaBlock}>
                             <img src={props.captchaUrl} alt="captcha" />
                             <label className={s.loginLabel} htmlFor="email">
                                 <Field
-                                type="text" id="captcha" component={Input}
+                                type="text" id="captcha" component={InputFormik}
                                 name="captcha" placeholder="Enter symbols from image" />
                             </label>
                         </div>
                     }
                     <div className={s.commonErrorMessage}>{props.errorMessage}</div>
                     
-                    <button type="submit">submit</button>
+                    <Button value="submit" buttonType="login" />
                 </Form>
             )}
         </Formik>
