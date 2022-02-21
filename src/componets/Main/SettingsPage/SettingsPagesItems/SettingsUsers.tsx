@@ -1,6 +1,7 @@
-import React, { useState } from "react"
+import React, { ChangeEvent, useState } from "react"
 import { Button } from "../../../common/buttons/Button"
-import s from "../Settings.module.css"
+import { Input } from "../../../common/input/Input"
+import s from "./SettingsUsers.module.css"
 
 type propsType = {
     pageSize: number
@@ -16,21 +17,24 @@ export const SettingsUsers = (props: propsType) => {
         setEditState(false)
     }
 
+    const changeNumberOfUsersInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setPageSizeTemp(+e.target.value)
+    }
+
     return (
         <div className={s.usersSetWrap}>
             <h3 className={s.usersSetTitle}>Users-settings</h3>
             <div className={s.usersSetContent}>
-                {!isEditState ? <div>
-                    <div>
-                        Number users in one page: {props.pageSize}
+                {!isEditState ? <div className={s.currentValueBlock}>
+                        Number users in one page: <span className={s.currentValue}>{props.pageSize}</span>
                     </div>
-                </div> :
-                <div>
-                    <div>
-                        Enter number users in one page (from 1 to 100): 
-                        <input value={pageSizeTemp} onChange={(e) => setPageSizeTemp(+e.target.value) } type="number" />
-                    </div>
-                </div>}
+                :
+                    <div className={s.editSetBlock}>
+                        <span className={s.editSetText}>Enter number users in one page (from 1 to 100):</span>
+                        <Input onChange={changeNumberOfUsersInputChangeHandler}
+                            value={pageSizeTemp} placeholder="Enter number of users"
+                            inputTypeStyle="usersSettings" type="number" />
+                    </div>}
             </div>
             <div className={s.usersSetButtons}>
                 {!isEditState ? 

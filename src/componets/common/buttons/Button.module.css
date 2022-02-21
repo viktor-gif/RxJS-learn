@@ -77,3 +77,6 @@
 .deleteMessage:hover {
     background: linear-gradient(#e2b3cd, #5f3737);
 }
+.login {
+    font-size: .9em;
+}

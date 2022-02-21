@@ -7,6 +7,7 @@ import { ProfileStatus } from "./ProfileStatus";
 import downLoadIcon from "../../../../img/profile/icons/download_button.png"
 import {Formik, Form, Field} from "formik"
 import { Button } from "../../../common/buttons/Button";
+import { Checkbox } from "../../../common/checkbox/Checkbox";
 
 export type profileInfoTypeWithoutPhotos = {
     aboutMe: string | null

@@ -1,26 +1,44 @@
 /* main styles */
+
+a {
+    outline: none;
+}
+
 .setWrap {
     padding: 20px;
 }
-.setLinks {
-    margin-bottom: 30px;
-    font-size: 16px;
+.contentWrap {
+    display: flex;
+}
+.setTitle {
+    font-size: 2em;
     font-weight: bold;
+    margin-bottom: 1em;
+}
+.setLinks {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: left;
+    font-size: 1em;
+    font-weight: bold;
+    margin-right: 1.1em;
+}
+.linkTextWrap {
+    display: inline-block;
+    padding: 10px 20px;
 }
 .setLink {
+    width: fit-content;
     text-decoration: none;
     color: #333333;
+    opacity: .7;
+}
+.activeLink {
+    background-color: rgb(174, 204, 243, .5);
+    border-radius: 20px;
+    opacity: 1
 }
 .setLink:hover {
     color: #999999;
-}
-
-/* users-page */
-.usersSetTitle {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-.usersSetContent {
-    margin-bottom: 20px;
 }
