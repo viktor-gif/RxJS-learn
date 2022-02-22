@@ -5,6 +5,7 @@ import ChatWrap from "./Chat/ChatWrap";
 import Profile from "./Profile/Profile";
 import { SettingsWrap } from "./SettingsPage/SettingsWrap";
 import { UsersWrap } from "./Users/UsersWrap";
+import { Slide } from "./Slide/Slide";
 
 export const Main = React.memo(() => {
     return <div className={s.mainContainer}>
@@ -12,5 +13,6 @@ export const Main = React.memo(() => {
         <Route path="/dialogs" render={() => <ChatWrap />} />
         <Route path="/users" render={() => <UsersWrap />} />
         <Route path="/settings" render={() => <SettingsWrap />} />
+        <Route path="/slide" render={() => <Slide />} />
     </div>
 })

@@ -11,6 +11,7 @@ export const Nav = () => {
             <NavLink activeClassName={s.active} to="/news"><li>News</li></NavLink>
             <NavLink activeClassName={s.active} to="/music"><li>Music</li></NavLink>
             <NavLink activeClassName={s.active} to="settings"><li>Settings</li></NavLink>
+            <NavLink activeClassName={s.active} to="slide"><li>Slide</li></NavLink>
         </ul>
     </nav>
 }
