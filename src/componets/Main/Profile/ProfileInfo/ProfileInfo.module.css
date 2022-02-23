@@ -59,6 +59,12 @@
     font-size: 18px;
     line-height: 25px;
 }
+.profileInfoItem, .contactItem {
+    margin-bottom: 10px;
+}
+.profileInfoItemForm, .contactItemForm {
+    margin-bottom: 20px;
+}
 .profileInfoItem span {
     font-weight: bold;
 }

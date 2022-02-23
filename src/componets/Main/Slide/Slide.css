@@ -52,12 +52,6 @@
   font-weight: 700;
   font-style: italic;
 }
-@font-face {
-  src: url("../../../fonts/assassin.woff2") format("woff2");
-  font-family: "assassin-st";
-  font-weight: 700;
-  font-style: italic;
-}
 /* GENERAL CSS SETTINGS */
 ::-webkit-input-placeholder {
   color: #666;

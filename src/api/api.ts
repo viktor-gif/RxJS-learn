@@ -1,10 +1,9 @@
 import axios from "axios"
 import { profileInfoTypeWithoutPhotos } from "../componets/Main/Profile/ProfileInfo/ProfileInfo"
-import { store } from "../redux/store"
 
 let apiKey = "8844171b-8f1f-4905-bc9a-c6a452eff646"
 
-let apiKeyOlia = "9a7954c5-9bc0-4375-83c0-e272d6fc4027"
+// let apiKeyOlia = "9a7954c5-9bc0-4375-83c0-e272d6fc4027"
 
 export const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',

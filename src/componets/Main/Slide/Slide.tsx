@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import 'swiper/swiper-bundle.min.css'
@@ -10,8 +10,6 @@ import bg3 from '../../../img/images-slider/3.png'
 import bg4 from '../../../img/images-slider/4.png'
 
 export const Slide = () => {
-    const prev = useRef(null)
-    const next = useRef(null)
     return (
     //     <div className={s.slideWrap}>
 
@@ -40,12 +38,13 @@ export const Slide = () => {
                     speed = {1800}
                     centeredSlides = {true}
                     // navigation
-                    // navigation = {
-                    //     nextEl: next,
-                    //     prevEl: prev
-                    // }
+                    navigation = {{
+                        prevEl: '.showcase-navigation__prev',
+                    	nextEl: '.showcase-navigation__next'
+                    }}
                 >
 					<div className="swiper-wrapper">
+						
 						<SwiperSlide className="swiper-slide showcase-carousel__item">
 							<div className="showcase-carousel__image-wrapper">
 								<div className="showcase-carousel__image-left">
@@ -108,14 +107,15 @@ export const Slide = () => {
 						</SwiperSlide>
 					</div>
 				</Swiper>
+				
 
 			</div>
 
 			<div className="showcase-navigation">
-				<div ref={prev} className="showcase-navigation__prev">
+				<div className="showcase-navigation__prev">
 
 				</div>
-				<div ref={next} className="showcase-navigation__next">
+				<div className="showcase-navigation__next">
 
 				</div>
 			</div>

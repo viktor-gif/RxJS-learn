@@ -7,7 +7,9 @@ import { ProfileStatus } from "./ProfileStatus";
 import downLoadIcon from "../../../../img/profile/icons/download_button.png"
 import {Formik, Form, Field} from "formik"
 import { Button } from "../../../common/buttons/Button";
+import { InputFormik } from "../../../common/inputFormik/InputFormik";
 import { Checkbox } from "../../../common/checkbox/Checkbox";
+import { TextareaFormik } from "../../../common/textarea/TextareaFormik";
 
 export type profileInfoTypeWithoutPhotos = {
     aboutMe: string | null
@@ -42,17 +44,17 @@ export const ProfileInfo = (props: profileInfoPropsType) => {
     let contacts = info && Object.entries(info?.contacts)
 
     const contactsItems = contacts && contacts.map(c => {
-        return <li key={c[0]} className={s.contactItem}><span>{
+        return c[1] && <li key={c[0]} className={s.contactItem}><span>{
                 c[0][0].toUpperCase() + c[0].slice(1)
             }</span>: {c[1]}</li>
     })
 
     const contactsItemsUpdate = contacts && contacts.map(c => {
-        return <li key={c[0]} className={s.contactItem}><span>{
+        return <li key={c[0]} className={s.contactItemForm}><span>{
                 c[0][0].toUpperCase() + c[0].slice(1)
             }</span>: 
-                <Field component="input" type="text" placeholder={`Your ${c[0]}`}
-                                            name={c[0]} id={c[0]} />
+                <Field component={InputFormik} type="text" placeholder={`Your ${c[0]}`}
+                    name={c[0]} id={c[0]} />
             </li>
     })
 
@@ -157,21 +159,20 @@ export const ProfileInfo = (props: profileInfoPropsType) => {
                             
                             <Form>
                                 <div className={s.description}>
-                                    <div className={s.profileInfoItem}><span>id</span>: {info?.userId}</div>
-                                    <div className={s.profileInfoItem}><span>User-name</span>: 
-                                        <Field component="input" type="text" placeholder="Your full name"
+                                    <div className={s.profileInfoItemForm}><span>id</span>: {info?.userId}</div>
+                                    <div className={s.profileInfoItemForm}><span>User-name</span>: 
+                                        <Field component={InputFormik} type="text" placeholder="Your full name"
                                             name="fullName" id="fullName" />
                                     </div>
-                                    <div className={s.profileInfoItem}><span>About me</span>: 
-                                        <Field component="input" type="text" placeholder="Tell about yoursesf"
+                                    <div className={s.profileInfoItemForm}><span>About me</span>: 
+                                        <Field component={InputFormik} type="text" placeholder="Tell about yoursesf"
                                             name="aboutMe" id="aboutMe" />
                                     </div>
-                                    <div className={s.profileInfoItem}><span>Look for a job</span>: 
-                                        <Field component="input" type="checkbox"
-                                            name="lookingForAJob" id="lookingForAJob" />
+                                    <div className={s.profileInfoItemForm}><span>Look for a job</span>: 
+                                        <Field component={Checkbox} name="lookingForAJob" id="lookingForAJob" />
                                     </div>
-                                    <div className={s.profileInfoItem}><span>Look for a job (description)</span>: 
-                                        <Field component="textarea" type="text" placeholder="Descript your job"
+                                    <div className={s.profileInfoItemForm}><span>Look for a job (description)</span>: 
+                                        <Field component={TextareaFormik} type="text" placeholder="Descript your job"
                                             name="lookingForAJobDescription" id="userlookingForAJobDescription" />
                                     </div>
                                     <ul className={s.contactsListWrap}>

@@ -24,6 +24,7 @@
 .main {
   grid-area: main;
   background-color: rgb(231, 231, 231);
+  max-width: 930px;
 }
 .aside {
   grid-area: nav;

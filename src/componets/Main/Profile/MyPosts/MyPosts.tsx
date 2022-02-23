@@ -1,8 +1,9 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { postsType } from "../../../../redux/store";
 import s from "./MyPosts.module.css";
 import ava from "../../../../img/ava_male.jpeg";
 import { Button } from "../../../common/buttons/Button";
+import { Textarea } from "../../../common/textarea/Textarea";
 
 
 type myPostsPropsType = {
@@ -28,13 +29,11 @@ export const MyPosts = React.memo((props: myPostsPropsType) => {
     const textareaInput: React.RefObject<HTMLTextAreaElement> = React.createRef();
 
     const addPost = () => {
-            props.addPost();
+        props.addPost();
     }
 
-    const changePostText = () => {
-        if (textareaInput.current) {
-            props.updatePostText(textareaInput.current.value);
-        }
+    const changePostText = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        props.updatePostText(e.currentTarget.value);
     }
 
     return (
@@ -42,15 +41,16 @@ export const MyPosts = React.memo((props: myPostsPropsType) => {
             <h3 className={s.postsTitle}>My posts</h3>
             {/* <form className={s.postsForm}> */}
                 <div className={s.postsFormInput}>
-                    <textarea value={props.postText}
-                            onChange={changePostText} 
-                            ref={textareaInput} name="addPost" 
-                            id="addPost"></textarea>
+                    <Textarea value={props.postText}
+                            onChange={changePostText}
+                            placeholder="Your post-text" />
 
                 </div>
                 <Button click={addPost} buttonType="addPost" value="Submit" />
             {/* </form> */}
-            {postsItems}
+            <div className={s.postsItems}>
+                {postsItems}
+            </div>
         </div>
     )
 })
