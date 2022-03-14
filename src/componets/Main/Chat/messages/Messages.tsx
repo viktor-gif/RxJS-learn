@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import s from "./Messages.module.css";
 import { chatMessageAPIType, statusType } from "../../../../api/chat-api";
-import { Message } from "./Message";
+import { Message } from "./message/Message";
 import { MessagesForm } from "./MessagesForm";
-import { dialogMessageType, dialogsAPI } from "../../../../api/dialogs-api";
+import { dialogMessageType } from "../../../../api/dialogs-api";
 import avaMale from "../../../../img/ava_male.jpeg";
 
 type propsType = {

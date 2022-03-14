@@ -36,7 +36,7 @@ const App = React.memo((props: propsType) => {
     props.initialize()
   }, [])
 
-  if (!props.initialized) return <Preloader />
+  // if (!props.initialized) return <Preloader />
 
   return (
     <BrowserRouter>

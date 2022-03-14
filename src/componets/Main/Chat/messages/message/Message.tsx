@@ -1,9 +1,9 @@
 import React from "react";
-import s from "./Messages.module.css";
-import avaMale from "../../../../img/ava_male.jpeg";
+import s from "./Message.module.css";
+import avaMale from "../../../../../img/ava_male.jpeg";
 import { NavLink } from "react-router-dom"
-import { profilePageActions } from "../../../../redux/profile-reducer";
-import { Button } from "../../../common/buttons/Button";
+import { Button } from "../../../../common/buttons/Button";
+import deleteIcon from "../../../../../img/icons/delete-icon.png"
 
 type propsType = {
     id: number | string
@@ -34,13 +34,21 @@ export const Message = React.memo((props: propsType) => {
                     <img className={s.userPhoto} src={props.ava || avaMale} alt="AVA" />
                 </NavLink>
             </div>
-            <div>{props.userName}</div>
+            <div className={s.userName}>{props.userName}</div>
             <div className={s.message + " " + (props.isMe && s.myMessage)}>
-                <span>{props.message}</span>
+                <span className={s.messageText + " " + (props.isMe && s.messageTextOwner)}>{props.message}</span>
+                {props.messageType === "dialog" && 
+                <div className={s.menuMessage + " " + (props.isMe && s.menuMessageOwner)}>
+                    <img className={s.deleteIconPic} src={deleteIcon} onClick={deleteMessage} />
+                </div>
+                }
             </div>
-            {props.messageType === "dialog" && 
-                <Button click={deleteMessage} value="Delete message" buttonType="deleteMessage" />
-            }
+
+            {/* <div className={s.deleteShure}>
+                Are you shure?
+                <button>yes</button><button>no</button>
+            </div> */}
+            
         </div>
             
         

@@ -1,0 +1,97 @@
+
+.messageWrap {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 50px 1fr;
+    grid-template-areas: "image name"
+                      "message message";
+    margin-bottom: 20px;
+    align-items: center;
+    gap: 10px;
+}
+.messageWrapOwner {
+    grid-template-columns: 11fr 50px;
+    grid-template-areas: "name image"
+                      "message message";
+    justify-items: end;
+}
+.userPhotoContainer {
+    grid-area: image;
+}
+.userName {
+    grid-area: name;
+}
+.message {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 1em;
+    grid-area: message;
+}
+.message:hover .menuMessage {
+    opacity: 1;
+}
+.menuMessage {
+    padding: 5px;
+    background-color: #c0dcee;
+    width: fit-content;
+    opacity: 0;
+    transition: opacity .2s linear;
+}
+.messageTextOwner {
+    order: 2;
+}
+.menuMessageOwner {
+    order: 1;
+}
+.deleteIconPic {
+    width: 35px;
+    opacity: .7;
+}
+.message span {
+    background-color: rgba(111, 199, 123, 0.5);
+    padding: 20px;
+    border-radius: 20px 20px 20px 0;
+    display: inline-block;
+}
+
+.myMessage span {
+    background-color: rgba(209, 207, 76, 0.5);
+    border-radius: 20px 20px 0 20px;
+}
+
+.userPhoto {
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+.messagesForm {
+    padding: 15px;
+}
+
+.deleteShure {
+    padding: 30px;
+    position: absolute;
+    top: 50vh;
+    left: 0vh;
+}
+
+
+
+@media(max-width: 575px) {
+    .message span {
+        padding: 10px;
+        border-radius: 20px 20px 20px 0;
+    }
+    .userPhoto {
+        width: 30px;
+        margin-right: 10px;
+    }
+    .message {
+        grid-area: message;
+        margin-bottom: 0;
+        font-size: .9em;
+    }
+}
