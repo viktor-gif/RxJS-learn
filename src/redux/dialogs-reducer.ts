@@ -11,7 +11,8 @@ const SET_DIALOG_ID = "Viktor-gif/dialogs/SET_DIALOG_ID"
 const initialState = {
     dialogMessages: null,
     dialogs: null,
-    currentDialogId: null
+    currentDialogId: null,
+    isViewedMessage: false
 }
 
 export const dialogsReducer = (state: dialogsPageType = initialState, action: any) => {

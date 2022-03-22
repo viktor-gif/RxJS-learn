@@ -18,7 +18,8 @@ export type dialogsType = Array<dialogType> | null;
 export type dialogsPageType = {
     dialogs: dialogsType
     dialogMessages: dialogMessageType[] | null,
-    currentDialogId: number | null
+    currentDialogId: number | null,
+    isViewedMessage: boolean
 };
 
 
@@ -130,7 +131,8 @@ export const store: storeType = {
                 }
             ],
             dialogMessages: null,
-            currentDialogId: null
+            currentDialogId: null,
+            isViewedMessage: false
         },
         
         profilePage: {

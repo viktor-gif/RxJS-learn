@@ -43,7 +43,7 @@ const mapStateToProps = (state: stateType) => {
         chatMessages: state.chat.messages,
         chatStatus: state.chat.status,
         dialogMessages: state.dialogsPage.dialogMessages,
-        currentDialogId: state.dialogsPage.currentDialogId
+        currentDialogId: state.dialogsPage.currentDialogId,
     }
 }
 
@@ -51,7 +51,7 @@ const mapDispatchToProps = (dispatch: any) => {
     return {
         getDialogs: () => dispatch(getDialogs()),
         getDialogMessages: (dialogId: number) => dispatch(getDialogMessages(dialogId)),
-        deleteMessage: (id: number | string, dialogId: number) => dispatch(deleteMessage(id, dialogId))
+        deleteMessage: (id: number | string, dialogId: number) => dispatch(deleteMessage(id, dialogId)),
     }
 }
 

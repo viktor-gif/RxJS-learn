@@ -48,16 +48,30 @@
     width: 35px;
     opacity: .7;
 }
-.message span {
+.messageText {
     background-color: rgba(111, 199, 123, 0.5);
     padding: 20px;
     border-radius: 20px 20px 20px 0;
     display: inline-block;
+    position: relative;
 }
 
-.myMessage span {
+.messageTextOwner {
     background-color: rgba(209, 207, 76, 0.5);
     border-radius: 20px 20px 0 20px;
+}
+
+.messageText .viewedMessageIcon {
+    position: absolute;
+    bottom: 0;
+    right: -20px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: blue;
+    text-shadow: 1px 1px 7px rgb(29, 29, 122);
+}
+.messageTextOwner .viewedMessageIcon {
+    left: -20px;
 }
 
 .userPhoto {
