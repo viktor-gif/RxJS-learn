@@ -8,6 +8,7 @@
     margin-bottom: 20px;
     align-items: center;
     gap: 10px;
+    position: relative;
 }
 .messageWrapOwner {
     grid-template-columns: 11fr 50px;
@@ -23,6 +24,7 @@
 }
 .message {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     gap: 20px;
     font-size: 1em;
@@ -33,10 +35,20 @@
 }
 .menuMessage {
     padding: 5px;
-    background-color: #c0dcee;
+    background-color: transparent;
     width: fit-content;
     opacity: 0;
     transition: opacity .2s linear;
+}
+.menuMessage img {
+    display: inline-block;
+    width: 35px;
+    opacity: .7;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.menuMessage img:last-child {
+    margin-right: 0;
 }
 .messageTextOwner {
     order: 2;
@@ -44,10 +56,7 @@
 .menuMessageOwner {
     order: 1;
 }
-.deleteIconPic {
-    width: 35px;
-    opacity: .7;
-}
+
 .messageText {
     background-color: rgba(111, 199, 123, 0.5);
     padding: 20px;
@@ -88,8 +97,35 @@
 .deleteShure {
     padding: 30px;
     position: absolute;
-    top: 50vh;
-    left: 0vh;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: .9;
+}
+.activeDeleteMenu {
+    display: flex;
+}
+.deletShureContentWrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    background-color: rgb(209, 106, 106);
+    width: fit-content;
+    font-size: .9em;
+    padding: 10px 20px;
+    box-shadow: inset 1px 1px 2px 2px #fff,
+                2px 2px 6px rgb(83, 38, 38);
+}
+.deleteShureButtons {
+    display: flex;
+    gap: 10px;
 }
 
 

@@ -39,7 +39,7 @@ const ChatsWrap = (props: propsType) => {
 const mapStateToProps = (state: stateType) => {
     return {
         dialogs: state.dialogsPage.dialogs,
-        ownerId: state.profilePage.profileInfo?.userId,
+        ownerId: state.auth.id,
         chatMessages: state.chat.messages,
         chatStatus: state.chat.status,
         dialogMessages: state.dialogsPage.dialogMessages,

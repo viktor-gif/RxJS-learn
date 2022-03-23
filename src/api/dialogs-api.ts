@@ -21,6 +21,9 @@ export const dialogsAPI = {
     },
     isViewedMessage(messageId: string | number) {
         return instance.get(`dialogs/messages/${messageId}/viewed`)
+    },
+    addToSpam() {
+        return instance.post(`dialogs/messages/0ab56605-b452-48b2-8b12-7517521aa75e/spam`)
     }
 }
 
