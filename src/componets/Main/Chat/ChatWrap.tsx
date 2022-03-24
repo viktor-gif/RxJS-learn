@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { dialogsType, stateType } from "../../../redux/store";
-import { getDialogMessages, getDialogs, deleteMessage } from "../../../redux/dialogs-reducer";
+import { getDialogMessages, getDialogs, deleteMessage, restoreMessage } from "../../../redux/dialogs-reducer";
 import { connect } from "react-redux";
 import { withAuthRedirect } from "../../../HOC/WithAuthRedirect";
 import { compose } from "redux";
@@ -20,7 +20,8 @@ type propsType = {
 
     getDialogs: () => void
     getDialogMessages: (dialogId: number) => void
-    deleteMessage: (id: number | string, dialogId: number) => void
+    deleteMessage: (id: number | string) => void
+    restoreMessage: (id: number | string) => void
 }
 
 const ChatsWrap = (props: propsType) => {
@@ -30,7 +31,7 @@ const ChatsWrap = (props: propsType) => {
                 getDialogs={props.getDialogs} getDialogMessages={props.getDialogMessages}
                 chatMessages={props.chatMessages} chatStatus={props.chatStatus}
                 dialogMessages={props.dialogMessages} currentDialogId={props.currentDialogId}
-                deleteMessage={props.deleteMessage} />
+                deleteMessage={props.deleteMessage} restoreMessage={props.restoreMessage} />
         </Suspense>
         
     </div>
@@ -51,7 +52,8 @@ const mapDispatchToProps = (dispatch: any) => {
     return {
         getDialogs: () => dispatch(getDialogs()),
         getDialogMessages: (dialogId: number) => dispatch(getDialogMessages(dialogId)),
-        deleteMessage: (id: number | string, dialogId: number) => dispatch(deleteMessage(id, dialogId)),
+        deleteMessage: (id: number | string) => dispatch(deleteMessage(id)),
+        restoreMessage: (id: number | string) => dispatch(restoreMessage(id))
     }
 }
 

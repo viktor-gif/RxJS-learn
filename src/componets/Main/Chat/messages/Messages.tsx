@@ -13,7 +13,8 @@ type propsType = {
     dialogMessages: dialogMessageType[] | null
     currentDialogId: number
 
-    deleteMessage: (id: number | string, dialogId: number) => void
+    deleteMessage: (id: number | string) => void
+    restoreMessage: (id: number | string) => void
 }
 
 export type chatMessageType = chatMessageAPIType & {id: string}
@@ -33,14 +34,15 @@ export const Messages = React.memo((props: propsType) => {
         return <Message id={m.userId} key={m.id} isMe={m.userId === props.ownerId}
             message={m.message} ava={m.photo} userName={m.userName}
             messageType={"commonChat"} deleteMessage = {props.deleteMessage}
-            senderId={1} recipientId={1} />
+            senderId={1} recipientId={1} restoreMessage={props.restoreMessage} />
     })
     const dialogMessagesItems = props.dialogMessages?.map((m) => {
         
         return <Message id={m.id} key={m.id.toString()} isMe={m.senderId === props.ownerId}
             message={m.body} ava={avaMale} userName={m.senderName}
             messageType={"dialog"}deleteMessage = {props.deleteMessage}
-            senderId={m.senderId} recipientId={m.recipientId} />
+            senderId={m.senderId} recipientId={m.recipientId}
+            restoreMessage={props.restoreMessage} />
     })
 
     if (props.status && props.status === "error") {

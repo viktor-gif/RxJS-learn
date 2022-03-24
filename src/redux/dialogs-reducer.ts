@@ -78,10 +78,17 @@ export const updateOrAddDialog = (userId: number) => (dispatch: any) => {
         }
     })
 }
-export const deleteMessage = (id: number | string, dialogId: number) => (dispatch: any) => {
+export const deleteMessage = (id: number | string) => (dispatch: any) => {
     dialogsAPI.deleteMessage(id).then(response => {
         if (response.data.resultCode === 0) {
-            dispatch(getDialogMessages(dialogId))
+            // dispatch(getDialogMessages(dialogId))
+        }
+    })
+}
+export const restoreMessage = (id: number | string) => (dispatch: any) => {
+    dialogsAPI.restoreMessage(id).then(response => {
+        if (response.data.resultCode === 0) {
+            // dispatch(getDialogMessages(dialogId))
         }
     })
 }

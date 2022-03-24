@@ -16,7 +16,8 @@ type propsType = {
 
     getDialogs: () => void
     getDialogMessages: (dialogId: number) => void
-    deleteMessage: (id: number | string, dialogId: number) => void
+    deleteMessage: (id: number | string) => void
+    restoreMessage: (id: number | string) => void
 }
 
 export type chatMessageType = chatMessageAPIType & {id: string}
@@ -29,7 +30,7 @@ const Chat = React.memo((props: propsType) => {
             <Dialogs dialogs={props.dialogs} getDialogs={props.getDialogs} getDialogMessages={props.getDialogMessages} />
             <Messages chatMessages={props.chatMessages} dialogMessages={props.dialogMessages} status={props.chatStatus}
                 ownerId={props.ownerId} currentDialogId={props.currentDialogId}
-                deleteMessage={props.deleteMessage} />
+                deleteMessage={props.deleteMessage} restoreMessage={props.restoreMessage} />
             
             {/* <Route path="chat" render={() => <Messages messages={props.chatMessages} status={props.chatStatus}
                 ownerId={props.ownerId} />} /> */}
