@@ -7,6 +7,10 @@ import spamIcon from "../../../../../img/icons/spam-icon.png"
 import { dialogsAPI } from "../../../../../api/dialogs-api";
 import { Controller } from "swiper";
 import { Button } from "../../../../common/buttons/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { stateType } from "../../../../../redux/store";
+import { getProfileData } from "../../../../../redux/profile-reducer";
+import { profileAPI } from "../../../../../api/api";
 
 type propsType = {
     id: string | number
@@ -18,6 +22,7 @@ type propsType = {
     messageType: "dialog" | "commonChat"
     senderId: number
     recipientId: number
+    ownerId: number
     
     deleteMessage: (id: number | string) => void
     restoreMessage: (id: number | string) => void
@@ -28,8 +33,17 @@ export const Message = React.memo((props: propsType) => {
     const [isActiveDeleteMenu, setActiveDeleteMenu] = useState(false)
     const [isDeletedMessage, setDeletedMessage] = useState(false)
     const [actionWindowType, setActionWindowType] = useState<'delete' | 'restore'>('delete')
-
+    const [myPhoto, setMyPhoto] = useState(null)
+    const [userPhoto, setUserPhoto] = useState<string | null>(null)
     const [isViewed, setViewed] = useState(false)
+
+    console.log(userPhoto)
+
+    const dispatch = useDispatch()
+
+    const profileInfo = useSelector((state: stateType) => state.profilePage.profileInfo)
+    
+    console.log(profileInfo)
 
     useEffect(() => {
         dialogsAPI.isViewedMessage(props.id).then(res => {
@@ -37,11 +51,19 @@ export const Message = React.memo((props: propsType) => {
         })
     }, [])
 
-    // useEffect(() => {
-    //     dialogsAPI.addToSpam().then(res => {
-    //         console.log(res)
-    //     })
-    // }, [])
+    useEffect(() => {
+        if (props.isMe) {
+            profileAPI.getProfileData(props.ownerId)
+                .then(res => setUserPhoto(res.data.photos.small))
+            // dispatch(getProfileData(props.ownerId))
+            // profileInfo && setUserPhoto(profileInfo.photos.small)
+        } else {
+            profileAPI.getProfileData(props.senderId)
+                .then(res => setUserPhoto(res.data.photos.small))
+            // dispatch(getProfileData(props.senderId))
+            // profileInfo && setUserPhoto(profileInfo.photos.small)
+        }
+    }, [])
 
     let dialogId = props.isMe ? props.recipientId : props.senderId
 
@@ -74,7 +96,7 @@ export const Message = React.memo((props: propsType) => {
                 :<div className={s.messageWrap + " " + (props.isMe && s.messageWrapOwner)}>
                     <div className={s.userPhotoContainer}>
                         <NavLink to={`/profile/${props.id}`}>
-                            <img className={s.userPhoto} src={props.ava || avaMale} alt="AVA" />
+                            <img className={s.userPhoto} src={props.ava || userPhoto || avaMale} alt="AVA" />
                         </NavLink>
                     </div>
                     <div className={s.userName}>{props.userName}</div>

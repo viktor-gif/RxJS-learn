@@ -3,7 +3,7 @@ import s from "./Messages.module.css";
 import { chatMessageAPIType, statusType } from "../../../../api/chat-api";
 import { Message } from "./message/Message";
 import { MessagesForm } from "./MessagesForm";
-import { dialogMessageType, dialogsAPI } from "../../../../api/dialogs-api";
+import { dialogMessageType } from "../../../../api/dialogs-api";
 import avaMale from "../../../../img/ava_male.jpeg";
 
 type propsType = {
@@ -21,6 +21,7 @@ export type chatMessageType = chatMessageAPIType & {id: string}
 
 
 export const Messages = React.memo((props: propsType) => {
+    // console.log(props.dialogMessages)
     
     const [isAutoscroll, setAutoscroll] = useState(true)
 
@@ -34,15 +35,17 @@ export const Messages = React.memo((props: propsType) => {
         return <Message id={m.userId} key={m.id} isMe={m.userId === props.ownerId}
             message={m.message} ava={m.photo} userName={m.userName}
             messageType={"commonChat"} deleteMessage = {props.deleteMessage}
-            senderId={1} recipientId={1} restoreMessage={props.restoreMessage} />
+            senderId={1} recipientId={1} restoreMessage={props.restoreMessage}
+            ownerId={props.ownerId} />
     })
     const dialogMessagesItems = props.dialogMessages?.map((m) => {
         
         return <Message id={m.id} key={m.id.toString()} isMe={m.senderId === props.ownerId}
-            message={m.body} ava={avaMale} userName={m.senderName}
+            message={m.body} ava={null} userName={m.senderName}
             messageType={"dialog"}deleteMessage = {props.deleteMessage}
             senderId={m.senderId} recipientId={m.recipientId}
-            restoreMessage={props.restoreMessage} />
+            restoreMessage={props.restoreMessage}
+            ownerId={props.ownerId} />
     })
 
     if (props.status && props.status === "error") {

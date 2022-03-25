@@ -1,9 +1,12 @@
-import { authAPI, resultCodeEnum, resultCodeForCaptchaEnum } from "../api/api"
-import { authType } from "./store"
+
+import { Dispatch } from "redux"
+import { authAPI, profileAPI, resultCodeEnum, resultCodeForCaptchaEnum } from "../api/api"
+import { authType, profileInfoType } from "./store"
 
 const SET_AUTH_DATA = 'Viktor-gif/auth/SET_AUTH_DATA'
 const SET_ERROR_MESSAGE = 'Viktor-gif/auth/SET_ERROR_MESSAGE'
 const SET_CAPTCHA_URL = 'Viktor-gif/auth/SET_CAPTCHA_URL'
+const SET_OWNER_PROFILE_INFO = 'Viktor-gif/auth/SET_OWNER_PROFILE_INFO'
 
 const initialState = {
     id: null,
@@ -11,6 +14,7 @@ const initialState = {
     login: null,
     isAuth: false,
     captchaUrl: null,
+    ownerProfileInfo: null,
     errorMessage: '',
 }
 
@@ -33,6 +37,11 @@ export const authReducer = (state: authType = initialState, action: any): authTy
                 ...state,
                 captchaUrl: action.captchaUrl
             }
+        case SET_OWNER_PROFILE_INFO:
+            return {
+                ...state,
+                ownerProfileInfo: action.profileInfo
+            }
         default: return state
     }
 }
@@ -46,6 +55,9 @@ export const setErrorMessage = ( message: string) => {
 }
 export const setCaptchaUrl = (captchaUrl: string | null) => {
     return {type: SET_CAPTCHA_URL, captchaUrl}
+}
+export const setOwnerProfileInfo = (profileInfo: profileInfoType) => {
+    return {type: SET_OWNER_PROFILE_INFO, profileInfo}
 }
 
 // redux-thunk
@@ -84,6 +96,11 @@ export const getCaptchaUrl = () => (dispatch: any) => {
     authAPI.getCaptchaUrl().then(response => {
         console.log(response.data.url)
         dispatch(setCaptchaUrl(response.data.url))
+    })
+}
+export const getOwnerProfileInfo = (ownerId: number) => (dispatch: Dispatch) => {
+    profileAPI.getProfileData(ownerId).then(response => {
+        dispatch(setOwnerProfileInfo(response.data))
     })
 }
 

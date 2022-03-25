@@ -4,8 +4,7 @@ import { NavLink } from "react-router-dom";
 import logo from "../../img/logo.png";
 import { stateType } from "../../redux/store";
 import s from "./Header.module.css";
-import { logout } from "../../redux/auth-reducer"
-import { getProfileData } from "../../redux/profile-reducer"
+import { logout, getOwnerProfileInfo } from "../../redux/auth-reducer"
 
 type propsType = {
     isAuth: boolean
@@ -14,7 +13,7 @@ type propsType = {
     userId: number | null
 
     logout: () => void
-    getProfileData: (userId: number) => void
+    getOwnerProfileInfo: (ownerId: number) => void
 }
 
 const Header = (props: propsType) => {
@@ -22,8 +21,8 @@ const Header = (props: propsType) => {
     const [isDropdownActive, setDropdownActive] = useState(false)
 
     useEffect(() => {
-        if (props.userId) props.getProfileData(props.userId)
-    }, [])
+        (props.userId) && props.getOwnerProfileInfo(props.userId)
+    }, [props.userId])
 
     useEffect(() => {
         const headerMenu = document.querySelector('#headerMenu')
@@ -40,7 +39,7 @@ const Header = (props: propsType) => {
         if (isDropdownActive) {
             setDropdownActive(false)
         } else if (!isDropdownActive) {
-            setDropdownActive(true)
+            setDropdownActive(true) 
         }
     }
 
@@ -70,8 +69,8 @@ const Header = (props: propsType) => {
 }
 
 const mapStateToProps = (state: stateType) => ({
-    userAva: state.profilePage.profileInfo?.photos.small,
+    userAva: state.auth.ownerProfileInfo?.photos.small,
     userId: state.auth.id
 })
 
-export default connect(mapStateToProps, {logout, getProfileData})(Header)
+export default connect(mapStateToProps, {logout, getOwnerProfileInfo})(Header)
