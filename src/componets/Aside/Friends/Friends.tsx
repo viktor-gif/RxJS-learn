@@ -24,7 +24,7 @@ const Friends = React.memo((props: propsType) => {
 
     useEffect(() => {
         props.getFriends()
-    }, [])
+    }, [!props.friends])
 
 
     const shuffle = (arr: usersType) => {

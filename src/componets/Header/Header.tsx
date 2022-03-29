@@ -18,22 +18,11 @@ type propsType = {
 
 const Header = (props: propsType) => {
 
-    const [isDropdownActive, setDropdownActive] = useState(false)
+    const [isDropdownActive, setDropdownActive] = useState(true)
 
     useEffect(() => {
         (props.userId) && props.getOwnerProfileInfo(props.userId)
     }, [props.userId])
-
-    useEffect(() => {
-        const headerMenu = document.querySelector('#headerMenu')
-
-        document.addEventListener('click', (e) => {
-
-            if (e.target !== headerMenu && e.target !== headerMenu?.children[0] ) {
-                setDropdownActive(false)
-            }
-        })
-    }, [])
 
     const navToggleClick = () => {
         if (isDropdownActive) {
@@ -41,30 +30,40 @@ const Header = (props: propsType) => {
         } else if (!isDropdownActive) {
             setDropdownActive(true) 
         }
+        
+        // if (isDropdownActive === true) {
+        //     debugger
+        //     setDropdownActive(false)
+        // }
+        // if (isDropdownActive === false) {
+        //     debugger
+        //     setDropdownActive(true) 
+        // }
     }
 
     return <div className={s.header}>
         <img className={s.logoPic} src={logo} alt="logo" />
-        <div>{props.isAuth 
-            ? <div className={s.headerNavWrap}>
-            {/* <span className={s.headernavItem}>props.login</span> */}
-            <ul id='dropDownMenu'
-            className={s.dropdownMenu + ' ' + (isDropdownActive && s.dropdownMenuActive)}>
-                <li className={s.dropDownMenuItem}>Settings</li>
-                <li onClick={props.logout} className={s.dropDownMenuItem}>Log out</li>
-            </ul>
-            <div id='headerMenu' onClick={navToggleClick}
-                className={s.headernavItem + " " + s.headerNavItemAuth}>
-                <img src={props.userAva ? props.userAva : ""} alt="userAva" />
-            </div>
-            
-            
-            {/* <button className={s.headernavItem} onClick={props.logout}>Log out</button> */}
-        </div> : 
-        <div className={s.headerNavWrap}>
-            <NavLink className={s.headernavItem} to="/login"><button>Sign in</button></NavLink>
-            <a className={s.headernavItem} href="/login"><button>Sign up</button></a>
-        </div>}</div>
+        <div>{props.isAuth
+            ? <div onClick={navToggleClick} className={s.headerNavWrap}>
+                {/* <span className={s.headernavItem}>props.login</span> */}
+                <ul id='dropDownMenu'
+                className={s.dropdownMenu + ' ' + (isDropdownActive && s.dropdownMenuActive)}>
+                    <li className={s.dropDownMenuItem}>Settings</li>
+                    <li onClick={props.logout} className={s.dropDownMenuItem}>Log out</li>
+                </ul>
+                <div id='headerMenu'
+                    className={s.headernavItem + " " + s.headerNavItemAuth}>
+                    <img src={props.userAva ? props.userAva : ""} alt="userAva" />
+                </div>
+                
+                
+                {/* <button className={s.headernavItem} onClick={props.logout}>Log out</button> */}
+            </div> : 
+            <div className={s.headerNavWrap}>
+                <NavLink className={s.headernavItem} to="/login"><button>Sign in</button></NavLink>
+                <a className={s.headernavItem} href="/login"><button>Sign up</button></a>
+            </div>}
+        </div>
     </div>
 }
 

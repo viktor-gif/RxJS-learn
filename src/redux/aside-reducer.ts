@@ -14,7 +14,7 @@ export const asideReducer = (state: asideType = initialState, action: any) => {
         case SET_FRIENDS:
             return {
                 ...state,
-                friends: action.friends
+                friends: action.friends || []
             }
         case SET_FRIENDS_COUNT:
             return {
