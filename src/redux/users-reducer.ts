@@ -131,19 +131,25 @@ export const getUsers = (pageSize: number, pageNumber: number, term: string, isF
 export const followPost = (userId: number) => (dispatch: dispatchType) => {
     dispatch(usersActions.setFollowingProgress(userId, true))
     usersAPI.followPost(userId).then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(usersActions.followUnfollow(userId))
-                dispatch(usersActions.setFollowingProgress(userId, false))
-            }
-        })
+        if (response.data.resultCode === 0) {
+            dispatch(usersActions.followUnfollow(userId))
+            dispatch(usersActions.setFollowingProgress(userId, false))
+        }
+    })
+    .catch(err => {
+        console.log(err.message)
+    })
 }
 export const followDelete = (userId: number): thunkType => 
 (dispatch) => {
     dispatch(usersActions.setFollowingProgress(userId, true))
     usersAPI.followDelete(userId).then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(usersActions.followUnfollow(userId))
-                dispatch(usersActions.setFollowingProgress(userId, false))
-            }
-        })
+        if (response.data.resultCode === 0) {
+            dispatch(usersActions.followUnfollow(userId))
+            dispatch(usersActions.setFollowingProgress(userId, false))
+        }
+    })
+    .catch(err => {
+        console.log(err.message)
+    })
 }

@@ -56,10 +56,16 @@ export const getDialogs = () => (dispatch: Dispatch) => {
     dialogsAPI.getDialogs().then(response => {
         dispatch(dialogsPageActions.setDialogs(response.data))
     })
+    .catch(err => {
+        console.log(err.message)
+    })
 }
 export const getDialogMessages = (dialogId: number) => (dispatch: Dispatch) => {
     dialogsAPI.getDialogMessages(dialogId).then(response => {
         dispatch(dialogsPageActions.setDialogMessages(response.data.items))
+    })
+    .catch(err => {
+        console.log(err.message)
     })
 }
 export const sendDialogMessage = (text: string, dialogId: number) => (dispatch: any) => {
@@ -70,12 +76,18 @@ export const sendDialogMessage = (text: string, dialogId: number) => (dispatch: 
             dispatch(getDialogMessages(dialogId))
         }
     })
+    .catch(err => {
+        console.log(err.message)
+    })
 }
 export const updateOrAddDialog = (userId: number) => (dispatch: any) => {
     dialogsAPI.updateOrAddDialog(userId).then(response => {
         if (response.data.resultCode === 0) {
             dispatch(getDialogs())
         }
+    })
+    .catch(err => {
+        console.log(err.message)
     })
 }
 export const deleteMessage = (id: number | string) => (dispatch: any) => {
@@ -84,11 +96,17 @@ export const deleteMessage = (id: number | string) => (dispatch: any) => {
             // dispatch(getDialogMessages(dialogId))
         }
     })
+    .catch(err => {
+        console.log(err.message)
+    })
 }
 export const restoreMessage = (id: number | string) => (dispatch: any) => {
     dialogsAPI.restoreMessage(id).then(response => {
         if (response.data.resultCode === 0) {
             // dispatch(getDialogMessages(dialogId))
         }
+    })
+    .catch(err => {
+        console.log(err.message)
     })
 }

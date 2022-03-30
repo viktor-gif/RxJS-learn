@@ -34,8 +34,11 @@ export const setFriendsCount = (count: number) => ({
 
 // thunk-creators
 export const getFriends = () => (dispatch: any) => {
-        usersAPI.getUsers(100, 1, '', true).then(response => {
-            dispatch(setFriends(response.data.items))
-            dispatch(setFriendsCount(response.data.totalCount))
+    usersAPI.getUsers(100, 1, '', true).then(response => {
+        dispatch(setFriends(response.data.items))
+        dispatch(setFriendsCount(response.data.totalCount))
+    })
+    .catch(err => {
+        console.log(err.message)
     })
 }

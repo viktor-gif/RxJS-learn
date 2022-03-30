@@ -8,7 +8,7 @@ import { RxjsLearn } from './componets/rxjs-learn/RxjsLearn';
 import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { stateType } from './redux/store';
-import { getAuthData } from './redux/auth-reducer';
+import { getAuthData, setLoginSuccess } from './redux/auth-reducer';
 import { initialize, setOpenChat } from './redux/app-reducer';
 import Login from './componets/Login/Login';
 import { Preloader } from './componets/common/preloader/preloader';
@@ -23,6 +23,7 @@ type propsType = {
   initialized: boolean
   isOpenedChat: boolean
 
+  setLoginSuccess: (success: boolean) => void
   getAuthData: () => void
   initialize: () => void
   setOpenChat: (isOpen: boolean) => void
@@ -31,12 +32,27 @@ type propsType = {
 const App = React.memo((props: propsType) => {
 
   const [isCollapsedChat, setCollapseChat] = useState(false)
+  const [rejected, setRejected] = useState(false)
+
+  const catchAllUnhandledErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
+    alert(promiseRejectionEvent.reason.message)
+    setRejected(true)
+  }
 
   useEffect(() => {
     props.initialize()
   }, [])
 
+  useEffect(() => {
+    window.addEventListener("unhandledrejection", catchAllUnhandledErrors)
+    return() => {
+      window.removeEventListener("unhandledrejection", catchAllUnhandledErrors)
+    }
+  }, [])
+
   // if (!props.initialized) return <Preloader />
+
+  if (rejected) return <Preloader />
 
   return (
     <BrowserRouter>
@@ -92,5 +108,5 @@ const mapStateToProps = (state: stateType) => ({
 })
 
 export default connect(mapStateToProps, {
-  getAuthData, initialize, setOpenChat
+  getAuthData, initialize, setOpenChat, setLoginSuccess
 })(App);

@@ -84,6 +84,7 @@ export type authType = {
     captchaUrl: string | null
     ownerProfileInfo: profileInfoType | null
     errorMessage: string
+    loginSuccess: boolean
 }
 export type appType = {
     initialized: boolean
@@ -199,7 +200,8 @@ export const store: storeType = {
             isAuth: false,
             captchaUrl: null,
             ownerProfileInfo: null,
-            errorMessage: ''
+            errorMessage: '',
+            loginSuccess: false
         },
         
         app: {

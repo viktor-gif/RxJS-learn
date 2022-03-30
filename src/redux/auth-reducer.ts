@@ -7,6 +7,7 @@ const SET_AUTH_DATA = 'Viktor-gif/auth/SET_AUTH_DATA'
 const SET_ERROR_MESSAGE = 'Viktor-gif/auth/SET_ERROR_MESSAGE'
 const SET_CAPTCHA_URL = 'Viktor-gif/auth/SET_CAPTCHA_URL'
 const SET_OWNER_PROFILE_INFO = 'Viktor-gif/auth/SET_OWNER_PROFILE_INFO'
+const SET_LOGIN_SUCCESS = 'Viktor-gif/auth/SET_LOGIN_SUCCESS'
 
 const initialState = {
     id: null,
@@ -16,6 +17,7 @@ const initialState = {
     captchaUrl: null,
     ownerProfileInfo: null,
     errorMessage: '',
+    loginSuccess: false
 }
 
 export const authReducer = (state: authType = initialState, action: any): authType => {
@@ -42,6 +44,11 @@ export const authReducer = (state: authType = initialState, action: any): authTy
                 ...state,
                 ownerProfileInfo: action.profileInfo
             }
+        case SET_LOGIN_SUCCESS:
+            return {
+                ...state,
+                loginSuccess: action.success
+            }
         default: return state
     }
 }
@@ -59,6 +66,9 @@ export const setCaptchaUrl = (captchaUrl: string | null) => {
 export const setOwnerProfileInfo = (profileInfo: profileInfoType) => {
     return {type: SET_OWNER_PROFILE_INFO, profileInfo}
 }
+export const setLoginSuccess = (success: boolean) => {
+    return {type: SET_LOGIN_SUCCESS, success}
+}
 
 // redux-thunk
 export const getAuthData = () => (dispatch: any) => {
@@ -67,8 +77,12 @@ export const getAuthData = () => (dispatch: any) => {
           dispatch(setAuthData(response.data.data, true))
         }
     })
+    .catch(err => {
+        console.log(err.message)
+    })
 }
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null) => (dispatch: any) => {
+    dispatch(setLoginSuccess(true))
     
     authAPI.login(email, password, rememberMe, captcha).then(response => {
         if (response.data.resultCode === resultCodeEnum.Success) {
@@ -76,13 +90,21 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
             dispatch(getAuthData())
             dispatch(setErrorMessage(''))
             dispatch(setCaptchaUrl(null))
+            dispatch(setLoginSuccess(false))
         } else if (response.data.resultCode === resultCodeForCaptchaEnum.CaptchaIsRequired){
             dispatch(getCaptchaUrl())
             dispatch (setErrorMessage(response.data.messages[0]))
+            dispatch(setLoginSuccess(false))
         } else {
             dispatch (setErrorMessage(response.data.messages[0]))
+            dispatch(setLoginSuccess(false))
         }
     })
+    .catch(err => {
+        dispatch(setLoginSuccess(false))
+        console.log(err.message)
+    })
+    
 }
 export const logout = () => (dispatch: any) => {
     authAPI.logout().then(response => {
@@ -91,16 +113,25 @@ export const logout = () => (dispatch: any) => {
             dispatch(setCaptchaUrl(null))
         }
     })
+    .catch(err => {
+        console.log(err.message)
+    })
 }
 export const getCaptchaUrl = () => (dispatch: any) => {
     authAPI.getCaptchaUrl().then(response => {
         console.log(response.data.url)
         dispatch(setCaptchaUrl(response.data.url))
     })
+    .catch(err => {
+        console.log(err.message)
+    })
 }
 export const getOwnerProfileInfo = (ownerId: number) => (dispatch: Dispatch) => {
     profileAPI.getProfileData(ownerId).then(response => {
         dispatch(setOwnerProfileInfo(response.data))
+    })
+    .catch(err => {
+        console.log(err.message)
     })
 }
 

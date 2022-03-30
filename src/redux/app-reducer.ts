@@ -37,5 +37,7 @@ export const initialize = () => (dispatch: any) => {
     dispatch(getAuthData()).then(() => {
         dispatch(initializeSuccess())
     })
-    
+    .catch((err: any) => {
+        console.log(err.message)
+    })
 }

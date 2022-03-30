@@ -8,11 +8,13 @@ import { validatioInputs } from "../../utils/validators/validators"
 import { InputFormik } from "../common/inputFormik/InputFormik"
 import { Button } from "../common/buttons/Button"
 import { Checkbox } from "../common/checkbox/Checkbox"
+import { Preloader } from "../common/preloader/preloader"
 
 type loginPropsType = {
     isAuth: boolean
     errorMessage: string
     captchaUrl: string | null
+    loginSuccess: boolean
 
     login: (email: string, password: string, rememberMe: boolean, captcha: string | null) => void
     logout: () => void
@@ -73,6 +75,7 @@ const Login = (props: loginPropsType) => {
                     <div className={s.commonErrorMessage}>{props.errorMessage}</div>
                     
                     <Button value="submit" buttonType="login" />
+                    {props.loginSuccess && <Preloader />}
                 </Form>
             )}
         </Formik>
@@ -84,7 +87,8 @@ const Login = (props: loginPropsType) => {
 const mapStateToProps = (state: stateType) => ({
     isAuth: state.auth.isAuth,
     errorMessage: state.auth.errorMessage,
-    captchaUrl: state.auth.captchaUrl
+    captchaUrl: state.auth.captchaUrl,
+    loginSuccess: state.auth.loginSuccess
 })
 
 export default connect(mapStateToProps, {login, logout})(Login)

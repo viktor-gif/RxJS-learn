@@ -81,10 +81,16 @@ export const getProfileData = (userId: number) => (dispatch: any) => {
     profileAPI.getProfileData(userId).then(response => {
         dispatch(setProfileInfo(response.data))
     })
+    .catch(err => {
+        console.log(err.message)
+    })
 }
 export const getStatus = (userId: number) => (dispatch: any) => {
     profileAPI.getStatus(userId).then(response => {
         dispatch(setStatusText(response.data))
+    })
+    .catch(err => {
+        console.log(err.message)
     })
 }
 export const setStatus = (status: string, userId: number) => (dispatch: any) => {
@@ -93,6 +99,9 @@ export const setStatus = (status: string, userId: number) => (dispatch: any) => 
             dispatch(getStatus(userId))
         }
     })
+    .catch(err => {
+        console.log(err.message)
+    })
 }
 export const savePhoto = (photo: File) => (dispatch: any) => {
     profileAPI.savePhoto(photo).then(response => {
@@ -100,6 +109,9 @@ export const savePhoto = (photo: File) => (dispatch: any) => {
         if (response.data.resultCode === 0) {
             dispatch(updatePhoto(response.data.data.photos))
         }
+    })
+    .catch(err => {
+        console.log(err.message)
     })
 }
 export const updateProfileInfo = (setEdit: any, 
@@ -119,6 +131,9 @@ export const updateProfileInfo = (setEdit: any,
         } else if (response.data.resultCode === 1) {
             setErrorMessage(response.data.messages[0])
         }
+    })
+    .catch(err => {
+        console.log(err.message)
     })
 }
     
