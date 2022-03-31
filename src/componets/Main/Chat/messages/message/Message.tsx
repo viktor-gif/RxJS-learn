@@ -5,11 +5,9 @@ import { NavLink } from "react-router-dom"
 import deleteIcon from "../../../../../img/icons/delete-icon.png"
 import spamIcon from "../../../../../img/icons/spam-icon.png"
 import { dialogsAPI } from "../../../../../api/dialogs-api";
-import { Controller } from "swiper";
 import { Button } from "../../../../common/buttons/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { stateType } from "../../../../../redux/store";
-import { getProfileData } from "../../../../../redux/profile-reducer";
 import { profileAPI } from "../../../../../api/api";
 
 type propsType = {

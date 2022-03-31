@@ -9,11 +9,12 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { stateType } from './redux/store';
 import { getAuthData, setLoginSuccess } from './redux/auth-reducer';
-import { initialize, setOpenChat } from './redux/app-reducer';
+import { initialize, setOpenChat, setRejectedApp, setErrorText } from './redux/app-reducer';
 import Login from './componets/Login/Login';
 import { Preloader } from './componets/common/preloader/preloader';
 import Friends from './componets/Aside/Friends/Friends';
 import ChatWrap from './componets/Main/Chat/ChatWrap';
+import { CommonError } from './componets/common/error/Error';
 
 type propsType = {
   userId: number | null
@@ -22,21 +23,24 @@ type propsType = {
   isAuth: boolean
   initialized: boolean
   isOpenedChat: boolean
+  rejectedApp: boolean
+  errorText: string
 
   setLoginSuccess: (success: boolean) => void
   getAuthData: () => void
   initialize: () => void
   setOpenChat: (isOpen: boolean) => void
+  setRejectedApp: (rejected: boolean) => void
+  setErrorText: (text: string) => void
 }
 
 const App = React.memo((props: propsType) => {
 
   const [isCollapsedChat, setCollapseChat] = useState(false)
-  const [rejected, setRejected] = useState(false)
 
   const catchAllUnhandledErrors = (promiseRejectionEvent: PromiseRejectionEvent) => {
-    alert(promiseRejectionEvent.reason.message)
-    setRejected(true)
+    props.setErrorText(promiseRejectionEvent.reason.message)
+    props.setRejectedApp(true)
   }
 
   useEffect(() => {
@@ -51,8 +55,6 @@ const App = React.memo((props: propsType) => {
   }, [])
 
   // if (!props.initialized) return <Preloader />
-
-  if (rejected) return <Preloader />
 
   return (
     <BrowserRouter>
@@ -94,6 +96,10 @@ const App = React.memo((props: propsType) => {
           <Route path="/rx" component={RxjsLearn} />
         </div>
       </div>
+      {props.rejectedApp && <div className="errorWindow">
+        <CommonError errorText={props.errorText} 
+          openedErrorWindow={props.setRejectedApp}/>
+      </div>}
     </BrowserRouter>
   );
 })
@@ -104,9 +110,11 @@ const mapStateToProps = (state: stateType) => ({
   email: state.auth.email,
   isAuth: state.auth.isAuth,
   initialized: state.app.initialized,
-  isOpenedChat: state.app.isOpendChat
+  isOpenedChat: state.app.isOpendChat,
+  rejectedApp: state.app.rejectedApp,
+  errorText: state.app.errorText
 })
 
 export default connect(mapStateToProps, {
-  getAuthData, initialize, setOpenChat, setLoginSuccess
+  getAuthData, initialize, setOpenChat, setLoginSuccess, setRejectedApp, setErrorText
 })(App);

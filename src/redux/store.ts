@@ -89,6 +89,8 @@ export type authType = {
 export type appType = {
     initialized: boolean
     isOpendChat: boolean
+    rejectedApp: boolean
+    errorText: string
 }
 export type asideType = {
     friends: usersType;
@@ -206,7 +208,9 @@ export const store: storeType = {
         
         app: {
             initialized: false,
-            isOpendChat: false
+            isOpendChat: false,
+            rejectedApp: false,
+            errorText: ''
         },
         aside: {
             friends: null,

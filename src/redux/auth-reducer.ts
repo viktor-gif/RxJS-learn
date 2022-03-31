@@ -1,6 +1,7 @@
 
 import { Dispatch } from "redux"
 import { authAPI, profileAPI, resultCodeEnum, resultCodeForCaptchaEnum } from "../api/api"
+import { setErrorText, setRejectedApp } from "./app-reducer"
 import { authType, profileInfoType } from "./store"
 
 const SET_AUTH_DATA = 'Viktor-gif/auth/SET_AUTH_DATA'
@@ -78,7 +79,8 @@ export const getAuthData = () => (dispatch: any) => {
         }
     })
     .catch(err => {
-        console.log(err.message)
+        dispatch(setErrorText(err.message))
+        dispatch(setRejectedApp(true))
     })
 }
 export const login = (email: string, password: string, rememberMe: boolean, captcha: string | null) => (dispatch: any) => {
@@ -102,7 +104,8 @@ export const login = (email: string, password: string, rememberMe: boolean, capt
     })
     .catch(err => {
         dispatch(setLoginSuccess(false))
-        console.log(err.message)
+        dispatch(setErrorText(err.message))
+        dispatch(setRejectedApp(true))
     })
     
 }
@@ -114,7 +117,8 @@ export const logout = () => (dispatch: any) => {
         }
     })
     .catch(err => {
-        console.log(err.message)
+        dispatch(setErrorText(err.message))
+        dispatch(setRejectedApp(true))
     })
 }
 export const getCaptchaUrl = () => (dispatch: any) => {
@@ -123,7 +127,8 @@ export const getCaptchaUrl = () => (dispatch: any) => {
         dispatch(setCaptchaUrl(response.data.url))
     })
     .catch(err => {
-        console.log(err.message)
+        dispatch(setErrorText(err.message))
+        dispatch(setRejectedApp(true))
     })
 }
 export const getOwnerProfileInfo = (ownerId: number) => (dispatch: Dispatch) => {
@@ -131,7 +136,8 @@ export const getOwnerProfileInfo = (ownerId: number) => (dispatch: Dispatch) => 
         dispatch(setOwnerProfileInfo(response.data))
     })
     .catch(err => {
-        console.log(err.message)
+        dispatch(setErrorText(err.message))
+        dispatch(setRejectedApp(true))
     })
 }
 

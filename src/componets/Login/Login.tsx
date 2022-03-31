@@ -33,7 +33,6 @@ const Login = (props: loginPropsType) => {
             }}
             onSubmit={(val) => {
                 props.login(val.email, val.password, val.rememberMe, val.captcha)
-                console.log(val)
             }}
             >
             
