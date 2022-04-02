@@ -1,148 +1,256 @@
-
 .messageWrap {
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: 50px 1fr;
-    grid-template-areas: "image name"
-                      "message message";
-    margin-bottom: 20px;
-    align-items: center;
-    gap: 10px;
-    position: relative;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 50px 1fr;
+  grid-template-areas:
+    "image name"
+    "message message";
+  margin-bottom: 20px;
+  align-items: center;
+  gap: 10px;
+  position: relative;
 }
 .messageWrapOwner {
-    grid-template-columns: 11fr 50px;
-    grid-template-areas: "name image"
-                      "message message";
-    justify-items: end;
+  grid-template-columns: 11fr 50px;
+  grid-template-areas:
+    "name image"
+    "message message";
+  justify-items: end;
 }
 .userPhotoContainer {
-    grid-area: image;
+  grid-area: image;
 }
 .userName {
-    grid-area: name;
+  grid-area: name;
 }
 .message {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 20px;
-    font-size: 1em;
-    grid-area: message;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 20px;
+  font-size: 1em;
+  grid-area: message;
+  position: relative;
 }
 .message:hover .menuMessage {
-    opacity: 1;
+  opacity: 1;
 }
 .menuMessage {
-    padding: 5px;
-    background-color: transparent;
-    width: fit-content;
-    opacity: 0;
-    transition: opacity .2s linear;
-}
-.menuMessage img {
-    display: inline-block;
-    width: 35px;
-    opacity: .7;
-    cursor: pointer;
-    margin-right: 10px;
-}
-.menuMessage img:last-child {
-    margin-right: 0;
-}
-.messageTextOwner {
-    order: 2;
+  display: flex;
+  gap: 10px;
+  padding: 5px;
+  background-color: transparent;
+  width: fit-content;
+  opacity: 0;
+  transition: opacity 0.2s linear;
+  order: 2;
 }
 .menuMessageOwner {
+  order: 1;
+}
+.menuMessage img {
+  display: inline-block;
+  width: 35px;
+  opacity: 0.7;
+  cursor: pointer;
+  /* margin-right: 10px; */
+}
+/* .menuMessage img:last-child {
+    margin-right: 0;
+} */
+/* .messageTextOwner {
     order: 1;
+}
+.menuMessageOwner {
+    order: 2;
+} */
+
+.deleteIconPic {
+  order: 1;
+}
+.spamIconPic {
+  order: 2;
+}
+.deleteIconPicOwner {
+  order: 2;
+}
+.spamIconPicOwner {
+  order: 1;
 }
 
 .messageText {
-    background-color: rgba(111, 199, 123, 0.5);
-    padding: 20px;
-    border-radius: 20px 20px 20px 0;
-    display: inline-block;
-    position: relative;
+  background-color: rgba(111, 199, 123, 0.5);
+  padding: 20px;
+  border-radius: 20px 20px 20px 0;
+  display: inline-block;
+  position: relative;
+  order: 1;
+}
+.messageTextOwner {
+  order: 2;
 }
 
 .messageTextOwner {
-    background-color: rgba(209, 207, 76, 0.5);
-    border-radius: 20px 20px 0 20px;
+  background-color: rgba(209, 207, 76, 0.5);
+  border-radius: 20px 20px 0 20px;
 }
 
 .messageText .viewedMessageIcon {
-    position: absolute;
-    bottom: 0;
-    right: -20px;
-    font-size: 1.5em;
-    font-weight: bold;
-    color: blue;
-    text-shadow: 1px 1px 7px rgb(29, 29, 122);
+  position: absolute;
+  bottom: 0;
+  right: -20px;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: blue;
+  text-shadow: 1px 1px 7px rgb(29, 29, 122);
 }
 .messageTextOwner .viewedMessageIcon {
-    left: -20px;
+  left: -20px;
 }
 
 .userPhoto {
-    width: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
+  width: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
-
 .messagesForm {
-    padding: 15px;
+  padding: 15px;
 }
 
 .deleteShure {
-    padding: 30px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: transparent;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    opacity: .9;
+  padding: 30px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.9;
 }
 .activeDeleteMenu {
-    display: flex;
+  display: flex;
 }
 .actionWindow {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    background-color: rgb(209, 106, 106);
-    width: fit-content;
-    font-size: .9em;
-    padding: 10px 20px;
-    margin: 20px auto;
-    box-shadow: inset 1px 1px 2px 2px #fff,
-                2px 2px 6px rgb(83, 38, 38);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background-color: rgb(209, 106, 106);
+  width: fit-content;
+  font-size: 0.9em;
+  padding: 10px 20px;
+  margin: 20px auto;
+  box-shadow: inset 1px 1px 2px 2px #fff, 2px 2px 6px rgb(83, 38, 38);
 }
 .actionWindowButtons {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
+.burgerMenu {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: -25px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: inherit;
+  transition: background-color 0.3s;
+}
+.burgerMenuOwner {
+  left: 100%;
+}
+.burgerMenu:hover {
+  background-color: #c7c7c7;
+}
+.burgerMenuCentralElem {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #666;
+  position: relative;
+}
+.burgerMenuCentralElem::before {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #666;
+  position: absolute;
+  left: 0;
+  bottom: 6px;
+}
+.burgerMenuCentralElem::after {
+  content: "";
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: #666;
+  position: absolute;
+  left: 0;
+  top: 6px;
+}
 
+.menuMessageSmallScreen {
+  display: none;
+  position: absolute;
+  top: 40px;
+  left: 15px;
+  z-index: 2;
+  background-color: #fff;
+  padding: 5px;
+  width: fit-content;
+  border-radius: 0 10px 10px 10px;
+  box-shadow: 2px 2px 5px #333;
+}
+.menuMessageSmallScreenOwner {
+  left: auto;
+  right: 15px;
+  border-radius: 10px 0 10px 10px;
+}
+.menuMessageSmallScreen ul li {
+  font-size: 0.9em;
+  line-height: 1.2em;
+  background-color: #e4e4e4;
+  border-radius: 5px;
+  margin: 2px;
+  cursor: pointer;
+  padding: 3px;
+}
+.menuMessageSmallActive {
+  display: block;
+}
 
-@media(max-width: 575px) {
-    .message span {
-        padding: 10px;
-        border-radius: 20px 20px 20px 0;
-    }
-    .userPhoto {
-        width: 30px;
-        margin-right: 10px;
-    }
-    .message {
-        grid-area: message;
-        margin-bottom: 0;
-        font-size: .9em;
-    }
+@media (max-width: 575px) {
+  .message span {
+    padding: 10px;
+    border-radius: 20px 20px 20px 0;
+  }
+  .userPhoto {
+    width: 30px;
+    margin-right: 10px;
+  }
+  .message {
+    grid-area: message;
+    margin-bottom: 0;
+    font-size: 0.9em;
+    margin: 0 15px;
+  }
+  .menuMessage {
+    display: none;
+  }
+  .burgerMenu {
+    display: flex;
+  }
 }

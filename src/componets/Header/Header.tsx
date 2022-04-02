@@ -18,7 +18,7 @@ type propsType = {
 
 const Header = (props: propsType) => {
 
-    const [isDropdownActive, setDropdownActive] = useState(true)
+    const [isDropdownActive, setDropdownActive] = useState(false)
 
     useEffect(() => {
         (props.userId) && props.getOwnerProfileInfo(props.userId)

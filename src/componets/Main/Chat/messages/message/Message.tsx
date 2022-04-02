@@ -31,17 +31,11 @@ export const Message = React.memo((props: propsType) => {
     const [isActiveDeleteMenu, setActiveDeleteMenu] = useState(false)
     const [isDeletedMessage, setDeletedMessage] = useState(false)
     const [actionWindowType, setActionWindowType] = useState<'delete' | 'restore'>('delete')
-    const [myPhoto, setMyPhoto] = useState(null)
     const [userPhoto, setUserPhoto] = useState<string | null>(null)
     const [isViewed, setViewed] = useState(false)
-
-    console.log(userPhoto)
-
-    const dispatch = useDispatch()
+    const [isActiveBurger, setActiveBurger] = useState(false)
 
     const profileInfo = useSelector((state: stateType) => state.profilePage.profileInfo)
-    
-    console.log(profileInfo)
 
     useEffect(() => {
         dialogsAPI.isViewedMessage(props.id).then(res => {
@@ -63,8 +57,6 @@ export const Message = React.memo((props: propsType) => {
         }
     }, [])
 
-    let dialogId = props.isMe ? props.recipientId : props.senderId
-
     const deleteMessage = () => {
         props.deleteMessage(props.id)
         setDeletedMessage(true)
@@ -81,6 +73,9 @@ export const Message = React.memo((props: propsType) => {
     }
     const addToSpam = () => {
         console.log('spam')
+    }
+    const toggleActiveBurgerMenu = () => {
+        isActiveBurger ? setActiveBurger(false) : setActiveBurger(true)
     }
     return (
         <div>
@@ -105,10 +100,24 @@ export const Message = React.memo((props: propsType) => {
                         </span>
                         {props.messageType === "dialog" && 
                         <div className={s.menuMessage + " " + (props.isMe && s.menuMessageOwner)}>
-                            <img className={s.deleteIconPic} src={deleteIcon} alt="delete" onClick={() => setActiveDeleteMenu(true)} />
-                            <img className={s.spamIconPic} src={spamIcon} alt="spam" onClick={addToSpam} />
+                                <img className={s.deleteIconPic + " " + (props.isMe && s.deleteIconPicOwner)}
+                                    src={deleteIcon} alt="delete"
+                                    onClick={() => setActiveDeleteMenu(true)} />
+                                <img className={s.spamIconPic + " " + (props.isMe && s.spamIconPicOwner)}
+                                    src={spamIcon} alt="spam"
+                                    onClick={addToSpam} />
                         </div>
                         }
+                    
+                        <div className={s.burgerMenu + " " + (props.isMe && s.burgerMenuOwner)}
+                            onClick={toggleActiveBurgerMenu}>
+                            <div className={s.burgerMenuCentralElem}>
+                        
+                            </div>
+
+                        </div>
+                        
+                        
                     </div>
 
                     <div className={s.deleteShure + ' ' + (isActiveDeleteMenu && s.activeDeleteMenu)}>
@@ -117,6 +126,17 @@ export const Message = React.memo((props: propsType) => {
                             actionWindowType={actionWindowType}
                             valueButton1="Yes" valueButton2="No" />
                     </div>
+
+                        <div className={s.menuMessageSmallScreen + " " + (props.isMe && s.menuMessageSmallScreenOwner)  + " " + (isActiveBurger && s.menuMessageSmallActive)}>
+                            <ul>
+                            <li onClick={() => {
+                                setActiveDeleteMenu(true);
+                                setActiveBurger(false)
+                            }}>Delete message</li>
+                                <li onClick={addToSpam}>Add to spam</li>
+                            </ul>
+                        </div>
+
                 </div>
             }
         </div>
