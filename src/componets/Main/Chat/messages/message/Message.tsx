@@ -38,31 +38,44 @@ export const Message = React.memo((props: propsType) => {
     const profileInfo = useSelector((state: stateType) => state.profilePage.profileInfo)
 
     useEffect(() => {
-        dialogsAPI.isViewedMessage(props.id).then(res => {
-            setViewed(res.data)
-        })
+        setTimeout(() => {
+            dialogsAPI.isViewedMessage(props.id).then(res => {
+                setViewed(res.data)
+            })
+        }, Math.random() * 5000)
+        
     }, [])
 
     useEffect(() => {
-        if (props.isMe) {
-            profileAPI.getProfileData(props.ownerId)
-                .then(res => setUserPhoto(res.data.photos.small))
-            // dispatch(getProfileData(props.ownerId))
-            // profileInfo && setUserPhoto(profileInfo.photos.small)
-        } else {
-            profileAPI.getProfileData(props.senderId)
-                .then(res => setUserPhoto(res.data.photos.small))
-            // dispatch(getProfileData(props.senderId))
-            // profileInfo && setUserPhoto(profileInfo.photos.small)
-        }
+        setTimeout(() => {
+            if (props.isMe) {
+                profileAPI.getProfileData(props.ownerId)
+                    .then(res => setUserPhoto(res.data.photos.small))
+                // dispatch(getProfileData(props.ownerId))
+                // profileInfo && setUserPhoto(profileInfo.photos.small)
+            } else {
+                profileAPI.getProfileData(props.senderId)
+                    .then(res => setUserPhoto(res.data.photos.small))
+                // dispatch(getProfileData(props.senderId))
+                // profileInfo && setUserPhoto(profileInfo.photos.small)
+            }
+        }, Math.random() * 5000)
     }, [])
 
+    const deleteMessageMenuActive = () => {
+        setActiveDeleteMenu(true)
+        setActiveBurger(false)
+    }
     const deleteMessage = () => {
         props.deleteMessage(props.id)
         setDeletedMessage(true)
         setActionWindowType('restore')
     }
-    const resetDeleteMessage = () => {
+    const addToSpam = () => {
+        console.log('spam')
+        setActiveBurger(false)
+    }
+    const resetDeledteMessage = () => {
         setActiveDeleteMenu(false)
     }
     const restoreMessage = () => {
@@ -71,9 +84,7 @@ export const Message = React.memo((props: propsType) => {
         setActiveDeleteMenu(false)
         setActionWindowType('delete')
     }
-    const addToSpam = () => {
-        console.log('spam')
-    }
+    
     const toggleActiveBurgerMenu = () => {
         isActiveBurger ? setActiveBurger(false) : setActiveBurger(true)
     }
@@ -98,16 +109,6 @@ export const Message = React.memo((props: propsType) => {
                             {props.message}
                             {isViewed && <span className={s.viewedMessageIcon}>&#10003;</span>}
                         </span>
-                        {props.messageType === "dialog" && 
-                        <div className={s.menuMessage + " " + (props.isMe && s.menuMessageOwner)}>
-                                <img className={s.deleteIconPic + " " + (props.isMe && s.deleteIconPicOwner)}
-                                    src={deleteIcon} alt="delete"
-                                    onClick={() => setActiveDeleteMenu(true)} />
-                                <img className={s.spamIconPic + " " + (props.isMe && s.spamIconPicOwner)}
-                                    src={spamIcon} alt="spam"
-                                    onClick={addToSpam} />
-                        </div>
-                        }
                     
                         <div className={s.burgerMenu + " " + (props.isMe && s.burgerMenuOwner)}
                             onClick={toggleActiveBurgerMenu}>
@@ -122,18 +123,21 @@ export const Message = React.memo((props: propsType) => {
 
                     <div className={s.deleteShure + ' ' + (isActiveDeleteMenu && s.activeDeleteMenu)}>
                         <ActionsWindow actionText="Are you shure?"
-                            action1={deleteMessage} action2={resetDeleteMessage}
+                            action1={deleteMessage} action2={resetDeledteMessage}
                             actionWindowType={actionWindowType}
                             valueButton1="Yes" valueButton2="No" />
                     </div>
 
                         <div className={s.menuMessageSmallScreen + " " + (props.isMe && s.menuMessageSmallScreenOwner)  + " " + (isActiveBurger && s.menuMessageSmallActive)}>
                             <ul>
-                            <li onClick={() => {
-                                setActiveDeleteMenu(true);
-                                setActiveBurger(false)
-                            }}>Delete message</li>
-                                <li onClick={addToSpam}>Add to spam</li>
+                            <li onClick={deleteMessageMenuActive}>
+                                <img src={deleteIcon} alt="" />
+                                <span>Delete message</span>
+                            </li>
+                            <li onClick={addToSpam}>
+                                <img src={spamIcon} alt="" />
+                                <span>Add to spam</span>
+                            </li>
                             </ul>
                         </div>
 

@@ -35,48 +35,6 @@
 .message:hover .menuMessage {
   opacity: 1;
 }
-.menuMessage {
-  display: flex;
-  gap: 10px;
-  padding: 5px;
-  background-color: transparent;
-  width: fit-content;
-  opacity: 0;
-  transition: opacity 0.2s linear;
-  order: 2;
-}
-.menuMessageOwner {
-  order: 1;
-}
-.menuMessage img {
-  display: inline-block;
-  width: 35px;
-  opacity: 0.7;
-  cursor: pointer;
-  /* margin-right: 10px; */
-}
-/* .menuMessage img:last-child {
-    margin-right: 0;
-} */
-/* .messageTextOwner {
-    order: 1;
-}
-.menuMessageOwner {
-    order: 2;
-} */
-
-.deleteIconPic {
-  order: 1;
-}
-.spamIconPic {
-  order: 2;
-}
-.deleteIconPicOwner {
-  order: 2;
-}
-.spamIconPicOwner {
-  order: 1;
-}
 
 .messageText {
   background-color: rgba(111, 199, 123, 0.5);
@@ -153,7 +111,7 @@
 }
 
 .burgerMenu {
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
@@ -222,11 +180,16 @@
 .menuMessageSmallScreen ul li {
   font-size: 0.9em;
   line-height: 1.2em;
-  background-color: #e4e4e4;
-  border-radius: 5px;
-  margin: 2px;
   cursor: pointer;
   padding: 3px;
+  border-bottom: 1px solid #999;
+}
+.menuMessageSmallScreen ul li:last-child {
+  border-bottom: none;
+}
+.menuMessageSmallScreen ul li img {
+  width: 30px;
+  margin-right: 10px;
 }
 .menuMessageSmallActive {
   display: block;
@@ -249,8 +212,5 @@
   }
   .menuMessage {
     display: none;
-  }
-  .burgerMenu {
-    display: flex;
   }
 }
