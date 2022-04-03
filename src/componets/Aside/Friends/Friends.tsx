@@ -12,6 +12,7 @@ type propsType = {
     friends: usersType
     friendsCount: number
     followingInProgressUsersId: number[]
+    ownerId: number | null
 
     getFriends: () => void
     followPost: (id: number) => void
@@ -24,8 +25,7 @@ const Friends = React.memo((props: propsType) => {
 
     useEffect(() => {
         props.getFriends()
-    }, [!props.friends])
-
+    }, [!props.friends, props.ownerId])
 
     const shuffle = (arr: usersType) => {
         // @ts-ignore
@@ -83,7 +83,8 @@ const Friends = React.memo((props: propsType) => {
 const mapStateToProps = (state: stateType) => ({
     friends: state.aside.friends,
     friendsCount: state.aside.totalFriendsCount,
-    followingInProgressUsersId: state.usersPage.followingInProgressUsersId
+    followingInProgressUsersId: state.usersPage.followingInProgressUsersId,
+    ownerId: state.auth.id
 })
 
 export default connect(mapStateToProps, {
