@@ -25,6 +25,9 @@ type propsType = {
 }
 
 const ChatsWrap = (props: propsType) => {
+
+    sessionStorage.path = 'dialogs'
+
     return <div>
         <Suspense fallback={<div>Loading...</div>}>
             <Chat dialogs={props.dialogs} ownerId={props.ownerId}

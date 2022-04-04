@@ -9,6 +9,7 @@ import { InputFormik } from "../common/inputFormik/InputFormik"
 import { Button } from "../common/buttons/Button"
 import { Checkbox } from "../common/checkbox/Checkbox"
 import { Preloader } from "../common/preloader/preloader"
+import { Redirect } from "react-router-dom"
 
 type loginPropsType = {
     isAuth: boolean
@@ -79,7 +80,7 @@ const Login = (props: loginPropsType) => {
             )}
         </Formik>
         
-        : <button onClick={() => props.logout()}>Log out</button>}
+        : <Redirect to={sessionStorage.path} />}
     </div>
 }
 

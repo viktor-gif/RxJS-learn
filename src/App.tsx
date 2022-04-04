@@ -49,6 +49,7 @@ const App = React.memo((props: propsType) => {
 
   useEffect(() => {
     window.addEventListener("unhandledrejection", catchAllUnhandledErrors)
+    if (!sessionStorage.path) sessionStorage.path = 'profile'
     return() => {
       window.removeEventListener("unhandledrejection", catchAllUnhandledErrors)
     }

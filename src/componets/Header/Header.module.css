@@ -1,60 +1,61 @@
 .header {
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .logoPic {
-    width: 80px;
+  width: 80px;
 }
 
 .headerNavWrap {
-    position: relative;
-    width: fit-content;
-    display: flex;
-    justify-content: space-between;
+  position: relative;
+  width: fit-content;
+  display: flex;
+  justify-content: space-between;
 }
 .headernavItem {
-    margin-right: 20px;
-    position: relative;
-    cursor: pointer;
+  margin-right: 20px;
+  position: relative;
+  cursor: pointer;
 }
 .headernavItem:last-child {
-    margin-right: 0;
+  margin-right: 0;
 }
 .headernavItem img {
-    width: 35px;
+  width: 35px;
 }
 .headerNavItemAuth::before {
-    content: "";
-    display: block;
-    box-sizing: border-box;
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    width: 0;
-    height: 0;
-    border: 7px solid transparent;
-    border-top: 5px solid #fff;
-    transform: translateX(-50%);
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 7px solid transparent;
+  border-top: 5px solid #fff;
+  transform: translateX(-50%);
 }
 
 .dropdownMenu {
-    display: none;
-    font-family: sans-serif;
-    line-height: 25px;
-    letter-spacing: 2px;
-    background-color: #fff;
-    position: absolute;
-    top: 150%;
-    right: 0;
-    padding: 10px 20px;
-    border-radius: 0 0 10px 10px;
+  display: none;
+  font-family: sans-serif;
+  line-height: 25px;
+  letter-spacing: 2px;
+  background-color: #fff;
+  position: absolute;
+  top: 150%;
+  right: 0;
+  z-index: 100;
+  padding: 10px 20px;
+  border-radius: 0 0 10px 10px;
 }
 .dropdownMenuActive {
-    display: block;
+  display: block;
 }
 .dropDownMenuItem {
-    cursor: pointer;
+  cursor: pointer;
 }

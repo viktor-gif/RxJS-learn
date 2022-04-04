@@ -5,13 +5,14 @@ import { ProfileInfoWrap } from "./ProfileInfo/ProfileInfoWrap";
 import { connect } from "react-redux";
 import { stateType } from "../../../redux/store";
 import { withAuthRedirect } from "../../../HOC/WithAuthRedirect";
-import { InputFormik } from "../../common/inputFormik/InputFormik";
 
 type profilePropsType = {
 
 }
 
 const Profile = React.memo((props: profilePropsType) => {
+
+    sessionStorage.path = 'profile'
 
     return (
         <div className={s.profileContainer}>
