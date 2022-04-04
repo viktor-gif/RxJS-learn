@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/RxJS-learn/static/css/main.7201e3ff.chunk.css",
-    "main.js": "/RxJS-learn/static/js/main.ae845eff.chunk.js",
-    "main.js.map": "/RxJS-learn/static/js/main.ae845eff.chunk.js.map",
-    "runtime-main.js": "/RxJS-learn/static/js/runtime-main.58893a76.js",
-    "runtime-main.js.map": "/RxJS-learn/static/js/runtime-main.58893a76.js.map",
+    "main.css": "/RxJS-learn/static/css/main.ed233c25.chunk.css",
+    "main.js": "/RxJS-learn/static/js/main.94beba7d.chunk.js",
+    "main.js.map": "/RxJS-learn/static/js/main.94beba7d.chunk.js.map",
+    "runtime-main.js": "/RxJS-learn/static/js/runtime-main.85845dfb.js",
+    "runtime-main.js.map": "/RxJS-learn/static/js/runtime-main.85845dfb.js.map",
     "static/css/2.4d8d6c40.chunk.css": "/RxJS-learn/static/css/2.4d8d6c40.chunk.css",
-    "static/js/2.96ae27bb.chunk.js": "/RxJS-learn/static/js/2.96ae27bb.chunk.js",
-    "static/js/2.96ae27bb.chunk.js.map": "/RxJS-learn/static/js/2.96ae27bb.chunk.js.map",
-    "static/css/3.1485b7ff.chunk.css": "/RxJS-learn/static/css/3.1485b7ff.chunk.css",
-    "static/js/3.1be5c39e.chunk.js": "/RxJS-learn/static/js/3.1be5c39e.chunk.js",
-    "static/js/3.1be5c39e.chunk.js.map": "/RxJS-learn/static/js/3.1be5c39e.chunk.js.map",
-    "static/js/4.6ad5cc84.chunk.js": "/RxJS-learn/static/js/4.6ad5cc84.chunk.js",
-    "static/js/4.6ad5cc84.chunk.js.map": "/RxJS-learn/static/js/4.6ad5cc84.chunk.js.map",
+    "static/js/2.463a11f6.chunk.js": "/RxJS-learn/static/js/2.463a11f6.chunk.js",
+    "static/js/2.463a11f6.chunk.js.map": "/RxJS-learn/static/js/2.463a11f6.chunk.js.map",
+    "static/css/3.ebcac35c.chunk.css": "/RxJS-learn/static/css/3.ebcac35c.chunk.css",
+    "static/js/3.9503c640.chunk.js": "/RxJS-learn/static/js/3.9503c640.chunk.js",
+    "static/js/3.9503c640.chunk.js.map": "/RxJS-learn/static/js/3.9503c640.chunk.js.map",
+    "static/js/4.a1f4f301.chunk.js": "/RxJS-learn/static/js/4.a1f4f301.chunk.js",
+    "static/js/4.a1f4f301.chunk.js.map": "/RxJS-learn/static/js/4.a1f4f301.chunk.js.map",
     "index.html": "/RxJS-learn/index.html",
     "static/css/2.4d8d6c40.chunk.css.map": "/RxJS-learn/static/css/2.4d8d6c40.chunk.css.map",
-    "static/css/3.1485b7ff.chunk.css.map": "/RxJS-learn/static/css/3.1485b7ff.chunk.css.map",
-    "static/css/main.7201e3ff.chunk.css.map": "/RxJS-learn/static/css/main.7201e3ff.chunk.css.map",
-    "static/js/2.96ae27bb.chunk.js.LICENSE.txt": "/RxJS-learn/static/js/2.96ae27bb.chunk.js.LICENSE.txt",
+    "static/css/3.ebcac35c.chunk.css.map": "/RxJS-learn/static/css/3.ebcac35c.chunk.css.map",
+    "static/css/main.ed233c25.chunk.css.map": "/RxJS-learn/static/css/main.ed233c25.chunk.css.map",
+    "static/js/2.463a11f6.chunk.js.LICENSE.txt": "/RxJS-learn/static/js/2.463a11f6.chunk.js.LICENSE.txt",
     "static/media/1.11426f07.png": "/RxJS-learn/static/media/1.11426f07.png",
     "static/media/2.4a170145.png": "/RxJS-learn/static/media/2.4a170145.png",
     "static/media/3.b2dc0775.png": "/RxJS-learn/static/media/3.b2dc0775.png",
@@ -29,10 +29,10 @@
     "static/media/spam-icon.c8885cb2.png": "/RxJS-learn/static/media/spam-icon.c8885cb2.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.58893a76.js",
+    "static/js/runtime-main.85845dfb.js",
     "static/css/2.4d8d6c40.chunk.css",
-    "static/js/2.96ae27bb.chunk.js",
-    "static/css/main.7201e3ff.chunk.css",
-    "static/js/main.ae845eff.chunk.js"
+    "static/js/2.463a11f6.chunk.js",
+    "static/css/main.ed233c25.chunk.css",
+    "static/js/main.94beba7d.chunk.js"
   ]
 }
