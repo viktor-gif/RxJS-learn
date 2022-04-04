@@ -1,5 +1,5 @@
 import React from "react";
-import { stateType, usersType } from "../../../redux/store";
+import { usersType } from "../../../redux/store";
 import { connect } from "react-redux";
 import { Users } from "./Users";
 import { getUsers, followPost, followDelete } from "../../../redux/users-reducer";
@@ -26,7 +26,7 @@ type propsType = mapStatePropstype & mapDispatchPropsType & ownPropsType
 
 const  UsersWrapMiddle: React.FC<propsType> = React.memo((props: propsType) => {
     const getUsers = (pageNumber: number, term: string, isFriend: boolean) => {
-        props.getUsers(props.pageSize, pageNumber, term, isFriend)
+        props.getUsers(localStorage.usersAmount || props.pageSize, pageNumber, term, isFriend)
     }
 
     return <Users users={props.users}

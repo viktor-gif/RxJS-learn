@@ -107,8 +107,10 @@ export const usersActions = {
     setPageSize: (size: number) => ({type: SET_PAGE_SIZE, size} as const),
     setCurrentPage: (page: number) => ({type: SET_CURRENT_PAGE, page} as const),
     setTerm: (term: string) => ({type: SET_TERM, term} as const),
-    setIsFriend: (isFriend: boolean) => ({type: SET_IS_FRIEND, isFriend} as const),
+    setIsFriend: (isFriend: boolean) => ({ type: SET_IS_FRIEND, isFriend } as const),
 }
+export const setPageSize = (size: number) => ({type: SET_PAGE_SIZE, size} as const)
+
 
 
 // thunk-creators

@@ -12,9 +12,12 @@ export const SettingsUsers = (props: propsType) => {
     const [isEditState, setEditState] = useState(false)
     const [pageSizeTemp, setPageSizeTemp] = useState(props.pageSize)
 
+    const usersAmount = localStorage.usersAmount
+
     const submitChanges = () => {
         props.setPageSize(pageSizeTemp)
         setEditState(false)
+        localStorage.usersAmount = pageSizeTemp
     }
 
     const changeNumberOfUsersInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -26,7 +29,7 @@ export const SettingsUsers = (props: propsType) => {
             <h3 className={s.usersSetTitle}>Users-settings</h3>
             <div className={s.usersSetContent}>
                 {!isEditState ? <div className={s.currentValueBlock}>
-                        Number users in one page: <span className={s.currentValue}>{props.pageSize}</span>
+                        Number users in one page: <span className={s.currentValue}>{usersAmount || props.pageSize}</span>
                     </div>
                 :
                     <div className={s.editSetBlock}>

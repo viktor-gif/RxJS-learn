@@ -6,7 +6,7 @@ import { Nav } from './componets/Aside/Nav/Nav';
 import { Footer } from './componets/Footer/Footer';
 import { RxjsLearn } from './componets/rxjs-learn/RxjsLearn';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { stateType } from './redux/store';
 import { getAuthData, setLoginSuccess } from './redux/auth-reducer';
 import { initialize, setOpenChat, setRejectedApp, setErrorText } from './redux/app-reducer';
@@ -15,6 +15,7 @@ import { Preloader } from './componets/common/preloader/preloader';
 import Friends from './componets/Aside/Friends/Friends';
 import ChatWrap from './componets/Main/Chat/ChatWrap';
 import { CommonError } from './componets/common/error/Error';
+import { setPageSize } from './redux/users-reducer'
 
 type propsType = {
   userId: number | null
@@ -32,9 +33,12 @@ type propsType = {
   setOpenChat: (isOpen: boolean) => void
   setRejectedApp: (rejected: boolean) => void
   setErrorText: (text: string) => void
+  setPageSize: (pageSize: number) => void
 }
 
 const App = React.memo((props: propsType) => {
+
+  console.log(localStorage.usersAmount)
 
   const [isCollapsedChat, setCollapseChat] = useState(false)
 
@@ -46,6 +50,10 @@ const App = React.memo((props: propsType) => {
   useEffect(() => {
     props.initialize()
   }, [])
+
+  useEffect(() => {
+    props.setPageSize(localStorage.usersAmount)
+  }, [props.isAuth])
 
   useEffect(() => {
     window.addEventListener("unhandledrejection", catchAllUnhandledErrors)
@@ -117,5 +125,5 @@ const mapStateToProps = (state: stateType) => ({
 })
 
 export default connect(mapStateToProps, {
-  getAuthData, initialize, setOpenChat, setLoginSuccess, setRejectedApp, setErrorText
+  getAuthData, initialize, setOpenChat, setLoginSuccess, setRejectedApp, setErrorText, setPageSize
 })(App);
